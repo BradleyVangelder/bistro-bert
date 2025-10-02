@@ -1,6 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { track } from '@vercel/analytics'
+
+// Type declaration for gtag function
+declare global {
+  interface Window {
+    gtag?: (command: string, action: string, options: Record<string, unknown>) => void
+  }
+}
 
 interface VitalMetric {
   name: string
@@ -12,7 +20,6 @@ interface VitalMetric {
 
 interface WebVitalsData {
   lcp?: VitalMetric
-  fid?: VitalMetric
   cls?: VitalMetric
   fcp?: VitalMetric
   ttfb?: VitalMetric
@@ -26,7 +33,13 @@ export function WebVitalsMonitor() {
       return
     }
 
-    const reportWebVitals = async (metric: any) => {
+    const reportWebVitals = async (metric: {
+      name: string
+      value: number
+      rating: 'good' | 'needs-improvement' | 'poor'
+      delta?: number
+      id: string
+    }) => {
       const vitalData: VitalMetric = {
         name: metric.name,
         value: Math.round(metric.value * 100) / 100,
@@ -41,10 +54,10 @@ export function WebVitalsMonitor() {
       }
 
       // Send to analytics service in production
-      if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_GA_ID) {
+      if (process.env.NODE_ENV === 'production') {
         try {
           // Send to Google Analytics 4
-          if (window.gtag) {
+          if (process.env.NEXT_PUBLIC_GA_ID && window.gtag) {
             window.gtag('event', metric.name, {
               event_category: 'Web Vitals',
               event_label: metric.id,
@@ -57,6 +70,16 @@ export function WebVitalsMonitor() {
               }
             })
           }
+
+          // Send to Vercel Analytics
+          track('web-vital', {
+            name: metric.name,
+            value: metric.value,
+            rating: metric.rating,
+            id: metric.id,
+            delta: metric.delta || 0,
+            page: window.location.pathname
+          })
         } catch (error) {
           console.warn('Failed to send web vitals to analytics:', error)
         }
@@ -78,9 +101,8 @@ export function WebVitalsMonitor() {
     }
 
     // Import and use web-vitals library
-    import('web-vitals').then(({ onCLS, onFID, onFCP, onLCP, onTTFB, onINP }) => {
+    import('web-vitals').then(({ onCLS, onFCP, onLCP, onTTFB, onINP }) => {
       onCLS(reportWebVitals)
-      onFID(reportWebVitals)
       onFCP(reportWebVitals)
       onLCP(reportWebVitals)
       onTTFB(reportWebVitals)

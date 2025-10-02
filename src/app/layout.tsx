@@ -7,6 +7,7 @@ import WebVitalsMonitor from "@/components/performance/WebVitalsMonitor";
 import { WebVitalsDebug } from "@/components/performance/WebVitalsMonitor";
 import PerformanceOptimizer from "@/components/performance/PerformanceOptimizer";
 import { PerformanceDebug } from "@/components/performance/PerformanceOptimizer";
+import { Analytics } from '@vercel/analytics/react';
 import "./fonts.css";
 import "./globals.css";
 
@@ -141,6 +142,9 @@ export default function RootLayout({
         {/* Performance Monitoring */}
         <WebVitalsMonitor />
         <PerformanceOptimizer />
+
+        {/* Vercel Analytics */}
+        <Analytics />
 
         {/* Debug Components (development only) */}
         {process.env.NODE_ENV === 'development' && (
