@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "bistro-bert",
+  "name": "bistro-bert-debug",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
   "installCommand": "npm install",
@@ -8,18 +8,13 @@
   "regions": ["bru1"],
   "env": {
     "NEXT_PUBLIC_ENV": "production",
-    "NODE_OPTIONS": "--max-old-space-size=4096"
+    "NODE_OPTIONS": "--max-old-space-size=4096",
+    "DEBUG_VERCEL": "true"
   },
   "build": {
     "env": {
       "NEXT_PUBLIC_ENV": "production",
       "NODE_OPTIONS": "--max-old-space-size=4096"
-    }
-  },
-  "git": {
-    "deploymentEnabled": {
-      "master": true,
-      "staging": true
     }
   }
 }
