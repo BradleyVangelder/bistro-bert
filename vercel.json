@@ -1,0 +1,50 @@
+{
+  "version": 2,
+  "name": "bistro-bert",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["bru1"],
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "functions": {
+    "src/pages/api/**/*.ts": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "env": {
+    "NEXT_PUBLIC_ENV": "production"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_ENV": "production"
+    }
+  },
+  "git": {
+    "deploymentEnabled": {
+      "master": true,
+      "staging": true
+    }
+  },
+  "environments": {
+    "production": {
+      "build": {
+        "env": {
+          "NEXT_PUBLIC_ENV": "production"
+        }
+      }
+    },
+    "preview": {
+      "build": {
+        "env": {
+          "NEXT_PUBLIC_ENV": "staging"
+        }
+      }
+    }
+  }
+}
