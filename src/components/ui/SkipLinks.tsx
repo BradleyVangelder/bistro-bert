@@ -39,22 +39,22 @@ export default function SkipLinks({ showOnLoad = false }: SkipLinksProps) {
   }, [])
 
   const skipToMain = () => {
-    const main = document.querySelector('main')
+    const main = document.querySelector('main') as HTMLElement
     main?.focus()
   }
 
   const skipToNavigation = () => {
-    const nav = document.querySelector('nav, [role="navigation"]')
+    const nav = document.querySelector('nav, [role="navigation"]') as HTMLElement
     nav?.focus()
   }
 
   const skipToContact = () => {
-    const contact = document.querySelector('#contact, [aria-label*="contact"], [aria-label*="reserveren"]')
+    const contact = document.querySelector('#contact, [aria-label*="contact"], [aria-label*="reserveren"]') as HTMLElement
     contact?.focus()
   }
 
   const skipToMenu = () => {
-    const menu = document.querySelector('#menu, [aria-label*="menu"], [aria-label*="kaart"]')
+    const menu = document.querySelector('#menu, [aria-label*="menu"], [aria-label*="kaart"]') as HTMLElement
     menu?.focus()
   }
 

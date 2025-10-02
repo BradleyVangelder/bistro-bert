@@ -59,7 +59,7 @@ export function useAccessibilityPreferences() {
 }
 
 // Get animation variants that respect reduced motion
-export function getAccessibleAnimationvariants(baseVariants: any, reducedVariants: any) {
+export function getAccessibleAnimationvariants(baseVariants: Record<string, unknown>, reducedVariants: Record<string, unknown>) {
   return {
     ...baseVariants,
     ...(prefersReducedMotion() ? reducedVariants : {})
@@ -67,7 +67,7 @@ export function getAccessibleAnimationvariants(baseVariants: any, reducedVariant
 }
 
 // Safe motion props that respect user preferences
-export function getSafeMotionProps(motionProps: any) {
+export function getSafeMotionProps(motionProps: Record<string, unknown>) {
   if (prefersReducedMotion()) {
     return {
       ...motionProps,
@@ -87,8 +87,8 @@ export function isTouchDevice(): boolean {
   return (
     'ontouchstart' in window ||
     navigator.maxTouchPoints > 0 ||
-    // @ts-ignore - for older browsers
-    navigator.msMaxTouchPoints > 0
+    // @ts-expect-error - for older browsers
+    (navigator as unknown as { msMaxTouchPoints?: number }).msMaxTouchPoints > 0
   )
 }
 

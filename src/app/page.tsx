@@ -8,7 +8,7 @@ import ImageGallery from '@/components/ImageGallery'
 import { galleryImages } from '@/data/images'
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema'
 import ReviewSchema from '@/components/ui/ReviewSchema'
-import { LoadingState, ImageSkeleton } from '@/components/ui/LoadingState'
+import { ImageSkeleton } from '@/components/ui/LoadingState'
 
 // Force dynamic rendering to avoid SSR issues with browser APIs
 export const dynamic = 'force-dynamic'

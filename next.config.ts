@@ -11,6 +11,27 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     domains: ['images.unsplash.com'],
   },
+  webpack: (config, { isServer }) => {
+    // Fix for PDF.js canvas dependency issue
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        canvas: false,
+        "canvas/browser": false,
+        "canvas/node": false,
+      };
+      
+      // Ignore canvas-related modules that cause build issues
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        canvas: false,
+        "canvas/browser": false,
+        "canvas/node": false,
+      };
+    }
+    
+    return config;
+  },
 };
 
 export default nextConfig;

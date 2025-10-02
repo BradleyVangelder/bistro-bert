@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Menu, Phone, Mail, MapPin } from 'lucide-react'
+import { X, Phone, Mail, MapPin } from 'lucide-react'
 
 interface MenuOverlayProps {
   isOpen: boolean

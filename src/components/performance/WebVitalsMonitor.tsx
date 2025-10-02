@@ -192,7 +192,7 @@ export function WebVitalsDebug() {
     <div className="fixed bottom-4 right-4 bg-black/90 text-white p-4 rounded-lg text-xs font-mono z-50 max-w-xs">
       <h3 className="font-bold mb-2 text-yellow-400">Web Vitals Debug</h3>
       <div className="space-y-1">
-        {Object.entries(thresholds).map(([name, _]) => {
+        {Object.entries(thresholds).map(([name]) => {
           const vital = latestVitals[name as keyof WebVitalsData] as VitalMetric
           return (
             <div key={name} className="flex justify-between">

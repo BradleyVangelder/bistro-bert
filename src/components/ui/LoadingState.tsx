@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 interface LoadingStateProps {
   type?: 'spinner' | 'skeleton' | 'pulse' | 'dots'
   size?: 'sm' | 'md' | 'lg'
+  textSize?: 'sm' | 'md' | 'lg'
   text?: string
   className?: string
   style?: React.CSSProperties
@@ -13,6 +14,7 @@ interface LoadingStateProps {
 export function LoadingState({
   type = 'spinner',
   size = 'md',
+  textSize = 'md',
   text,
   className = '',
   style
