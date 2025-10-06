@@ -23,9 +23,9 @@ const nextConfig: NextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  webpack: (config, { isServer }) => {
-    // Handle canvas package for PDF.js
-    if (isServer) {
+  webpack: (config, { isServer, dev }) => {
+    // Handle canvas package for PDF.js - only in development
+    if (isServer && dev) {
       config.externals = config.externals || [];
       config.externals.push({
         'canvas': 'canvas'
@@ -37,6 +37,17 @@ const nextConfig: NextConfig = {
       ...config.resolve.alias,
       'pdfjs-dist/build/pdf.worker.entry': 'pdfjs-dist/build/pdf.worker.entry.js',
     };
+    
+    // Ignore canvas in production builds
+    if (!dev) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        'canvas': false,
+        'cairo': false,
+        'pango': false,
+        'gdk-pixbuf-2.0': false
+      };
+    }
     
     return config;
   },

@@ -3,7 +3,7 @@
   "name": "bistro-bert",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
-  "installCommand": "npm install",
+  "installCommand": "npm install --production=false",
   "framework": "nextjs",
   "regions": ["bru1"],
   "builds": [
@@ -13,11 +13,13 @@
     }
   ],
   "env": {
-    "NEXT_PUBLIC_ENV": "production"
+    "NEXT_PUBLIC_ENV": "production",
+    "NODE_ENV": "production"
   },
   "build": {
     "env": {
-      "NEXT_PUBLIC_ENV": "production"
+      "NEXT_PUBLIC_ENV": "production",
+      "NODE_ENV": "production"
     }
   },
   "git": {
