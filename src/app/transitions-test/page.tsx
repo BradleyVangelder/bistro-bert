@@ -4,12 +4,13 @@ import { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { usePageTransition } from '@/hooks/animations/usePageTransition'
-import { useTransitionManager } from '@/components/ui/TransitionManager'
+import { useTransitionManager, TransitionManager } from '@/components/ui/TransitionManager'
+import { CursorProvider } from '@/components/ui/CursorProvider'
 import { TransitionType } from '@/components/ui/TransitionManager'
 import { ANIMATION_DURATIONS } from '@/utils/animations/constants'
 import { runAnimationTestSuite, testAnimationPerformance } from '@/utils/animations/testing'
 
-export default function TransitionsTestPage() {
+function TransitionsTestContent() {
   const router = useRouter()
   const pathname = usePathname()
   const { navigateTo, state, startTransition, getPerformanceMetrics } = usePageTransition()
@@ -319,5 +320,15 @@ export default function TransitionsTestPage() {
         </motion.div>
       </div>
     </div>
+  )
+}
+
+export default function TransitionsTestPage() {
+  return (
+    <CursorProvider>
+      <TransitionManager>
+        <TransitionsTestContent />
+      </TransitionManager>
+    </CursorProvider>
   )
 }
