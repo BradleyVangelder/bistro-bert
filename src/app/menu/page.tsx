@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Footer from '@/components/layout/Footer'
 import ReviewSchema from '@/components/ui/ReviewSchema'
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema'
+import { MenuJsonLd } from '@/components/ui/MenuJsonLd'
 import MinimalistPDFViewer from '@/components/MinimalistPDFViewer'
 
 // Force dynamic rendering for this page to avoid SSR issues with PDF viewer
@@ -28,12 +29,13 @@ const sampleReviews = [
 export default function MenuPage() {
 
   const breadcrumbItems = [
-    { name: 'Home', url: 'https://bistrobert.be' },
-    { name: 'Menu', url: 'https://bistrobert.be/menu' },
+    { name: 'Home', url: 'https://www.bistro-bert.be' },
+    { name: 'Menu', url: 'https://www.bistro-bert.be/menu' },
   ]
 
   return (
     <>
+      <MenuJsonLd />
       <BreadcrumbSchema items={breadcrumbItems} />
       <ReviewSchema reviews={sampleReviews} />
       

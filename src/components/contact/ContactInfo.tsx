@@ -10,12 +10,12 @@ export default function ContactInfo() {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-16"
+        className="text-center mb-24"
       >
-        <h2 className="text-4xl font-serif font-light mb-4">Moderne Verfijning</h2>
-        <div className="w-16 h-px bg-gradient-to-r from-transparent via-burgundy to-transparent mx-auto mb-8" />
+        <h2 className="text-4xl font-serif font-light mb-6 md:mb-8">Reserveringsinformatie</h2>
+        <div className="w-16 h-px bg-gradient-to-r from-transparent via-burgundy to-transparent mx-auto" />
         <p className="text-gray-600 text-lg leading-relaxed font-luxury max-w-2xl mx-auto">
-          Belgische traditie met moderne finesse—serieuze keuken, zonder zwaar te worden.
+          Verfijnde keuken met een uitgebreide wijnkaart. Reserveer uw tafel voor een onvergetelijke culinaire ervaring.
         </p>
       </motion.div>
 
@@ -71,7 +71,7 @@ export default function ContactInfo() {
             </div>
             <div>
               <h3 className="font-luxury font-medium text-rich-black mb-1">Openingstijden</h3>
-              <p className="text-gray-600 font-luxury">Dinsdag t/m zondag: 18:00–22:00. Lunch vrij & zat: 12:00–14:00. (Pas aan indien anders.)</p>
+              <p className="text-gray-600 font-luxury">Dinsdag t/m zondag: 10:00–22:00</p>
               <p className="text-sm text-gray-500">Maandag: gesloten</p>
             </div>
           </div>

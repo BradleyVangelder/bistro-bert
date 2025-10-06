@@ -6,18 +6,15 @@ import { getSafeMotionProps, useAccessibilityPreferences } from '@/utils/accessi
 
 interface AccessibleMotionProps {
   children: ReactNode
-  initial?: Record<string, unknown>
-  animate?: Record<string, unknown>
-  whileHover?: Record<string, unknown>
-  whileTap?: Record<string, unknown>
-  transition?: Record<string, unknown>
+  initial?: any
+  animate?: any
+  whileHover?: any
+  whileTap?: any
+  transition?: any
   className?: string
-  viewport?: Record<string, unknown>
+  viewport?: any
   onAnimationComplete?: () => void
-  reducedMotionVariant?: {
-    initial?: Record<string, unknown>
-    animate?: Record<string, unknown>
-  }
+  reducedMotionVariant?: any
   respectReducedMotion?: boolean
 }
 
@@ -31,7 +28,8 @@ export function AccessibleMotion({
   className,
   viewport,
   onAnimationComplete,
-  reducedMotionVariant
+  reducedMotionVariant,
+  respectReducedMotion = true
 }: AccessibleMotionProps) {
   const { reducedMotion } = useAccessibilityPreferences()
 

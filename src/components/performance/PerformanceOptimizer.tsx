@@ -10,7 +10,7 @@ interface PerformanceMetrics {
 }
 
 export function PerformanceOptimizer() {
-  const [, setMetrics] = useState<PerformanceMetrics>({
+  const [metrics, setMetrics] = useState<PerformanceMetrics>({
     domNodes: 0,
     scriptExecutionTime: 0,
     renderTime: 0
@@ -24,14 +24,11 @@ export function PerformanceOptimizer() {
 
         const domNodes = document.querySelectorAll('*').length
 
-        // Type assertion for performance.memory which is not in standard TypeScript types
-        const performanceMemory = (performance as unknown as { memory?: { usedJSHeapSize: number } }).memory
-
         setMetrics({
-          memoryUsage: performanceMemory?.usedJSHeapSize,
+          memoryUsage: (performance as any).memory?.usedJSHeapSize,
           domNodes,
           scriptExecutionTime: navigation?.loadEventEnd - navigation?.loadEventStart || 0,
-          renderTime: navigation?.domComplete - navigation?.domInteractive || 0
+          renderTime: navigation?.domComplete - navigation?.domLoading || 0
         })
 
         // Performance warnings
@@ -39,8 +36,8 @@ export function PerformanceOptimizer() {
           console.warn('High DOM node count detected:', domNodes)
         }
 
-        if (performanceMemory?.usedJSHeapSize && performanceMemory.usedJSHeapSize > 50 * 1024 * 1024) { // 50MB
-          console.warn('High memory usage detected:', performanceMemory.usedJSHeapSize)
+        if ((performance as any).memory?.usedJSHeapSize > 50 * 1024 * 1024) { // 50MB
+          console.warn('High memory usage detected:', (performance as any).memory.usedJSHeapSize)
         }
       } catch (error) {
         console.warn('Failed to measure performance:', error)
@@ -106,7 +103,7 @@ export function PerformanceOptimizer() {
 export function useImageOptimization() {
   const [optimizedImages, setOptimizedImages] = useState<Set<string>>(new Set())
 
-  const optimizeImage = (src: string) => {
+  const optimizeImage = (src: string, priority = false) => {
     if (optimizedImages.has(src)) return src
 
     // Create optimized image URL with size parameters

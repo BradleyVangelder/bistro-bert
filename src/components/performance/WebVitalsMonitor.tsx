@@ -1,14 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { track } from '@vercel/analytics'
-
-// Type declaration for gtag function
-declare global {
-  interface Window {
-    gtag?: (command: string, action: string, options: Record<string, unknown>) => void
-  }
-}
 
 interface VitalMetric {
   name: string
@@ -20,6 +12,7 @@ interface VitalMetric {
 
 interface WebVitalsData {
   lcp?: VitalMetric
+  fid?: VitalMetric
   cls?: VitalMetric
   fcp?: VitalMetric
   ttfb?: VitalMetric
@@ -33,13 +26,7 @@ export function WebVitalsMonitor() {
       return
     }
 
-    const reportWebVitals = async (metric: {
-      name: string
-      value: number
-      rating: 'good' | 'needs-improvement' | 'poor'
-      delta?: number
-      id: string
-    }) => {
+    const reportWebVitals = async (metric: any) => {
       const vitalData: VitalMetric = {
         name: metric.name,
         value: Math.round(metric.value * 100) / 100,
@@ -54,10 +41,10 @@ export function WebVitalsMonitor() {
       }
 
       // Send to analytics service in production
-      if (process.env.NODE_ENV === 'production') {
+      if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_GA_ID) {
         try {
           // Send to Google Analytics 4
-          if (process.env.NEXT_PUBLIC_GA_ID && window.gtag) {
+          if (window.gtag) {
             window.gtag('event', metric.name, {
               event_category: 'Web Vitals',
               event_label: metric.id,
@@ -70,16 +57,6 @@ export function WebVitalsMonitor() {
               }
             })
           }
-
-          // Send to Vercel Analytics
-          track('web-vital', {
-            name: metric.name,
-            value: metric.value,
-            rating: metric.rating,
-            id: metric.id,
-            delta: metric.delta || 0,
-            page: window.location.pathname
-          })
         } catch (error) {
           console.warn('Failed to send web vitals to analytics:', error)
         }
@@ -101,8 +78,9 @@ export function WebVitalsMonitor() {
     }
 
     // Import and use web-vitals library
-    import('web-vitals').then(({ onCLS, onFCP, onLCP, onTTFB, onINP }) => {
+    import('web-vitals').then(({ onCLS, onFID, onFCP, onLCP, onTTFB, onINP }) => {
       onCLS(reportWebVitals)
+      onFID(reportWebVitals)
       onFCP(reportWebVitals)
       onLCP(reportWebVitals)
       onTTFB(reportWebVitals)
@@ -192,7 +170,7 @@ export function WebVitalsDebug() {
     <div className="fixed bottom-4 right-4 bg-black/90 text-white p-4 rounded-lg text-xs font-mono z-50 max-w-xs">
       <h3 className="font-bold mb-2 text-yellow-400">Web Vitals Debug</h3>
       <div className="space-y-1">
-        {Object.entries(thresholds).map(([name]) => {
+        {Object.entries(thresholds).map(([name, _]) => {
           const vital = latestVitals[name as keyof WebVitalsData] as VitalMetric
           return (
             <div key={name} className="flex justify-between">

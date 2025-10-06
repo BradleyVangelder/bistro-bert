@@ -90,14 +90,21 @@ export default function MinimalNavbar() {
                     onClick={() => setIsMenuOpen(false)}
                     className="text-white text-2xl font-serif font-light tracking-tight hover:text-white transition-none"
                   >
-                    Menu
+                    Menukaart
+                  </Link>
+                  <Link
+                    href="/over-ons"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-white text-2xl font-serif font-light tracking-tight hover:text-white transition-none"
+                  >
+                    Over Ons
                   </Link>
                   <Link
                     href="/contact"
                     onClick={() => setIsMenuOpen(false)}
                     className="text-white text-2xl font-serif font-light tracking-tight hover:text-white transition-none"
                   >
-                    Contact
+                    Reserveringen
                   </Link>
                 </div>
               </div>
@@ -121,14 +128,21 @@ export default function MinimalNavbar() {
                     onClick={() => setIsMenuOpen(false)}
                     className="text-white text-2xl font-serif font-light tracking-tight hover:text-white transition-none"
                   >
-                    Menu
+                    Menukaart
+                  </Link>
+                  <Link
+                    href="/over-ons"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="text-white text-2xl font-serif font-light tracking-tight hover:text-white transition-none"
+                  >
+                    Over Ons
                   </Link>
                   <Link
                     href="/contact"
                     onClick={() => setIsMenuOpen(false)}
                     className="text-white text-2xl font-serif font-light tracking-tight hover:text-white transition-none"
                   >
-                    Contact
+                    Reserveringen
                   </Link>
                 </div>
               </div>

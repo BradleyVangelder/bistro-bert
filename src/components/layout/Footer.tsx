@@ -69,6 +69,7 @@ export default function Footer() {
                 <a
                   href={`tel:${contactInfo.phone.replace(/[^\d+]/g, '')}`}
                   className="text-gray-700 hover:text-burgundy transition-colors text-sm font-luxury"
+                  aria-label="Bel Bistro Bert: +32 13 48 01 39"
                 >
                   {contactInfo.phone}
                 </a>
@@ -78,6 +79,7 @@ export default function Footer() {
                 <a
                   href={`mailto:${contactInfo.email}`}
                   className="text-gray-700 hover:text-burgundy transition-colors text-sm font-luxury"
+                  aria-label="E-mail Bistro Bert: info@bistro-bert.be"
                 >
                   {contactInfo.email}
                 </a>
@@ -101,7 +103,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-burgundy transition-colors"
-                aria-label="Instagram"
+                aria-label="Bezoek Bistro Bert op Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </a>

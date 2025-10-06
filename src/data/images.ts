@@ -11,44 +11,44 @@ export const galleryImages: GalleryImage[] = [
   {
     id: 'hero-feature',
     src: '/images/restaurant/hero-moody-wine-bar.jpg',
-    alt: 'Bistro Bert - Verfijnde sfeer en ambiance',
+    alt: 'Menukaart — pagina 1',
     priority: true
   },
   {
     id: 'chef-portrait',
     src: '/images/restaurant/chef-portrait.jpg',
-    alt: 'Onze chef',
+    alt: 'Menukaart — pagina 2',
     priority: true
   },
   {
     id: 'cuisine-elegant',
     src: '/images/restaurant/cuisine.jpg',
-    alt: 'Elegante gerechtpresentatie'
+    alt: 'Menukaart — pagina 3'
   },
   {
     id: 'dining-room',
     src: '/images/restaurant/dining-room.jpg',
-    alt: 'Eetzaal sfeer'
+    alt: 'Menukaart — pagina 4'
   },
   {
     id: 'fine-dining',
     src: '/images/restaurant/hero-elegant-fine-dining.jpg',
-    alt: 'Elegante fine dining ervaring',
+    alt: 'Menukaart — pagina 5',
     priority: true
   },
   {
     id: 'interior-luxury',
     src: '/images/restaurant/hero-upscale-interior.jpg',
-    alt: 'Stijlvol interieur'
+    alt: 'Menukaart — pagina 6'
   },
   {
     id: 'ambiance',
     src: '/images/restaurant/ambiance.jpg',
-    alt: 'Verfijnde tafeldekking'
+    alt: 'Menukaart — pagina 7'
   },
   {
     id: 'service',
     src: '/images/restaurant/service.jpg',
-    alt: 'Professionele bediening'
+    alt: 'Menukaart — pagina 8'
   }
 ]

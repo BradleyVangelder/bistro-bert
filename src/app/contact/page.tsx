@@ -6,8 +6,8 @@ import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema'
 import EventSchema from '@/components/ui/EventSchema'
 
 export const metadata: Metadata = {
-  title: "Reserveer Tafel | Bistro Bert Laakdal | Luxe Restaurant Reserveringen",
-  description: "Reserveer uw tafel bij Bistro Bert in Laakdal voor een exclusieve fine dining ervaring. Eenvoudig online reserveren voor een onvergetelijke culinaire avond.",
+  title: "Reserveer Tafel | Bistro Bert Laakdal",
+  description: "Reserveer uw tafel bij Bistro Bert in Laakdal. Belgische klassiekers met finesse. Dagvers, seizoensgebonden. Reserveer voor lunch, zakenlunch of diner.",
   keywords: [
     "Bistro Bert reserveren",
     "restaurant reserveren Laakdal",
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Reserveer Tafel | Bistro Bert Laakdal",
-    description: "Exclusieve fine dining reserveringen in Laakdal",
-    url: "https://bistrobert.be/contact",
+    description: "Reserveer uw tafel bij Bistro Bert in Laakdal. Belgische klassiekers met finesse. Dagvers, seizoensgebonden.",
+    url: "https://www.bistro-bert.be/contact",
     images: [
       {
         url: "/images/restaurant/dining-room.jpg",
@@ -38,10 +38,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     images: ["/images/restaurant/dining-room.jpg"],
     title: "Reserveer Tafel | Bistro Bert Laakdal",
-    description: "Exclusieve fine dining reserveringen in Laakdal",
+    description: "Reserveer uw tafel bij Bistro Bert in Laakdal. Belgische klassiekers met finesse. Dagvers, seizoensgebonden.",
   },
   alternates: {
-    canonical: "https://bistrobert.be/contact",
+    canonical: "https://www.bistro-bert.be/contact",
   },
   other: {
     'script:ld+json': JSON.stringify({
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
       '@type': 'Restaurant',
       name: 'Bistro Bert',
       description: 'Luxe restaurant met verfijnde Belgische keuken in Laakdal',
-      url: 'https://bistrobert.be/contact',
+      url: 'https://www.bistro-bert.be/contact',
       telephone: '013 480 139',
       email: 'info@bistro-bert.be',
       address: {
@@ -65,14 +65,14 @@ export const metadata: Metadata = {
         longitude: '5.0996063',
       },
       openingHours: [
-        'Tuesday-Sunday 18:00-22:00',
+        'Tuesday-Sunday 10:00-22:00',
       ],
       priceRange: '€€€',
       image: [
-        'https://bistrobert.be/images/restaurant/dining-room.jpg',
+        'https://www.bistro-bert.be/images/restaurant/dining-room.jpg',
       ],
       acceptsReservations: 'True',
-      reservationUrl: 'https://bistrobert.be/contact',
+      reservationUrl: 'https://www.bistro-bert.be/contact',
     }),
   },
 }
@@ -98,8 +98,8 @@ const sampleEvents = [
 ]
 
 const breadcrumbItems = [
-  { name: 'Home', url: 'https://bistrobert.be' },
-  { name: 'Reserveren', url: 'https://bistrobert.be/contact' },
+  { name: 'Home', url: 'https://www.bistro-bert.be' },
+  { name: 'Reserveren', url: 'https://www.bistro-bert.be/contact' },
 ]
 
 export default function ContactPage() {
@@ -113,27 +113,32 @@ export default function ContactPage() {
         <section className="navbar-spacer pt-32 pb-20 bg-gradient-to-b from-ivory/50 to-white">
           <div className="container-dh">
             <div className="text-center max-w-4xl mx-auto">
-              <h1 className="typography-h1 mb-6">
-                Reserveer uw tafel — Lunch, Zakenlunch & Diner in Laakdal
+              <h1 className="typography-h1 mb-6 md:mb-8">
+                Reserveer uw tafel
               </h1>
               <div className="w-24 h-px bg-gradient-to-r from-transparent via-burgundy to-transparent mx-auto mb-8" />
               <p className="typography-body-large text-gray-600">
-                Bel of reserveer voor lunch, zakenlunch of diner. We helpen met allergenen, timing en een stille tafel indien gewenst.
+                Verfijnde keuken met een uitgebreide wijnkaart in Laakdal. Reserveer voor lunch, zakenlunch of diner.
               </p>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center max-w-full">
                 <a
-                  href="tel:013480139"
-                  className="inline-block px-6 py-3 bg-black text-white hover:bg-gray-800 transition-colors typography-button w-full sm:w-auto text-center min-w-0"
+                  href="tel:+3213480139"
+                  className="inline-block px-8 py-4 bg-black text-white hover:bg-gray-800 transition-colors typography-button w-full sm:w-auto text-center min-w-0"
+                  aria-label="Bel Bistro Bert direct: +32 13 48 01 39"
                 >
                   Bel direct: +32 13 48 01 39
                 </a>
-                <button
-                  className="inline-block px-6 py-3 border border-black text-black hover:bg-black hover:text-white transition-colors typography-button w-full sm:w-auto text-center min-w-0 cursor-not-allowed opacity-75"
-                  disabled
+                <a
+                  href="mailto:info@bistro-bert.be?subject=Reservatie"
+                  className="inline-block px-8 py-4 bg-black text-white hover:bg-gray-800 transition-colors typography-button w-full sm:w-auto text-center min-w-0"
+                  aria-label="Stuur e-mail naar Bistro Bert: info@bistro-bert.be"
                 >
-                  Online reserveren
-                </button>
+                  E-MAIL
+                </a>
               </div>
+              <p className="mt-4 text-center text-gray-600 typography-body-small">
+                We denken graag mee over allergenen, wijn en timing.
+              </p>
             </div>
           </div>
         </section>
@@ -142,18 +147,18 @@ export default function ContactPage() {
         <section className="section-dh py-20 bg-white">
           <div className="container-dh">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-16">
-                <h2 className="typography-h1 mb-4">Reserveringsinformatie</h2>
-                <div className="w-16 h-px bg-gradient-to-r from-transparent via-burgundy to-transparent mx-auto mb-8" />
+              <div className="text-center mb-24">
+                <h2 className="typography-h2 mb-6 md:mb-8">Reserveringsinformatie</h2>
+                <div className="w-16 h-px bg-gradient-to-r from-transparent via-burgundy to-transparent mx-auto" />
                 <p className="typography-body text-gray-600 max-w-2xl mx-auto">
                   Hier vind je praktische info voor je reservatie: lunch- en dineruren, parkeren en allergenen.
                 </p>
               </div>
 
               <div className="bg-gray-50 p-6 md:p-8 rounded-lg overflow-hidden max-w-2xl mx-auto">
-                <h3 className="typography-h2 mb-4">Openingstijden</h3>
+                <h3 className="typography-h3 mb-4">Openingstijden</h3>
                 <p className="typography-body text-gray-600 mb-4">
-                  <strong>Dinsdag t/m zondag:</strong> 18:00–22:00. Lunch vrij & zat: 12:00–14:00. (Pas aan indien anders.)
+                  <strong>Dinsdag t/m zondag:</strong> 10:00–22:00
                 </p>
                 <p className="typography-body text-gray-600 mb-4">
                   <strong>Maandag:</strong> gesloten
@@ -164,22 +169,22 @@ export default function ContactPage() {
               </div>
 
               <div className="mt-12 bg-gray-50 p-6 md:p-8 rounded-lg overflow-hidden">
-                <h3 className="typography-h2 mb-4 text-center">Wat je mag verwachten</h3>
-                <p className="typography-body text-gray-600 mb-6 text-center">
-                  Wat je mag verwachten: Belgische klassiekers met moderne precisie. Voorbeeld? Vol-au-vent met rijke, heldere saus of dagvis op de graat met seizoensgroenten.
+                <h3 className="typography-h3 mb-6 text-center">Wat je mag verwachten</h3>
+                <p className="typography-body text-gray-600 text-center">
+                  Verfijnde gerechten bereid met moderne precisie, perfect gecombineerd met onze uitgebreide wijnselectie. Van seizoensgerechten tot dagverse vis, elke maaltijd is een harmonieuze ervaring.
                 </p>
                 <div className="grid md:grid-cols-3 gap-4 md:gap-6">
                   <div className="text-center p-4">
-                    <h4 className="typography-h4 mb-2">Lunch & Diner</h4>
-                    <p className="typography-small text-gray-600">Heldere keuzes voor elke gelegenheid: snelle zakenlunch, ontspannen lunch of uitgebreid diner.</p>
+                    <h4 className="typography-h4 mb-4">Lunch & Diner</h4>
+                    <p className="typography-small text-gray-600">Menuopties voor elke gelegenheid: van lichte zakelijke lunches tot uitgebreide diners. Elk gerecht wordt bereid met dezelfde toewijding aan kwaliteit en presentatie.</p>
                   </div>
                   <div className="text-center p-4">
-                    <h4 className="typography-h4 mb-2">Seizoensgebonden</h4>
-                    <p className="typography-small text-gray-600">Met het seizoen mee, met respect voor het product. Voorbeeld: hoevekip met zachte jus en knapperige groenten.</p>
+                    <h4 className="typography-h4 mb-4">Seizoensgebonden</h4>
+                    <p className="typography-small text-gray-600">We vieren de seizoenen met ingrediënten op hun piek van versheid. Van lente asperges tot herfst paddenstoelen, elk gerecht vertelt een verhaal van tijd en plaats.</p>
                   </div>
                   <div className="text-center p-4">
-                    <h4 className="typography-h4 mb-2">Belgische Klassiekers</h4>
-                    <p className="typography-small text-gray-600">Onze basis: Belgische klassiekers zoals vol-au-vent of stoofvlees, met lichte, frisse accenten.</p>
+                    <h4 className="typography-h4 mb-4">Wijnselectie</h4>
+                    <p className="typography-small text-gray-600">Een zorgvuldig samengestelde wijnkaart met klassieke en eigentijdse wijnen. Perfect gecombineerd met onze gerechten voor een harmonieuze ervaring.</p>
                   </div>
                 </div>
               </div>
@@ -214,7 +219,7 @@ export default function ContactPage() {
         <section className="py-12 md:py-20 bg-white overflow-hidden">
           <div className="container-dh">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="typography-h1 mb-6 md:mb-8">Ontdek meer van Bistro Bert</h2>
+              <h2 className="typography-h2 mb-6 md:mb-8">Ontdek meer van Bistro Bert</h2>
               <div className="grid md:grid-cols-2 gap-6 md:gap-8">
                 <a
                   href="/menu"
@@ -222,7 +227,7 @@ export default function ContactPage() {
                 >
                   <h3 className="typography-h3 mb-4">Onze menukaart</h3>
                   <p className="typography-body text-gray-600 mb-4">
-                    Ontdek onze à la carte menukaart met seizoensklassiekers en dagsuggesties—precies bereid, fris gepresenteerd.
+                    Ontdek onze à la carte menukaart met verfijnde gerechten en seizoensgebonden creaties. Perfect gecombineerd met onze uitgebreide wijnselectie.
                   </p>
                   <span className="typography-small text-black">Bekijk menu →</span>
                 </a>
@@ -232,7 +237,7 @@ export default function ContactPage() {
                 >
                   <h3 className="typography-h3 mb-4">Ons restaurant</h3>
                   <p className="typography-body text-gray-600 mb-4">
-                    Leer meer over onze keuken, chef en de unieke sfeer van Bistro Bert in Laakdal.
+                    Ontdek het verhaal van Bistro Bert, waar Belgische culinaire tradities samenkomen met moderne gastronomie. Een intieme eetkamer waar gastvrijheid centraal staat.
                   </p>
                   <span className="typography-small text-black">Meer informatie →</span>
                 </Link>

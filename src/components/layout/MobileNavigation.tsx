@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { Phone, Mail, Clock, MapPin, X } from 'lucide-react';
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -11,77 +12,117 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
   const pathname = usePathname();
   
   const navItems = [
-    { label: 'Home', href: '/', icon: '🏠' },
-    { label: 'Menu', href: '/menu/ala-carte', icon: '📋' },
-    { label: 'Reserveren', href: '/contact/reserveren', icon: '📞' },
-    { label: 'Locatie', href: '/contact/locatie', icon: '📍' },
+    { label: 'Menukaart', href: '/menu', icon: '📋' },
+    { label: 'Over Ons', href: '/over-ons', icon: 'ℹ️' },
+    { label: 'Reserveringen', href: '/contact', icon: '📞' },
   ];
 
   return (
-    <motion.div
-      initial={{ x: '100%' }}
-      animate={{ x: isOpen ? 0 : '100%' }}
-      transition={{ type: 'spring', damping: 25 }}
-      className="fixed inset-y-0 right-0 w-80 bg-white shadow-xl z-50"
-    >
-      <div className="p-6">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100"
-          aria-label="Close menu"
-        >
-          ✕
-        </button>
-        
-        <nav className="mt-8">
-          <ul className="space-y-4">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  onClick={onClose}
-                  className={`flex items-center space-x-3 p-4 rounded-lg text-lg font-medium transition-colors ${
-                    pathname === item.href
-                      ? 'bg-black text-white'
-                      : 'text-gray-700 hover:bg-gray-100'
-                  }`}
+    <>
+      {/* Backdrop */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isOpen ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        className={`fixed inset-0 bg-black/60 z-40 ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      
+      {/* Navigation Panel */}
+      <motion.div
+        initial={{ x: '100%' }}
+        animate={{ x: isOpen ? 0 : '100%' }}
+        transition={{ type: 'spring', damping: 25 }}
+        className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-xl z-50 mobile-nav-container"
+      >
+        <div className="h-full flex flex-col p-6 mobile-menu">
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="self-end p-3 rounded-full hover:bg-gray-100 transition-colors focus:ring-2 focus:ring-burgundy focus:ring-offset-2"
+            aria-label="Sluit menu"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          
+          {/* Navigation Items */}
+          <nav className="mt-8 flex-1">
+            <ul className="space-y-3">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={onClose}
+                    className={`mobile-nav-item flex items-center space-x-4 p-4 rounded-xl text-lg font-medium transition-all ${
+                      pathname === item.href
+                        ? 'bg-black text-white shadow-lg'
+                        : 'text-gray-700 hover:bg-gray-100 active:scale-98'
+                    }`}
+                  >
+                    <span className="text-2xl">{item.icon}</span>
+                    <span>{item.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          
+          {/* Contact Information */}
+          <div className="space-y-4 mt-8">
+            {/* Quick Contact */}
+            <div className="p-4 bg-gray-50 rounded-xl">
+              <h3 className="font-semibold mb-4 text-lg">Direct Contact</h3>
+              <div className="space-y-3">
+                <a
+                  href="tel:+3213480139"
+                  className="flex items-center space-x-3 text-lg font-medium text-black hover:text-burgundy transition-colors mobile-nav-item"
                 >
-                  <span className="text-2xl">{item.icon}</span>
-                  <span>{item.label}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        
-        {/* Quick contact info */}
-        <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-          <h3 className="font-semibold mb-2">Direct Contact</h3>
-          <a
-            href="tel:013480139"
-            className="block text-lg font-medium text-black hover:text-gray-700 mb-2"
-          >
-            013 480 139
-          </a>
-          <a
-            href="mailto:info@bistro-bert.be"
-            className="block text-black hover:text-gray-700"
-          >
-            info@bistro-bert.be
-          </a>
+                  <Phone className="w-5 h-5 text-burgundy" />
+                  <span>+32 13 48 01 39</span>
+                </a>
+                <a
+                  href="mailto:info@bistro-bert.be"
+                  className="flex items-center space-x-3 text-black hover:text-burgundy transition-colors mobile-nav-item"
+                >
+                  <Mail className="w-5 h-5 text-burgundy" />
+                  <span>info@bistro-bert.be</span>
+                </a>
+              </div>
+            </div>
+            
+            {/* Opening Hours */}
+            <div className="p-4 bg-gray-50 rounded-xl">
+              <h3 className="font-semibold mb-3 text-lg flex items-center">
+                <Clock className="w-5 h-5 mr-2 text-burgundy" />
+                Openingstijden
+              </h3>
+              <p className="text-black font-medium">
+                Dinsdag - Zondag
+              </p>
+              <p className="text-burgundy font-semibold">
+                10:00 - 22:00
+              </p>
+              <p className="text-gray-600 text-sm mt-2">
+                Maandag gesloten
+              </p>
+            </div>
+            
+            {/* Address */}
+            <div className="p-4 bg-gray-50 rounded-xl">
+              <h3 className="font-semibold mb-3 text-lg flex items-center">
+                <MapPin className="w-5 h-5 mr-2 text-burgundy" />
+                Adres
+              </h3>
+              <p className="text-black">
+                Verboekt 121<br />
+                2430 Laakdal<br />
+                België
+              </p>
+            </div>
+          </div>
         </div>
-        
-        {/* Opening hours */}
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <h3 className="font-semibold mb-2">Openingstijden</h3>
-          <p className="text-black">
-            Dinsdag - Zondag: 18:00 - 22:00
-          </p>
-          <p className="text-gray-600 text-sm">
-            Maandag gesloten
-          </p>
-        </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </>
   );
 }

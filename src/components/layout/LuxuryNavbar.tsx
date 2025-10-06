@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Phone, Mail, MapPin } from 'lucide-react'
+import { X, Menu, Phone, Mail, MapPin } from 'lucide-react'
 
 interface MenuOverlayProps {
   isOpen: boolean
@@ -21,16 +21,22 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
-    id: 'contact',
-    label: 'Contacteer ons',
-    href: '/contact',
-    description: 'Reserveer uw tafel of vraag naar onze diensten'
-  },
-  {
     id: 'menu',
     label: 'Menukaart',
     href: '/menu',
     description: 'Ontdek onze culinaire creaties'
+  },
+  {
+    id: 'over-ons',
+    label: 'Over Ons',
+    href: '/over-ons',
+    description: 'Leer meer over ons restaurant en onze filosofie'
+  },
+  {
+    id: 'contact',
+    label: 'Reserveringen',
+    href: '/contact',
+    description: 'Reserveer uw tafel of vraag naar onze diensten'
   }
 ]
 
@@ -68,19 +74,55 @@ export default function LuxuryNavbar() {
       }
     }
 
+    // Focus trapping implementation
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Tab' && menuRef.current) {
+        const focusableElements = menuRef.current.querySelectorAll(
+          'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+        )
+        const firstElement = focusableElements[0] as HTMLElement
+        const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
+
+        if (event.shiftKey) {
+          // Shift + Tab
+          if (document.activeElement === firstElement) {
+            event.preventDefault()
+            lastElement?.focus()
+          }
+        } else {
+          // Tab
+          if (document.activeElement === lastElement) {
+            event.preventDefault()
+            firstElement?.focus()
+          }
+        }
+      }
+    }
+
     if (isMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside)
       document.addEventListener('keydown', handleEscape)
+      document.addEventListener('keydown', handleKeyDown)
       document.body.style.overflow = 'hidden'
+      
+      // Set focus to first focusable element when menu opens
+      setTimeout(() => {
+        const firstFocusable = menuRef.current?.querySelector(
+          'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+        ) as HTMLElement
+        firstFocusable?.focus()
+      }, 100)
     } else {
       document.removeEventListener('mousedown', handleClickOutside)
       document.removeEventListener('keydown', handleEscape)
+      document.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = 'unset'
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
       document.removeEventListener('keydown', handleEscape)
+      document.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = 'unset'
     }
   }, [isMenuOpen])
@@ -185,6 +227,7 @@ export default function LuxuryNavbar() {
                       <span className="text-sm font-luxury">Verboekt 121, 2430 Laakdal</span>
                     </div>
                   </motion.div>
+                  
                 </nav>
 
                 {/* Footer */}
@@ -252,6 +295,7 @@ export default function LuxuryNavbar() {
                 </Link>
               ))}
             </nav>
+
 
             {/* Menu Button - Positioned on the right */}
             <button

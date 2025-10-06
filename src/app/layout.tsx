@@ -7,7 +7,7 @@ import WebVitalsMonitor from "@/components/performance/WebVitalsMonitor";
 import { WebVitalsDebug } from "@/components/performance/WebVitalsMonitor";
 import PerformanceOptimizer from "@/components/performance/PerformanceOptimizer";
 import { PerformanceDebug } from "@/components/performance/PerformanceOptimizer";
-import { Analytics } from '@vercel/analytics/react';
+import { HighContrastProvider } from "@/contexts/HighContrastContext";
 import "./fonts.css";
 import "./globals.css";
 
@@ -19,10 +19,10 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Bistro Bert Laakdal | Luxe Restaurant & Fine Dining | Antwerpse Kempen",
+    default: "Bistro Bert Laakdal — Luxe Belgisch genieten",
     template: "%s | Bistro Bert Laakdal"
   },
-  description: "Ervaar culinaire excellentie in een sfeer van verfijnde elegantie. Bistro Bert in Laakdal, waar passie en precisie samenkomen op elk bord.",
+  description: "Belgische klassiekers met finesse. Dagvers, seizoensgebonden. Reserveer voor lunch, zakenlunch of diner in Laakdal.",
   keywords: [
     "Bistro Bert Laakdal",
     "luxe restaurant",
@@ -43,18 +43,18 @@ export const metadata: Metadata = {
     telephone: true,
     address: true,
   },
-  metadataBase: new URL("https://bistrobert.be"),
+  metadataBase: new URL("https://www.bistro-bert.be"),
   alternates: {
-    canonical: "https://bistrobert.be",
+    canonical: "https://www.bistro-bert.be",
     languages: {
-      "nl-BE": "https://bistrobert.be/nl",
-      "fr-BE": "https://bistrobert.be/fr",
+      "nl-BE": "https://www.bistro-bert.be/nl",
+      "fr-BE": "https://www.bistro-bert.be/fr",
     },
   },
   openGraph: {
-    title: "Bistro Bert Laakdal | Luxe Restaurant & Fine Dining",
-    description: "Ervaar culinaire excellentie in een sfeer van verfijnde elegantie. Bistro Bert in Laakdal, waar passie en precisie samenkomen op elk bord.",
-    url: "https://bistrobert.be",
+    title: "Bistro Bert Laakdal — Luxe Belgisch genieten",
+    description: "Belgische klassiekers met finesse. Dagvers, seizoensgebonden. Reserveer voor lunch, zakenlunch of diner in Laakdal.",
+    url: "https://www.bistro-bert.be",
     siteName: "Bistro Bert",
     locale: "nl_BE",
     type: "website",
@@ -72,8 +72,8 @@ export const metadata: Metadata = {
     site: "@bistrobert",
     creator: "@bistrobert",
     images: ["/images/restaurant/hero-moody-wine-bar.jpg"],
-    title: "Bistro Bert Laakdal | Luxe Restaurant & Fine Dining",
-    description: "Ervaar culinaire excellentie in een sfeer van verfijnde elegantie.",
+    title: "Bistro Bert Laakdal — Luxe Belgisch genieten",
+    description: "Belgische klassiekers met finesse. Dagvers, seizoensgebonden. Reserveer voor lunch, zakenlunch of diner in Laakdal.",
   },
 
   appleWebApp: {
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
       '@type': 'LocalBusiness',
       name: 'Bistro Bert',
       description: 'Luxe restaurant met verfijnde Belgische keuken in Laakdal',
-      url: 'https://bistrobert.be',
+      url: 'https://www.bistro-bert.be',
       telephone: '013 480 139',
       email: 'info@bistro-bert.be',
       address: {
@@ -103,13 +103,13 @@ export const metadata: Metadata = {
         longitude: '5.0996063',
       },
       openingHours: [
-        'Tuesday-Sunday 18:00-22:00',
+        'Tuesday-Sunday 10:00-22:00',
       ],
       priceRange: '€€€',
       image: [
-        'https://bistrobert.be/images/restaurant/hero-moody-wine-bar.jpg',
-        'https://bistrobert.be/images/restaurant/dining-room.jpg',
-        'https://bistrobert.be/images/restaurant/cuisine.jpg',
+        'https://www.bistro-bert.be/images/restaurant/hero-moody-wine-bar.jpg',
+        'https://www.bistro-bert.be/images/restaurant/dining-room.jpg',
+        'https://www.bistro-bert.be/images/restaurant/cuisine.jpg',
       ],
       sameAs: [
         'https://instagram.com/bistrobert',
@@ -126,33 +126,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="nl-BE">
+    <html lang="nl">
       <head>
-        <link rel="alternate" hrefLang="nl-BE" href="https://bistrobert.be" />
-        <link rel="alternate" hrefLang="fr-BE" href="https://bistrobert.be/fr" />
-        <link rel="alternate" hrefLang="x-default" href="https://bistrobert.be" />
+        <link rel="alternate" hrefLang="nl-BE" href="https://www.bistro-bert.be" />
+        <link rel="alternate" hrefLang="fr-BE" href="https://www.bistro-bert.be/fr" />
+        <link rel="alternate" hrefLang="x-default" href="https://www.bistro-bert.be" />
       </head>
       <body
         className={`${inter.variable} font-suisse antialiased`}
       >
-        <SkipLinks />
-        <Header />
-        <MainContent>{children}</MainContent>
+        <HighContrastProvider>
+          <SkipLinks />
+          <Header />
+          <MainContent>{children}</MainContent>
 
-        {/* Performance Monitoring */}
-        <WebVitalsMonitor />
-        <PerformanceOptimizer />
+          {/* Performance Monitoring */}
+          <WebVitalsMonitor />
+          <PerformanceOptimizer />
 
-        {/* Vercel Analytics */}
-        <Analytics />
-
-        {/* Debug Components (development only) */}
-        {process.env.NODE_ENV === 'development' && (
-          <>
-            <WebVitalsDebug />
-            <PerformanceDebug />
-          </>
-        )}
+          {/* Debug Components (development only) */}
+          {process.env.NODE_ENV === 'development' && (
+            <>
+              <WebVitalsDebug />
+              <PerformanceDebug />
+            </>
+          )}
+        </HighContrastProvider>
       </body>
     </html>
   );
