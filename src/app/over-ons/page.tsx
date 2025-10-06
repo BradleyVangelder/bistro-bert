@@ -24,8 +24,8 @@ const sampleReviews = [
 
 export default function OverOnsPage() {
   const breadcrumbItems = [
-    { name: 'Home', url: 'https://bistrobert.be' },
-    { name: 'Over Ons', url: 'https://bistrobert.be/over-ons' },
+    { name: 'Home', url: 'https://www.bistro-bert.be' },
+    { name: 'Over Ons', url: 'https://www.bistro-bert.be/over-ons' },
   ]
 
   return (
@@ -139,7 +139,7 @@ export default function OverOnsPage() {
                   transition={{ duration: 0.8, delay: 0.6 }}
                   className="bg-gray-50 p-12 rounded-lg mb-16"
                 >
-                  <h3 className="typography-h2 text-black mb-6 text-center">
+                  <h3 className="typography-h3 text-black mb-6 text-center">
                     Onze Werkwijze
                   </h3>
                   <div className="grid md:grid-cols-2 gap-8">

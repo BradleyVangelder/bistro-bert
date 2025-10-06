@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { Loader2 } from 'lucide-react'
 import { LoadingState } from './LoadingState'
 
 interface AnimatedButtonProps {
@@ -48,7 +49,7 @@ export function AnimatedButton({
   const motionProps = {
     whileHover: !disabled && !loading ? { scale: 1.02, y: -1 } : {},
     whileTap: !disabled && !loading ? { scale: 0.98 } : {},
-    transition: { type: "spring" as const, stiffness: 400, damping: 17 }
+    transition: { type: "spring", stiffness: 400, damping: 17 }
   }
 
   const content = (

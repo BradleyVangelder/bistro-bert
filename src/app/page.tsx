@@ -8,7 +8,8 @@ import ImageGallery from '@/components/ImageGallery'
 import { galleryImages } from '@/data/images'
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema'
 import ReviewSchema from '@/components/ui/ReviewSchema'
-import { ImageSkeleton } from '@/components/ui/LoadingState'
+import { RestaurantJsonLd } from '@/components/ui/RestaurantJsonLd'
+import { LoadingState, ImageSkeleton } from '@/components/ui/LoadingState'
 
 // Force dynamic rendering to avoid SSR issues with browser APIs
 export const dynamic = 'force-dynamic'
@@ -42,17 +43,18 @@ export default function Home() {
   ]
 
   const breadcrumbItems = [
-    { name: 'Home', url: 'https://bistrobert.be' },
+    { name: 'Home', url: 'https://www.bistro-bert.be' },
   ]
 
   return (
     <>
+      <RestaurantJsonLd />
       <BreadcrumbSchema items={breadcrumbItems} />
       <ReviewSchema reviews={sampleReviews} />
       
       <div className="min-h-screen bg-white">
         {/* Hero Section - Completely static */}
-        <div className="relative w-full overflow-hidden" style={{ height: '100vh' }}>
+        <div className="relative w-full overflow-hidden hero-section" style={{ height: '100vh' }}>
           <section
             className="relative h-full w-full"
             role="banner"
@@ -69,7 +71,7 @@ export default function Home() {
               )}
               <Image
                 src="/images/restaurant/hero-moody-wine-bar.jpg"
-                alt="Bistro Bert Laakdal - Luxe restaurant met verfijnde sfeer en fine dining ambiance"
+                alt="Menukaart — pagina 1"
                 fill
                 sizes="100vw"
                 className={`object-cover object-center brightness-65 ${
@@ -78,25 +80,25 @@ export default function Home() {
                 priority
                 onLoad={() => setImagesLoaded(prev => ({ ...prev, hero: true }))}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/10" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/75 to-black/50" aria-hidden="true" />
             </div>
 
             {/* Static hero content */}
-            <div className="relative z-10 h-full flex flex-col justify-end items-start px-8 md:px-16 lg:px-24 pb-16">
+            <div className="relative z-10 h-full flex flex-col justify-end items-start px-6 sm:px-8 md:px-16 lg:px-24 pb-12 md:pb-16 hero-content">
               <div className="max-w-4xl">
                 {/* Restaurant name with tagline */}
                 <h1 className="typography-hero text-white drop-shadow-lg mb-4 max-w-xs md:max-w-none">
                   Bistro Bert • Laakdal
                 </h1>
-                <p className="typography-body text-white/90 drop-shadow-lg mb-6 max-w-xs md:max-w-2xl">
-                  Luxe Belgisch genieten in Laakdal — klassiekers met finesse, dagvers en seizoensgebonden.
+                <p className="typography-body text-white/95 drop-shadow-lg mb-6 max-w-xs md:max-w-2xl">
+                  Luxe Belgisch genieten — klassiekers met finesse, dagvers en seizoensgebonden.
                 </p>
 
                 {/* Static CTA button */}
                 <div>
                   <a
                     href="#menu"
-                    className="inline-block mt-4 px-6 md:px-8 py-3 border border-white text-white hover:bg-white hover:text-black transition-colors duration-300 typography-button drop-shadow-lg"
+                    className="inline-block mt-4 px-6 md:px-8 py-3 border border-white text-white hover:bg-white hover:text-black transition-colors duration-300 typography-button drop-shadow-lg mobile-button"
                     aria-label="Navigeer naar onze menukaart"
                   >
                     Ontdek de menukaart
@@ -108,22 +110,22 @@ export default function Home() {
         </div>
 
         {/* Menu Section - Ultra-refined */}
-        <section id="menu" className="relative min-h-screen bg-white py-20 md:py-40">
+        <section id="menu" className="relative min-h-screen bg-white py-16 md:py-20 lg:py-40">
           <div className="container-dh">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="max-w-5xl mx-auto px-4 md:px-0">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
                 {/* Left side - Radical minimalism */}
-                <div className="space-y-16">
+                <div className="space-y-8 lg:space-y-16 order-2 lg:order-1">
                   <div>
-                    <h2 className="typography-h1 text-black max-w-md md:max-w-none">
+                    <h2 className="typography-h1 text-black max-w-md md:max-w-none mb-6 md:mb-8">
                       Verfijnde Belgische Keuken — Lunch, Zakenlunch & Diner
                     </h2>
                     <p className="typography-body-large text-gray-600 mt-8 max-w-md">
-                      Klassiekers met schwung: garnaalkroketten met citroenmayonaise, steak tartaar aan tafel afgewerkt en dagverse Noordzeevis met lichte saus. Altijd seizoensgebonden, altijd precies bereid.
+                      Klassiekers met schwung: precies bereid, seizoensgebonden en dagvers. Altijd verfijnd, zonder poeha.
                     </p>
                     <Link
                       href="/menu"
-                      className="inline-block mt-8 md:mt-12 px-8 py-3 border border-black text-black hover:bg-black hover:text-white transition-colors typography-button"
+                      className="inline-block mt-8 md:mt-12 px-8 py-3 border border-black text-black hover:bg-black hover:text-white transition-colors typography-button mobile-button"
                     >
                       Bekijk onze kaart
                     </Link>
@@ -131,10 +133,10 @@ export default function Home() {
                 </div>
 
                 {/* Right side - Chef portrait */}
-                <div className="relative h-[700px] overflow-hidden">
+                <div className="relative h-[400px] md:h-[500px] lg:h-[700px] overflow-hidden order-1 lg:order-2">
                   <Image
                     src="/images/restaurant/chef-portrait.jpg"
-                    alt="Chef-kok van Bistro Bert - Meester in de Belgische culinaire kunst met passie voor expressieve gerechten"
+                    alt="Menukaart — pagina 2"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
@@ -146,19 +148,19 @@ export default function Home() {
         </section>
 
         {/* Unique Selling Points */}
-        <section className="min-h-screen bg-gray-50 py-20 md:py-40">
+        <section className="min-h-screen bg-gray-50 py-16 md:py-20 lg:py-40">
           <div className="container-dh">
-            <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-16 md:mb-32">
-                <h2 className="typography-h1 text-black mb-6 md:mb-12">
+            <div className="max-w-6xl mx-auto px-4 md:px-0">
+              <div className="text-center mb-8 md:mb-12">
+                <h2 className="typography-h1 text-black mb-6 md:mb-8">
                   Wat je mag verwachten
                 </h2>
               </div>
 
               <div className="max-w-4xl mx-auto">
-                <div className="space-y-16">
+                <div className="space-y-8 md:space-y-12">
                   {/* Section 1: Our Philosophy */}
-                  <div className="text-center">
+                  <div className="text-center p-4 md:p-0">
                     <p className="typography-caption text-gray-500 mb-3 md:mb-4">
                       Ons Verhaal
                     </p>
@@ -168,7 +170,7 @@ export default function Home() {
                   </div>
 
                   {/* Section 2: Seasonal Approach */}
-                  <div className="text-center">
+                  <div className="text-center p-4 md:p-0">
                     <p className="typography-caption text-gray-500 mb-3 md:mb-4">
                       Seizoensgebonden & fris
                     </p>
@@ -178,7 +180,7 @@ export default function Home() {
                   </div>
 
                   {/* Section 3: Ambiance */}
-                  <div className="text-center">
+                  <div className="text-center p-4 md:p-0">
                     <p className="typography-caption text-gray-500 mb-3 md:mb-4">
                       Intieme, stijlvolle sfeer
                     </p>
@@ -188,7 +190,7 @@ export default function Home() {
                   </div>
 
                   {/* Section 4: Our Team */}
-                  <div className="text-center">
+                  <div className="text-center p-4 md:p-0">
                     <p className="typography-caption text-gray-500 mb-3 md:mb-4">
                       Ons Team
                     </p>
@@ -205,9 +207,9 @@ export default function Home() {
         {/* Smaakvolle Verhalen Onvergetelijke Momenten Section */}
         <section className="min-h-[80vh] bg-white py-16 md:py-32">
           <div className="container-dh">
-            <div className="max-w-7xl mx-auto">
+            <div className="max-w-7xl mx-auto px-4 md:px-0">
               {/* Section header - Minimalist elegance */}
-              <div className="text-center mb-24">
+              <div className="text-center mb-16 md:mb-24">
                 <h2 className="typography-h1 text-black mb-6 md:mb-8">
                   Smaakvolle Verhalen — Onvergetelijke Momenten
                 </h2>
@@ -217,11 +219,13 @@ export default function Home() {
               </div>
 
               {/* Minimalistic Image Gallery */}
-              <ImageGallery
-                images={galleryImages.slice(0, 8)}
-                className="w-full"
-                enableLightbox={true}
-              />
+              <div className="mobile-gallery">
+                <ImageGallery
+                  images={galleryImages.slice(0, 8)}
+                  className="w-full"
+                  enableLightbox={true}
+                />
+              </div>
             </div>
           </div>
         </section>
@@ -229,7 +233,7 @@ export default function Home() {
         {/* Call to Action Section */}
         <section className="py-16 md:py-32 bg-black text-white">
           <div className="container-dh">
-            <div className="max-w-4xl mx-auto text-center">
+            <div className="max-w-4xl mx-auto text-center px-4 md:px-0">
               <h2 className="typography-h1 leading-[0.9] mb-6 md:mb-8">
                   Aan Tafel bij Bert — Reserveer vandaag
               </h2>
@@ -239,7 +243,7 @@ export default function Home() {
               <div>
                 <Link
                   href="/contact"
-                  className="inline-block px-6 md:px-8 py-3 border border-white text-white hover:bg-white hover:text-black transition-all duration-500 typography-button"
+                  className="inline-block px-6 md:px-8 py-3 border border-white text-white hover:bg-white hover:text-black transition-all duration-500 typography-button mobile-button"
                 >
                   Reserveer voor lunch of zakenlunch
                 </Link>

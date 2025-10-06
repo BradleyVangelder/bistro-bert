@@ -1,0 +1,131 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - button "Open Next.js Dev Tools" [ref=e7] [cursor=pointer]:
+    - img [ref=e8] [cursor=pointer]
+  - banner:
+    - generic:
+      - link "Bistro Bert - Terug naar homepagina" [ref=e12] [cursor=pointer]:
+        - /url: /
+        - img [ref=e13] [cursor=pointer]
+      - button "Open menu" [ref=e16]:
+        - img [ref=e18]
+  - main [ref=e20]:
+    - generic [ref=e21]:
+      - banner [ref=e23]:
+        - img "Menukaart — pagina 1" [ref=e25]
+        - generic [ref=e28]:
+          - heading "Bistro Bert • Laakdal" [level=1] [ref=e29]
+          - paragraph [ref=e30]: Luxe Belgisch genieten — klassiekers met finesse, dagvers en seizoensgebonden.
+          - link "Navigeer naar onze menukaart" [ref=e32] [cursor=pointer]:
+            - /url: "#menu"
+            - text: Ontdek de menukaart
+      - generic [ref=e36]:
+        - generic [ref=e38]:
+          - heading "Verfijnde Belgische Keuken — Lunch, Zakenlunch & Diner" [level=2] [ref=e39]
+          - paragraph [ref=e40]: "Klassiekers met schwung: precies bereid, seizoensgebonden en dagvers. Altijd verfijnd, zonder poeha."
+          - link "Bekijk onze kaart" [ref=e41] [cursor=pointer]:
+            - /url: /menu
+        - img "Menukaart — pagina 2" [ref=e43]
+      - generic [ref=e46]:
+        - heading "Wat je mag verwachten" [level=2] [ref=e48]
+        - generic [ref=e50]:
+          - generic [ref=e51]:
+            - paragraph [ref=e52]: Ons Verhaal
+            - paragraph [ref=e53]: "Van traag gegaarde sauzen tot kraakverse garnalen: we koken met twee voeten in de Belgische traditie—licht, precies en vol smaak. Intiem, warm en zonder poeha."
+          - generic [ref=e54]:
+            - paragraph [ref=e55]: Seizoensgebonden & fris
+            - paragraph [ref=e56]: "Met het seizoen mee: asperges in het voorjaar, hoevekip en Noordzeevis doorheen het jaar, wild wanneer het zover is. Kraakvers, zuiver van smaak, elegant gepresenteerd."
+          - generic [ref=e57]:
+            - paragraph [ref=e58]: Intieme, stijlvolle sfeer
+            - paragraph [ref=e59]: Zachte verlichting, warme materialen en comfortabele stoelen. Ongeveer 40 couverts, genoeg ruimte voor een rustig zaken- of romantisch diner.
+          - generic [ref=e60]:
+            - paragraph [ref=e61]: Ons Team
+            - paragraph [ref=e62]: Chef Bert focust op precisie en sauswerk; in de zaal helpen we graag met wijnsuggesties, allergenenadvies en timing voor een vlotte zakenlunch.
+      - generic [ref=e65]:
+        - generic [ref=e66]:
+          - heading "Smaakvolle Verhalen — Onvergetelijke Momenten" [level=2] [ref=e67]
+          - paragraph [ref=e68]: "Een blik achter de schermen: mise-en-place, het afwerken aan tafel en de sfeer in de zaal. Volg ons op Instagram voor dagelijkse stories."
+        - generic [ref=e69]:
+          - 'button "Bekijk afbeelding: Menukaart — pagina 1" [ref=e70] [cursor=pointer]':
+            - img "Menukaart — pagina 1" [ref=e72] [cursor=pointer]
+          - 'button "Bekijk afbeelding: Menukaart — pagina 2" [ref=e74] [cursor=pointer]':
+            - img "Menukaart — pagina 2" [ref=e76] [cursor=pointer]
+          - 'button "Bekijk afbeelding: Menukaart — pagina 3" [ref=e78] [cursor=pointer]':
+            - img "Menukaart — pagina 3" [ref=e80] [cursor=pointer]
+          - 'button "Bekijk afbeelding: Menukaart — pagina 4" [ref=e82] [cursor=pointer]':
+            - img "Menukaart — pagina 4" [ref=e84] [cursor=pointer]
+          - 'button "Bekijk afbeelding: Menukaart — pagina 5" [ref=e86] [cursor=pointer]':
+            - img "Menukaart — pagina 5" [ref=e88] [cursor=pointer]
+          - 'button "Bekijk afbeelding: Menukaart — pagina 6" [ref=e90] [cursor=pointer]':
+            - img "Menukaart — pagina 6" [ref=e92] [cursor=pointer]
+          - 'button "Bekijk afbeelding: Menukaart — pagina 7" [ref=e94] [cursor=pointer]':
+            - img "Menukaart — pagina 7" [ref=e96] [cursor=pointer]
+          - 'button "Bekijk afbeelding: Menukaart — pagina 8" [ref=e98] [cursor=pointer]':
+            - img "Menukaart — pagina 8" [ref=e100] [cursor=pointer]
+      - generic [ref=e104]:
+        - heading "Aan Tafel bij Bert — Reserveer vandaag" [level=2] [ref=e105]
+        - paragraph [ref=e106]: Zin in lunch, zakenlunch of diner in Laakdal? Bel of reserveer eenvoudig—we denken graag mee over allergenen, wijn en timing.
+        - link "Reserveer voor lunch of zakenlunch" [ref=e108] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=e110]:
+        - generic [ref=e111]:
+          - generic [ref=e112]:
+            - heading "Bistro Bert" [level=2] [ref=e113]
+            - paragraph [ref=e115]: Belgische traditie met moderne finesse—serieuze keuken, zonder zwaar te worden.
+          - generic [ref=e116]:
+            - heading "Navigatie" [level=3] [ref=e117]
+            - navigation [ref=e118]:
+              - link "Menukaart" [ref=e119] [cursor=pointer]:
+                - /url: /menu
+              - link "Over Ons" [ref=e120] [cursor=pointer]:
+                - /url: /over-ons
+              - link "Reserveringen" [ref=e121] [cursor=pointer]:
+                - /url: /contact
+          - generic [ref=e122]:
+            - heading "Gastvrijheid" [level=3] [ref=e123]
+            - generic [ref=e124]:
+              - generic [ref=e125]:
+                - img [ref=e126]
+                - generic [ref=e129]: Verboekt 121, 2430 Laakdal, België
+              - generic [ref=e130]:
+                - img [ref=e131]
+                - 'link "Bel Bistro Bert: +32 13 48 01 39" [ref=e133] [cursor=pointer]':
+                  - /url: tel:+3213480139
+                  - text: +32 13 48 01 39
+              - generic [ref=e134]:
+                - img [ref=e135]
+                - 'link "E-mail Bistro Bert: info@bistro-bert.be" [ref=e138] [cursor=pointer]':
+                  - /url: mailto:info@bistro-bert.be
+                  - text: info@bistro-bert.be
+        - generic [ref=e140]:
+          - generic [ref=e141]: © 2025 Bistro Bert. Alle rechten voorbehouden.
+          - generic [ref=e142]: "BTW: BE 1026.203.481"
+          - link "Bezoek Bistro Bert op Instagram" [ref=e144] [cursor=pointer]:
+            - /url: https://instagram.com/bistrobert
+            - img [ref=e145] [cursor=pointer]
+  - generic [ref=e148]:
+    - heading "Web Vitals Debug" [level=3] [ref=e149]
+    - generic [ref=e150]:
+      - generic [ref=e151]:
+        - generic [ref=e152]: "lcp:"
+        - generic [ref=e153]: N/A
+      - generic [ref=e154]:
+        - generic [ref=e155]: "fid:"
+        - generic [ref=e156]: N/A
+      - generic [ref=e157]:
+        - generic [ref=e158]: "cls:"
+        - generic [ref=e159]: N/A
+      - generic [ref=e160]:
+        - generic [ref=e161]: "fcp:"
+        - generic [ref=e162]: N/A
+      - generic [ref=e163]:
+        - generic [ref=e164]: "ttfb:"
+        - generic [ref=e165]: N/A
+      - generic [ref=e166]:
+        - generic [ref=e167]: "inp:"
+        - generic [ref=e168]: N/A
+    - generic [ref=e169]: "Last updated: 8:46:01 AM"
+  - alert [ref=e170]
+```

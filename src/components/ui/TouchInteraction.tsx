@@ -42,7 +42,7 @@ export function TouchInteraction({
   const calculateSwipeDirection = useCallback((endX: number, endY: number, startX: number, startY: number) => {
     const deltaX = endX - startX
     const deltaY = endY - startY
-    const minSwipeDistance = 50
+    const minSwipeDistance = 30 // Reduced for better mobile experience
 
     if (Math.abs(deltaX) < minSwipeDistance && Math.abs(deltaY) < minSwipeDistance) {
       return null
@@ -59,6 +59,9 @@ export function TouchInteraction({
     if (disabled) return
 
     const touch = e.touches[0]
+    console.log('[TouchInteraction] 👆 Touch start at:', touch.clientX, touch.clientY);
+    console.log('[TouchInteraction] Touch action:', touchAction);
+    
     setTouchState({
       startX: touch.clientX,
       startY: touch.clientY,
@@ -72,7 +75,7 @@ export function TouchInteraction({
       setTouchState(prev => prev ? { ...prev, isLongPress: true } : null)
       onLongPress?.()
     }, 500)
-  }, [disabled, onLongPress])
+  }, [disabled, onLongPress, touchAction])
 
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
     if (disabled || !touchState) return
@@ -80,14 +83,32 @@ export function TouchInteraction({
     const touch = e.touches[0]
     const deltaX = Math.abs(touch.clientX - touchState.startX)
     const deltaY = Math.abs(touch.clientY - touchState.startY)
-
-    // If we've moved enough, clear the long press timer
-    if ((deltaX > 10 || deltaY > 10) && longPressTimer.current) {
-      clearTimeout(longPressTimer.current)
-      longPressTimer.current = null
-      setTouchState(prev => prev ? { ...prev, hasMoved: true } : null)
+    
+    // Log significant movements
+    if (deltaX > 10 || deltaY > 10) {
+      console.log('[TouchInteraction] 📱 Touch move - deltaX:', deltaX, 'deltaY:', deltaY);
+      
+      // If we've moved enough, clear the long press timer
+      if (longPressTimer.current) {
+        clearTimeout(longPressTimer.current)
+        longPressTimer.current = null
+        setTouchState(prev => prev ? { ...prev, hasMoved: true } : null)
+      }
     }
-  }, [disabled, touchState])
+    
+    // Only prevent default for horizontal swipes when touchAction is 'pan-y'
+    // This allows vertical scrolling to work naturally
+    if (touchAction === 'pan-y' && deltaX > deltaY && deltaX > 15) {
+      e.preventDefault()
+    } else if (touchAction === 'none') {
+      e.preventDefault()
+    }
+    
+    // Add haptic feedback for mobile devices
+    if (typeof window !== 'undefined' && 'vibrate' in navigator && (deltaX > 30 || deltaY > 30)) {
+      navigator.vibrate(10)
+    }
+  }, [disabled, touchState, touchAction])
 
   const handleTouchEnd = useCallback((e: React.TouchEvent) => {
     if (disabled || !touchState) return
@@ -108,6 +129,15 @@ export function TouchInteraction({
 
     const touchDuration = Date.now() - touchState.startTime
     const isQuickTap = touchDuration < 300 && !touchState.hasMoved
+
+    // Add haptic feedback for gestures
+    if (typeof window !== 'undefined' && 'vibrate' in navigator) {
+      if (direction) {
+        navigator.vibrate(20)
+      } else if (isQuickTap) {
+        navigator.vibrate(5)
+      }
+    }
 
     if (direction) {
       switch (direction) {
@@ -141,16 +171,17 @@ export function TouchInteraction({
   return (
     <div
       ref={elementRef}
-      className={className}
+      className={`${className} touch-optimized`}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       onClick={handleClick}
       style={{
-        touchAction: disabled ? 'none' : (touchAction || 'pan-y'),
+        touchAction: disabled ? 'none' : (touchAction || 'auto'),
         WebkitUserSelect: 'none',
         userSelect: 'none',
         WebkitTouchCallout: 'none',
+        WebkitTapHighlightColor: 'rgba(128, 0, 32, 0.1)',
       }}
     >
       {children}

@@ -106,6 +106,7 @@ export default function Header() {
             </Link>
           </div>
 
+
           {/* Minimalist Menu Button */}
           <div className="self-center">
             <MinimalistMenuButton
@@ -139,7 +140,7 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-              className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white z-[65] pointer-events-auto"
+              className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white z-[65] pointer-events-auto mobile-nav-container"
               role="dialog"
               aria-modal="true"
               aria-labelledby="menu-title"
@@ -148,7 +149,7 @@ export default function Header() {
                 {/* Menu Header - Mobile Friendly */}
                 <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100 bg-white/95 backdrop-blur-sm">
                   <div className="flex items-center gap-3">
-                    <div className="relative w-20 h-20">
+                    <div className="relative w-16 h-16 md:w-20 md:h-20">
                       <Image
                         src="/bistro-bert-logo.png"
                         alt=""
@@ -163,20 +164,20 @@ export default function Header() {
                   </div>
                   <button
                     onClick={() => setIsMenuOpen(false)}
-                    className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors focus:ring-2 focus:ring-burgundy focus:ring-offset-2"
+                    className="w-10 h-10 md:w-8 md:h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors focus:ring-2 focus:ring-burgundy focus:ring-offset-2"
                     aria-label="Sluit menu"
                   >
-                    <X className="w-5 h-5 text-black" />
+                    <X className="w-6 h-6 md:w-5 md:h-5 text-black" />
                   </button>
                 </div>
 
                 {/* Navigation Items */}
                 <nav
-                  className="flex-1 px-6 py-8"
+                  className="flex-1 px-6 py-8 overflow-y-auto"
                   role="navigation"
                   aria-label="Hoofdnavigatie"
                 >
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     {navItems.map((item, index) => (
                       <motion.div
                         key={item.id}
@@ -186,11 +187,11 @@ export default function Header() {
                       >
                         <Link
                           href={item.href}
-                          className="group block py-3 focus:outline-none focus:ring-2 focus:ring-burgundy focus:ring-offset-2 rounded"
+                          className="group block py-4 px-3 focus:outline-none focus:ring-2 focus:ring-burgundy focus:ring-offset-2 rounded mobile-nav-item"
                           onClick={() => setIsMenuOpen(false)}
                           aria-label={`Navigeer naar ${item.label}`}
                         >
-                          <div className="text-2xl font-serif font-light text-black leading-tight tracking-tight group-hover:text-gray-600 transition-colors duration-300">
+                          <div className="text-2xl md:text-2xl font-serif font-light text-black leading-tight tracking-tight group-hover:text-gray-600 transition-colors duration-300">
                             {item.label}
                           </div>
                           <div className="w-0 h-px bg-black transition-all duration-300 group-hover:w-16 mt-2"></div>
@@ -204,36 +205,51 @@ export default function Header() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
-                    className="mt-8 pt-6 border-t border-gray-100 space-y-3"
+                    className="mt-8 pt-6 border-t border-gray-100 space-y-4"
                   >
                     {/* Mobile Weather Info */}
-                    <div className="flex items-center gap-3 text-gray-700 bg-gray-50 rounded-lg px-3 py-2">
+                    <div className="flex items-center gap-3 text-gray-700 bg-gray-50 rounded-lg px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <Thermometer className="w-4 h-4 text-burgundy" />
-                        <span className="text-sm font-medium font-luxury">{weather.temperature}°C</span>
+                        <Thermometer className="w-5 h-5 text-burgundy" />
+                        <span className="text-base font-medium font-luxury">{weather.temperature}°C</span>
                       </div>
                       <div className="w-px h-4 bg-gray-300" />
                       <div className="flex items-center gap-2">
-                        <Cloud className="w-4 h-4 text-burgundy" />
-                        <span className="text-xs text-gray-600 font-luxury">{weather.condition}</span>
+                        <Cloud className="w-5 h-5 text-burgundy" />
+                        <span className="text-sm text-gray-600 font-luxury">{weather.condition}</span>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3 text-gray-700">
-                      <Phone className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm font-luxury">+32 13 48 01 39</span>
+                    <a
+                      href="tel:+3213480139"
+                      className="flex items-center gap-3 text-gray-700 p-3 rounded-lg hover:bg-gray-50 transition-colors mobile-nav-item"
+                    >
+                      <Phone className="w-5 h-5 text-burgundy" />
+                      <span className="text-base font-luxury">+32 13 48 01 39</span>
+                    </a>
+                    
+                    <a
+                      href="mailto:info@bistro-bert.be"
+                      className="flex items-center gap-3 text-gray-700 p-3 rounded-lg hover:bg-gray-50 transition-colors mobile-nav-item"
+                    >
+                      <Mail className="w-5 h-5 text-burgundy" />
+                      <span className="text-base font-luxury">info@bistro-bert.be</span>
+                    </a>
+                    
+                    <div className="flex items-center gap-3 text-gray-700 p-3 rounded-lg bg-gray-50">
+                      <Clock className="w-5 h-5 text-burgundy" />
+                      <div>
+                        <span className="text-base font-luxury">Dinsdag t/m zondag</span>
+                        <div className="text-burgundy font-semibold">10:00–22:00</div>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3 text-gray-700">
-                      <Mail className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm font-luxury">info@bistro-bert.be</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-gray-700">
-                      <Clock className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm font-luxury">Dinsdag t/m zondag: 18:00–22:00. Lunch vrij & zat: 12:00–14:00. (Pas aan indien anders.)</span>
-                    </div>
-                    <div className="flex items-center gap-3 text-gray-700">
-                      <MapPin className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm font-luxury">Verboekt 121, 2430 Laakdal, België</span>
+                    
+                    <div className="flex items-start gap-3 text-gray-700 p-3 rounded-lg bg-gray-50">
+                      <MapPin className="w-5 h-5 text-burgundy mt-1" />
+                      <div>
+                        <span className="text-base font-luxury">Verboekt 121</span>
+                        <div className="text-sm text-gray-600">2430 Laakdal, België</div>
+                      </div>
                     </div>
                   </motion.div>
                 </nav>
