@@ -12,11 +12,6 @@
       "use": "@vercel/next"
     }
   ],
-  "functions": {
-    "src/pages/api/**/*.ts": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "env": {
     "NEXT_PUBLIC_ENV": "production"
   },
