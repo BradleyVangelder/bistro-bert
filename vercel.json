@@ -3,7 +3,7 @@
   "name": "bistro-bert",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
-  "installCommand": "npm install --production=false",
+  "installCommand": "npm install --omit=dev",
   "framework": "nextjs",
   "regions": ["bru1"],
   "builds": [
