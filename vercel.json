@@ -30,21 +30,5 @@
       "master": true,
       "staging": true
     }
-  },
-  "environments": {
-    "production": {
-      "build": {
-        "env": {
-          "NEXT_PUBLIC_ENV": "production"
-        }
-      }
-    },
-    "preview": {
-      "build": {
-        "env": {
-          "NEXT_PUBLIC_ENV": "staging"
-        }
-      }
-    }
   }
 }
