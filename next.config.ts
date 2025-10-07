@@ -28,7 +28,10 @@ const nextConfig: NextConfig = {
     if (isServer && dev) {
       config.externals = config.externals || [];
       config.externals.push({
-        'canvas': 'canvas'
+        'canvas': 'canvas',
+        'cairo': 'cairo',
+        'pango': 'pango',
+        'gdk-pixbuf-2.0': 'gdk-pixbuf-2.0'
       });
     }
     
@@ -38,15 +41,29 @@ const nextConfig: NextConfig = {
       'pdfjs-dist/build/pdf.worker.entry': 'pdfjs-dist/build/pdf.worker.entry.js',
     };
     
-    // Ignore canvas in production builds
+    // Strengthen canvas exclusion for all builds
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      'canvas': false,
+      'cairo': false,
+      'pango': false,
+      'gdk-pixbuf-2.0': false,
+      'zlib': false,
+      'tty': false,
+      'fs': false,
+      'path': false,
+      'os': false
+    };
+    
+    // Add externals for canvas and related dependencies in production
     if (!dev) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        'canvas': false,
-        'cairo': false,
-        'pango': false,
-        'gdk-pixbuf-2.0': false
-      };
+      config.externals = config.externals || [];
+      config.externals.push({
+        'canvas': 'canvas',
+        'cairo': 'cairo',
+        'pango': 'pango',
+        'gdk-pixbuf-2.0': 'gdk-pixbuf-2.0'
+      });
     }
     
     return config;

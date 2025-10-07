@@ -3,7 +3,7 @@
   "name": "bistro-bert",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
-  "installCommand": "npm install --omit=dev --omit=optional",
+  "installCommand": "npm ci",
   "framework": "nextjs",
   "regions": ["bru1"],
   "builds": [
@@ -14,12 +14,16 @@
   ],
   "env": {
     "NEXT_PUBLIC_ENV": "production",
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "SKIP_CANVAS_INSTALL": "true",
+    "PDFJS_DIST_BUILD_SCRIPT": "false"
   },
   "build": {
     "env": {
       "NEXT_PUBLIC_ENV": "production",
-      "NODE_ENV": "production"
+      "NODE_ENV": "production",
+      "SKIP_CANVAS_INSTALL": "true",
+      "PDFJS_DIST_BUILD_SCRIPT": "false"
     }
   },
   "git": {
