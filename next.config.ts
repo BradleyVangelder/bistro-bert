@@ -59,10 +59,10 @@ const nextConfig: NextConfig = {
     if (!dev) {
       config.externals = config.externals || [];
       config.externals.push({
-        'canvas': 'canvas',
-        'cairo': 'cairo',
-        'pango': 'pango',
-        'gdk-pixbuf-2.0': 'gdk-pixbuf-2.0'
+        'canvas': 'commonjs canvas',
+        'cairo': 'commonjs cairo',
+        'pango': 'commonjs pango',
+        'gdk-pixbuf-2.0': 'commonjs gdk-pixbuf-2.0'
       });
     }
     
