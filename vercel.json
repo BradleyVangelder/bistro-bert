@@ -5,7 +5,7 @@
   "outputDirectory": ".next",
   "installCommand": "npm install --omit=dev --include=optional",
   "framework": "nextjs",
-  "regions": ["bru1"],
+  "regions": ["cdg1"],
   "builds": [
     {
       "src": "package.json",
