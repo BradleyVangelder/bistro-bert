@@ -44,9 +44,29 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   webpack: (config, { isServer, dev }) => {
-    // Handle canvas package for PDF.js - only in development
+    // Completely exclude canvas and all related native dependencies
+    config.externals = config.externals || [];
+
+    // Always exclude canvas and native dependencies for production
+    if (!dev) {
+      config.externals.push({
+        'canvas': 'commonjs canvas',
+        'cairo': 'commonjs cairo',
+        'pango': 'commonjs pango',
+        'gdk-pixbuf-2.0': 'commonjs gdk-pixbuf-2.0',
+        'pangocairo': 'commonjs pangocairo',
+        'pixman-1': 'commonjs pixman-1',
+        'fontconfig': 'commonjs fontconfig',
+        'freetype2': 'commonjs freetype2',
+        'harfbuzz': 'commonjs harfbuzz',
+        'libpng': 'commonjs libpng',
+        'libjpeg': 'commonjs libjpeg',
+        'giflib': 'commonjs giflib'
+      });
+    }
+
+    // Handle canvas only in development server-side
     if (isServer && dev) {
-      config.externals = config.externals || [];
       config.externals.push({
         'canvas': 'canvas',
         'cairo': 'cairo',
@@ -54,41 +74,42 @@ const nextConfig: NextConfig = {
         'gdk-pixbuf-2.0': 'gdk-pixbuf-2.0'
       });
     }
-    
-    // Handle PDF.js worker
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      'pdfjs-dist/build/pdf.worker.entry': 'pdfjs-dist/build/pdf.worker.entry.js',
-    };
-    
-    // Strengthen canvas exclusion for all builds
+
+    // Comprehensive fallbacks for all canvas-related modules
     config.resolve.fallback = {
       ...config.resolve.fallback,
       'canvas': false,
       'cairo': false,
       'pango': false,
+      'pangocairo': false,
       'gdk-pixbuf-2.0': false,
+      'pixman-1': false,
+      'fontconfig': false,
+      'freetype2': false,
+      'harfbuzz': false,
+      'libpng': false,
+      'libjpeg': false,
+      'giflib': false,
       'zlib': false,
       'tty': false,
       'fs': false,
       'path': false,
-      'os': false
+      'os': false,
+      'worker_threads': false
     };
-    
-    // Add externals for canvas and related dependencies in production
-    if (!dev) {
-      config.externals = config.externals || [];
-      config.externals.push({
-        'canvas': 'commonjs canvas',
-        'cairo': 'commonjs cairo',
-        'pango': 'commonjs pango',
-        'gdk-pixbuf-2.0': 'commonjs gdk-pixbuf-2.0'
-      });
-    }
-    
-    // Rely on Next.js built-in CSS handling (no custom loaders needed)
-    // Custom CSS loader configuration removed to prevent module-not-found errors
-    
+
+    // Handle PDF.js worker
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'pdfjs-dist/build/pdf.worker.entry': 'pdfjs-dist/build/pdf.worker.entry.js',
+    };
+
+    // Ignore canvas during build
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'canvas': false,
+    };
+
     return config;
   },
 };
