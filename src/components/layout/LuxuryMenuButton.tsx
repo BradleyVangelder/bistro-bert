@@ -155,7 +155,7 @@ export default function LuxuryMenuButton({ isOpen, onToggle, className = '' }: L
           </motion.div>
 
           <span className="text-white text-sm font-light tracking-[0.3em] uppercase">
-            {isOpen ? 'Close' : 'Menu'}
+            {isOpen ? 'Sluit' : 'Menukaart'}
           </span>
         </div>
 

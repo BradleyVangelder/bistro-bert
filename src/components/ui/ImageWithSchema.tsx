@@ -24,7 +24,7 @@ export default function ImageWithSchema({
   const imageSchema = {
     '@context': 'https://schema.org',
     '@type': 'ImageObject',
-    contentUrl: `https://bistrobert.be${src}`,
+    contentUrl: `https://www.bistro-bert.be${src}`,
     name: alt,
     caption: caption || alt,
     width: width,

@@ -129,6 +129,10 @@ export function useWebVitalsData(): WebVitalsData[] {
 export function WebVitalsDebug() {
   const vitalsData = useWebVitalsData()
   const latestVitals = vitalsData[vitalsData.length - 1] || {}
+  const [lastUpdated, setLastUpdated] = useState('');
+  useEffect(() => {
+    setLastUpdated(new Date().toLocaleTimeString('nl-NL'));
+  }, []);
 
   if (process.env.NODE_ENV !== 'development') {
     return null
@@ -183,7 +187,7 @@ export function WebVitalsDebug() {
         })}
       </div>
       <div className="mt-2 pt-2 border-t border-gray-600 text-gray-400">
-        Last updated: {new Date().toLocaleTimeString()}
+        Last updated: {lastUpdated}
       </div>
     </div>
   )

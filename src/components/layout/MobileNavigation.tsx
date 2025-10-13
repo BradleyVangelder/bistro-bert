@@ -13,8 +13,8 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
   
   const navItems = [
     { label: 'Menukaart', href: '/menu', icon: '📋' },
-    { label: 'Over Ons', href: '/over-ons', icon: 'ℹ️' },
-    { label: 'Reserveringen', href: '/contact', icon: '📞' },
+    { label: 'Over ons', href: '/over-ons', icon: 'ℹ️' },
+    { label: 'Reserveren', href: '/contact', icon: '📞' },
   ];
 
   return (
@@ -36,14 +36,14 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
         transition={{ type: 'spring', damping: 25 }}
         className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-xl z-50 mobile-nav-container"
       >
-        <div className="h-full flex flex-col p-6 mobile-menu">
+        <div className="h-full flex flex-col mobile-menu" style={{ padding: '24px' }}>
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="self-end p-3 rounded-full hover:bg-gray-100 transition-colors focus:ring-2 focus:ring-burgundy focus:ring-offset-2"
+            className="self-end p-4 rounded-full hover:bg-gray-100 transition-colors focus:ring-2 focus:ring-burgundy focus:ring-offset-2 md:p-3"
             aria-label="Sluit menu"
           >
-            <X className="w-6 h-6" />
+            <X className="w-8 h-8 md:w-6 md:h-6" />
           </button>
           
           {/* Navigation Items */}
@@ -54,7 +54,7 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
                   <Link
                     href={item.href}
                     onClick={onClose}
-                    className={`mobile-nav-item flex items-center space-x-4 p-4 rounded-xl text-lg font-medium transition-all ${
+                    className={`mobile-nav-item flex items-center space-x-4 p-4 rounded-xl font-serif text-lg font-medium transition-all ${
                       pathname === item.href
                         ? 'bg-black text-white shadow-lg'
                         : 'text-gray-700 hover:bg-gray-100 active:scale-98'
@@ -71,8 +71,8 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
           {/* Contact Information */}
           <div className="space-y-4 mt-8">
             {/* Quick Contact */}
-            <div className="p-4 bg-gray-50 rounded-xl">
-              <h3 className="font-semibold mb-4 text-lg">Direct Contact</h3>
+            <div>
+              <h3 className="font-semibold mb-3 font-serif text-lg">Direct Contact</h3>
               <div className="space-y-3">
                 <a
                   href="tel:+3213480139"
@@ -92,25 +92,25 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
             </div>
             
             {/* Opening Hours */}
-            <div className="p-4 bg-gray-50 rounded-xl">
-              <h3 className="font-semibold mb-3 text-lg flex items-center">
+            <div>
+              <h3 className="font-semibold mb-3 font-serif text-lg flex items-center">
                 <Clock className="w-5 h-5 mr-2 text-burgundy" />
                 Openingstijden
               </h3>
               <p className="text-black font-medium">
-                Dinsdag - Zondag
+                Dinsdag–Zondag
               </p>
               <p className="text-burgundy font-semibold">
                 10:00 - 22:00
               </p>
-              <p className="text-gray-600 text-sm mt-2">
+              <p className="text-gray-600 text-sm mt-1">
                 Maandag gesloten
               </p>
             </div>
             
             {/* Address */}
-            <div className="p-4 bg-gray-50 rounded-xl">
-              <h3 className="font-semibold mb-3 text-lg flex items-center">
+            <div>
+              <h3 className="font-semibold mb-3 font-serif text-lg flex items-center">
                 <MapPin className="w-5 h-5 mr-2 text-burgundy" />
                 Adres
               </h3>

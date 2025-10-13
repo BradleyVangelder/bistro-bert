@@ -97,14 +97,14 @@ export default function MinimalNavbar() {
                     onClick={() => setIsMenuOpen(false)}
                     className="text-white text-2xl font-serif font-light tracking-tight hover:text-white transition-none"
                   >
-                    Over Ons
+                    Over ons
                   </Link>
                   <Link
                     href="/contact"
                     onClick={() => setIsMenuOpen(false)}
                     className="text-white text-2xl font-serif font-light tracking-tight hover:text-white transition-none"
                   >
-                    Reserveringen
+                    Reserveren
                   </Link>
                 </div>
               </div>
@@ -135,14 +135,14 @@ export default function MinimalNavbar() {
                     onClick={() => setIsMenuOpen(false)}
                     className="text-white text-2xl font-serif font-light tracking-tight hover:text-white transition-none"
                   >
-                    Over Ons
+                    Over ons
                   </Link>
                   <Link
                     href="/contact"
                     onClick={() => setIsMenuOpen(false)}
                     className="text-white text-2xl font-serif font-light tracking-tight hover:text-white transition-none"
                   >
-                    Reserveringen
+                    Reserveren
                   </Link>
                 </div>
               </div>

@@ -68,12 +68,12 @@ export default function StickyReserveButton() {
         
         {/* Button content */}
         <Link
-          href="/contact#reserveer"
+          href="/contact"
           className="relative block px-6 py-3 text-white font-medium text-sm tracking-wide rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300"
           aria-label="Reserveer een tafel bij Bistro Bert"
         >
           <div className="flex items-center space-x-2">
-            <span className="relative z-10">Reserveer</span>
+            <span className="relative z-10">Reserveer een tafel</span>
             <svg 
               className="w-4 h-4 relative z-10 transform group-hover:translate-x-1 transition-transform duration-300" 
               fill="none" 
@@ -115,12 +115,12 @@ export default function StickyReserveButton() {
           >
             {/* Luxury button with gradient */}
             <Link
-              href="/contact#reserveer"
+              href="/contact"
               className="block w-full bg-gradient-to-r from-black to-gray-900 text-white text-center py-4 px-6 rounded-lg font-medium text-base shadow-lg hover:shadow-xl transition-all duration-300"
               aria-label="Reserveer een tafel bij Bistro Bert"
             >
               <div className="flex items-center justify-center space-x-3">
-                <span className="relative z-10">Reserveer tafel</span>
+                <span className="relative z-10">Reserveer een tafel</span>
                 <svg 
                   className="w-5 h-5 relative z-10 transform group-hover:translate-x-1 transition-transform duration-300" 
                   fill="none" 

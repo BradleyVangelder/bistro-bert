@@ -1,16 +1,36 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-    turbopack: {
-    root: process.cwd(),
-  },
+    // turbopack: {
+    //   root: process.cwd(),
+    // },
   outputFileTracingRoot: process.cwd(),
   images: {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    domains: ['images.unsplash.com'],
+    domains: ['images.unsplash.com', 'localhost'],
+    minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
+    dangerouslyAllowSVG: false,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    qualities: [80, 85, 90],
+    // Enable unoptimized for debugging
+    unoptimized: process.env.NODE_ENV === 'development',
   },
+  // Performance optimizations
+  compress: true,
+  poweredByHeader: false,
+  generateEtags: false,
+  httpAgentOptions: {
+    keepAlive: true,
+  },
+  // Experimental features for performance
+  experimental: {
+    optimizePackageImports: ['framer-motion', 'lucide-react'],
+    scrollRestoration: true,
+  },
+  // Font optimization
+  optimizeFonts: true,
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
@@ -65,6 +85,9 @@ const nextConfig: NextConfig = {
         'gdk-pixbuf-2.0': 'commonjs gdk-pixbuf-2.0'
       });
     }
+    
+    // Rely on Next.js built-in CSS handling (no custom loaders needed)
+    // Custom CSS loader configuration removed to prevent module-not-found errors
     
     return config;
   },

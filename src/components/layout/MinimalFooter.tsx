@@ -5,7 +5,7 @@ import Link from 'next/link'
 export default function MinimalFooter() {
   const contactInfo = {
     address: 'Verboekt 121, 2430 Laakdal',
-    phone: '013 480 139',
+    phone: '+32 13 48 01 39',
     email: 'info@bistro-bert.be'
   }
 
