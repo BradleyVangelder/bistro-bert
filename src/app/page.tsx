@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useState } from 'react'
 import Footer from '@/components/layout/Footer'
 import ImageGallery from '@/components/ImageGallery'
@@ -21,6 +20,7 @@ import {
   RestaurantSectionHeading,
   RestaurantSubsectionHeading
 } from '@/components/ui/SmartHeadings'
+import ActionButton from '@/components/ui/ActionButton'
 
 // Force dynamic rendering to avoid SSR issues with browser APIs
 export const dynamic = 'force-dynamic'
@@ -103,33 +103,29 @@ export default function Home() {
                     </FadeIn>
                   </div>
 
-                  {/* CTA buttons with staggered reveal */}
-                  <div>
-                    <FadeIn delay={1.1} duration={0.8} direction="up">
-                      <div className="flex flex-col sm:flex-row gap-1 sm:gap-4">
-                        <motion.a
-                          href="/contact"
-                          className="inline-block mt-4 px-6 md:px-8 py-3 bg-white text-black hover:bg-transparent hover:text-white border border-white transition-colors duration-300 typography-button drop-shadow-lg mobile-button"
-                          aria-label="Reserveer een tafel bij Bistro Bert"
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          Reserveer een tafel
-                        </motion.a>
-                        <motion.a
-                          href="/menu"
-                          className="inline-block mt-4 px-6 md:px-8 py-3 border border-white text-white hover:bg-white hover:text-black transition-colors duration-300 typography-button drop-shadow-lg mobile-button"
-                          aria-label="Navigeer naar onze menukaart"
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          Bekijk de menukaart
-                        </motion.a>
-                      </div>
-                    </FadeIn>
-                  </div>
+                   {/* CTA buttons with staggered reveal */}
+                   <div>
+                     <FadeIn delay={1.1} duration={0.8} direction="up">
+                       <div className="flex flex-col sm:flex-row gap-1 sm:gap-4">
+                          <ActionButton
+                            href="/contact"
+                            variant="hero-reserve"
+                            className="mt-4"
+                            ariaLabel="Reserveer een tafel bij Bistro Bert"
+                          >
+                            Reserveer een tafel
+                          </ActionButton>
+                          <ActionButton
+                            href="/menu"
+                            variant="hero-menu"
+                            className="mt-4"
+                            ariaLabel="Navigeer naar onze menukaart"
+                          >
+                            Bekijk de menukaart
+                          </ActionButton>
+                       </div>
+                     </FadeIn>
+                   </div>
                 </ScrollTriggeredStagger>
               </div>
             </div>
@@ -165,22 +161,17 @@ export default function Home() {
                       </FadeIn>
                     </div>
                     
-                    <div>
-                      <FadeIn delay={0.8} duration={0.6} direction="up">
-                        <motion.div
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <Link
-                            href="/menu"
-                            className="inline-block mt-4 md:mt-12 px-8 py-3 border border-black text-black hover:bg-black hover:text-white transition-colors typography-button mobile-button"
-                          >
-                            Bekijk de menukaart
-                          </Link>
-                        </motion.div>
-                      </FadeIn>
-                    </div>
+                     <div>
+                       <FadeIn delay={0.8} duration={0.6} direction="up">
+                         <ActionButton
+                           href="/menu"
+                           variant="menu"
+                           className="mt-4 md:mt-12"
+                         >
+                           Bekijk de menukaart
+                         </ActionButton>
+                       </FadeIn>
+                     </div>
                   </ScrollTriggeredStagger>
                 </div>
 
@@ -364,22 +355,16 @@ export default function Home() {
                   </FadeIn>
                 </div>
                 
-                <div>
-                  <FadeIn delay={0.8} duration={0.6} direction="up">
-                    <motion.div
-                      whileHover={{ scale: 1.05, y: -3 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Link
-                        href="/contact"
-                        className="inline-block px-6 md:px-8 py-3 border border-white text-white hover:bg-white hover:text-black transition-all duration-500 typography-button mobile-button"
-                      >
-                        Reserveer een tafel
-                      </Link>
-                    </motion.div>
-                  </FadeIn>
-                </div>
+                 <div>
+                   <FadeIn delay={0.8} duration={0.6} direction="up">
+                     <ActionButton
+                       href="/contact"
+                       variant="cta"
+                     >
+                       Reserveer een tafel
+                     </ActionButton>
+                   </FadeIn>
+                 </div>
               </ScrollTriggeredStagger>
             </div>
           </div>

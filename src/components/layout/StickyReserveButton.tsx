@@ -69,7 +69,7 @@ export default function StickyReserveButton() {
         {/* Button content */}
         <Link
           href="/contact"
-          className="relative block px-6 py-3 text-white font-medium text-sm tracking-wide rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300"
+          className="relative block px-3 md:px-6 py-1.5 md:py-3 text-white font-medium text-sm tracking-wide rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300"
           aria-label="Reserveer een tafel bij Bistro Bert"
         >
           <div className="flex items-center space-x-2">
@@ -116,7 +116,7 @@ export default function StickyReserveButton() {
             {/* Luxury button with gradient */}
             <Link
               href="/contact"
-              className="block w-full bg-gradient-to-r from-black to-gray-900 text-white text-center py-4 px-6 rounded-lg font-medium text-base shadow-lg hover:shadow-xl transition-all duration-300"
+              className="block w-full bg-gradient-to-r from-black to-gray-900 text-white text-center py-1.5 md:py-4 px-3 md:px-6 rounded-lg font-medium text-base shadow-lg hover:shadow-xl transition-all duration-300"
               aria-label="Reserveer een tafel bij Bistro Bert"
             >
               <div className="flex items-center justify-center space-x-3">

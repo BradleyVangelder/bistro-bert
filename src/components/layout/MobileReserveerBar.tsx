@@ -41,7 +41,7 @@ export default function MobileReserveerBar() {
       <div className="container-dh px-4 py-3">
         <Link
           href="/contact"
-          className="block w-full bg-black text-white text-center py-3 px-6 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-300"
+          className="block w-full bg-black text-white text-center py-1.5 md:py-3 px-3 md:px-6 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-300"
           aria-label="Reserveer een tafel bij Bistro Bert"
         >
           Reserveer een tafel

@@ -11,6 +11,7 @@ interface OptimizedImageNextProps {
   height?: number
   fill?: boolean
   className?: string
+  style?: React.CSSProperties
   priority?: boolean
   quality?: number
   placeholder?: 'blur' | 'empty'
@@ -28,6 +29,7 @@ export default function OptimizedImageNext({
   height,
   fill = false,
   className = '',
+  style,
   priority = false,
   quality = 75,
   placeholder = 'empty',
@@ -108,6 +110,7 @@ export default function OptimizedImageNext({
             'duration-700 ease-in-out',
             isLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0'
           )}
+          style={style}
           sizes={sizes}
           onLoad={handleLoad}
           onError={handleError}
@@ -145,6 +148,7 @@ export default function OptimizedImageNext({
           'duration-700 ease-in-out',
           isLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0'
         )}
+        style={style}
         sizes={sizes}
         onLoad={handleLoad}
         onError={handleError}

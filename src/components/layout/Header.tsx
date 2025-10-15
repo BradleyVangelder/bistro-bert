@@ -142,13 +142,13 @@ export default function Header() {
             >
               <div className="h-full flex flex-col">
                 {/* Menu Header - Simplified */}
-                <div className="flex justify-end items-center px-6 py-4 border-b border-gray-100 bg-white/95 backdrop-blur-sm">
+                <div className="flex justify-end items-center px-6 py-4 bg-white/95 backdrop-blur-sm">
                   <button
                     onClick={() => setIsMenuOpen(false)}
-                    className="w-14 h-14 md:w-10 md:h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
+                    className="w-14 h-14 md:w-12 md:h-12 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
                     aria-label="Sluit menu"
                   >
-                    <X className="w-8 h-8 md:w-6 md:h-6 text-black" />
+                    <X className="w-8 h-8 md:w-8 md:h-8 text-black" />
                   </button>
                 </div>
 
@@ -172,7 +172,7 @@ export default function Header() {
                           onClick={() => setIsMenuOpen(false)}
                           aria-label={`Navigeer naar ${item.label}`}
                         >
-                          <div className="font-serif text-lg font-medium text-black leading-tight tracking-tight group-hover:text-gray-600 transition-colors duration-300">
+                          <div className="font-serif text-xl font-medium text-black leading-tight tracking-tight group-hover:text-gray-600 transition-colors duration-300">
                             {item.label}
                           </div>
                           <div className="w-0 h-px bg-black transition-all duration-300 group-hover:w-16 mt-2"></div>
@@ -186,29 +186,29 @@ export default function Header() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
-                    className="mt-8 pt-6 border-t border-gray-100 space-y-2"
+                    className="mt-8 pt-6 border-t border-gray-100 space-y-2 px-3"
                   >
-                    <a
-                      href="tel:+3213480139"
-                      className="flex items-center gap-3 text-gray-700 py-2 mobile-nav-item"
-                    >
+                    <div className="flex items-center gap-2 md:gap-4 text-gray-700 py-2">
                       <Phone className="w-5 h-5 text-gray-700" />
-                      <div>
-                        <span className="text-base font-luxury">+32 13 48 01 39</span>
-                      </div>
-                    </a>
+                      <a
+                        href="tel:+3213480139"
+                        className="text-base font-luxury"
+                      >
+                        <span>+32 13 48 01 39</span>
+                      </a>
+                    </div>
 
-                    <a
-                      href="mailto:info@bistro-bert.be"
-                      className="flex items-center gap-3 text-gray-700 py-2 mobile-nav-item"
-                    >
+                    <div className="flex items-center gap-2 md:gap-4 text-gray-700 py-2">
                       <Mail className="w-5 h-5 text-gray-700" />
-                      <div>
-                        <span className="text-base font-luxury">info@bistro-bert.be</span>
-                      </div>
-                    </a>
-                    
-                    <div className="flex items-center gap-3 text-gray-700 py-2">
+                      <a
+                        href="mailto:info@bistro-bert.be"
+                        className="text-base font-luxury"
+                      >
+                        <span>info@bistro-bert.be</span>
+                      </a>
+                    </div>
+
+                    <div className="flex items-center gap-2 md:gap-4 text-gray-700 py-2">
                       <Clock className="w-5 h-5 text-gray-700" />
                       <div>
                         <span className="text-base font-luxury">Dinsdag–Zondag</span>
@@ -232,10 +232,10 @@ export default function Header() {
                 {/* Mobile Footer */}
                 <div className="px-6 pb-6 pt-4 border-t border-gray-100 bg-gray-50/50">
                   <div className="text-xs text-gray-500 font-light tracking-wider uppercase text-center font-luxury">
-                    Ambachtelijke Perfectie
+                    Belgische Traditie
                   </div>
                   <div className="text-xs text-gray-400 font-light tracking-wider uppercase text-center mt-1 font-luxury">
-                    Since 2024
+                    Sinds 2025
                   </div>
                 </div>
               </div>

@@ -12,6 +12,7 @@ import {
   LuxuryStaggeredReveal
 } from '@/components/ui/StaggeredAnimations'
 import { useStaggeredAnimation } from '@/hooks/animations/useStaggeredAnimation'
+import ActionButton from '@/components/ui/ActionButton'
 
 // Sample reviews for structured data
 const sampleReviews = [
@@ -253,23 +254,21 @@ export default function OverOnsContent() {
                 <motion.div
                   className="text-center border-t border-gray-200 pt-8"
                 >
-                  <div className="flex flex-col sm:flex-row button-tight-spacing justify-center">
-                    <motion.a
-                      href="/menu"
-                      className="inline-block px-8 py-3 border border-black text-black hover:bg-black hover:text-white transition-colors typography-button"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Bekijk de menukaart
-                    </motion.a>
-                    <motion.a
-                      href="/contact"
-                      className="inline-block px-8 py-3 bg-black text-white hover:bg-gray-800 transition-colors typography-button"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Reserveer een tafel
-                    </motion.a>
+                   <div className="flex flex-col sm:flex-row button-tight-spacing justify-center">
+                     <ActionButton
+                       href="/menu"
+                       variant="menu"
+                       className="px-8 py-3"
+                     >
+                       Bekijk de menukaart
+                     </ActionButton>
+                     <ActionButton
+                       href="/contact"
+                       variant="reserve"
+                       className="px-8 py-3"
+                     >
+                       Reserveer een tafel
+                     </ActionButton>
                   </div>
                 </motion.div>
               </motion.div>

@@ -614,8 +614,6 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
           Pagina {pageNumber}{numPages ? ` van ${numPages}` : ''}
         </p>
       </div>
-
-      <p className="monochrome-pdf-hint">Gebruik de pijltjestoetsen of knoppen om te navigeren</p>
     </div>
   )
 }

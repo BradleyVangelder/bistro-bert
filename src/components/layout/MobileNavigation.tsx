@@ -74,20 +74,24 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
             <div>
               <h3 className="font-semibold mb-3 font-serif text-lg">Direct Contact</h3>
               <div className="space-y-3">
-                <a
-                  href="tel:+3213480139"
-                  className="flex items-center space-x-3 text-lg font-medium text-black hover:text-burgundy transition-colors mobile-nav-item"
-                >
-                  <Phone className="w-5 h-5 text-burgundy" />
-                  <span>+32 13 48 01 39</span>
-                </a>
-                <a
-                  href="mailto:info@bistro-bert.be"
-                  className="flex items-center space-x-3 text-black hover:text-burgundy transition-colors mobile-nav-item"
-                >
-                  <Mail className="w-5 h-5 text-burgundy" />
-                  <span>info@bistro-bert.be</span>
-                </a>
+                 <div>
+                   <a
+                     href="tel:+3213480139"
+                     className="flex items-center space-x-3 text-lg font-medium text-black hover:text-burgundy transition-colors"
+                   >
+                    <Phone className="w-5 h-5 text-burgundy" />
+                    <span>+32 13 48 01 39</span>
+                   </a>
+                 </div>
+                 <div>
+                   <a
+                     href="mailto:info@bistro-bert.be"
+                     className="flex items-center space-x-3 text-black hover:text-burgundy transition-colors"
+                   >
+                    <Mail className="w-5 h-5 text-burgundy" />
+                    <span>info@bistro-bert.be</span>
+                   </a>
+                 </div>
               </div>
             </div>
             

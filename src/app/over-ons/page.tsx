@@ -6,6 +6,7 @@ import { Leaf, ChefHat, Wheat } from 'lucide-react'
 import ReviewSchema from '@/components/ui/ReviewSchema'
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema'
 import { RestaurantSectionHeading, RestaurantSubsectionHeading } from '@/components/ui/SmartHeadings'
+import ActionButton from '@/components/ui/ActionButton'
 
 // Page-specific metadata for Over ons is now handled in the root layout.tsx
 
@@ -153,20 +154,20 @@ export default function OverOnsPage() {
                   transition={{ duration: 0.8, delay: 0.8 }}
                   className="text-center border-t border-gray-200 pt-8"
                 >
-                  <div className="flex flex-col sm:flex-row button-tight-spacing justify-center">
-                    <a
-                      href="/menu"
-                      className="inline-block px-8 py-3 border border-black text-black hover:bg-black hover:text-white transition-colors typography-button"
-                    >
-                      Bekijk de menukaart
-                    </a>
-                    <a
-                      href="/contact"
-                      className="inline-block px-8 py-3 bg-black text-white hover:bg-gray-800 transition-colors typography-button"
-                    >
-                      Reserveer een tafel
-                    </a>
-                  </div>
+                   <div className="flex flex-col sm:flex-row button-tight-spacing justify-center">
+                      <ActionButton
+                        href="/menu"
+                        variant="menu"
+                      >
+                        Bekijk de menukaart
+                      </ActionButton>
+                      <ActionButton
+                        href="/contact"
+                        variant="reserve"
+                      >
+                        Reserveer een tafel
+                      </ActionButton>
+                    </div>
                 </motion.div>
               </motion.div>
             </div>

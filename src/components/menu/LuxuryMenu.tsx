@@ -164,7 +164,7 @@ export default function LuxuryMenu() {
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`px-8 py-3 rounded-full transition-all duration-300 font-luxury font-medium tracking-wide ${
+              className={`px-3 md:px-8 py-1.5 md:py-3 rounded-full transition-all duration-300 font-luxury font-medium tracking-wide ${
                 selectedCategory === category.id
                   ? 'bg-white text-burgundy shadow-md'
                   : 'text-gray-600 hover:text-burgundy'
