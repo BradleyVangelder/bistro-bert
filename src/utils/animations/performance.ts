@@ -228,6 +228,22 @@ export class AnimationPerformanceMonitor {
 
   // Detect device capabilities
   private detectDeviceCapabilities(): DeviceCapabilities {
+    // Check if we're in a browser environment
+    const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
+    
+    if (!isBrowser) {
+      // Return default values for server-side rendering
+      return {
+        hardwareAcceleration: true,
+        maxConcurrentAnimations: 4,
+        preferredFrameRate: 60,
+        memoryTier: 'medium',
+        processorTier: 'medium',
+        gpuTier: 'medium',
+        recommendedQuality: 'medium',
+      };
+    }
+
     const hardwareAcceleration = this.checkHardwareAcceleration();
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const memory = this.getMemoryUsage();
@@ -244,17 +260,21 @@ export class AnimationPerformanceMonitor {
     else if (cores > 8) processorTier = 'high';
     
     // Determine GPU tier (simplified)
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl');
     let gpuTier: 'low' | 'medium' | 'high' = 'medium';
-    if (gl) {
-      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-      if (debugInfo) {
-        const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-        if (renderer.includes('NVIDIA') || renderer.includes('AMD') || renderer.includes('Apple')) {
-          gpuTier = 'high';
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl');
+      if (gl) {
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        if (debugInfo) {
+          const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+          if (renderer.includes('NVIDIA') || renderer.includes('AMD') || renderer.includes('Apple')) {
+            gpuTier = 'high';
+          }
         }
       }
+    } catch (error) {
+      // Keep default GPU tier if canvas creation fails
     }
     
     // Determine recommended quality
@@ -385,9 +405,18 @@ export class AnimationPerformanceMonitor {
 
   // Check hardware acceleration support
   private checkHardwareAcceleration(): boolean {
-    const testEl = document.createElement('div');
-    testEl.style.transform = 'translateZ(0)';
-    return testEl.style.transform !== '';
+    // Check if we're in a browser environment
+    if (typeof document === 'undefined') {
+      return true; // Assume hardware acceleration is available on server
+    }
+    
+    try {
+      const testEl = document.createElement('div');
+      testEl.style.transform = 'translateZ(0)';
+      return testEl.style.transform !== '';
+    } catch (error) {
+      return true; // Fallback to true if document access fails
+    }
   }
 
   // Get current frame time
@@ -407,22 +436,32 @@ export class AnimationPerformanceMonitor {
 
   // Setup performance observers
   private setupPerformanceObservers(): void {
+    // Check if we're in a browser environment
+    if (typeof window === 'undefined') {
+      return; // Skip performance observers on server-side
+    }
+
     if ('PerformanceObserver' in window) {
-      // Observe frame timing
-      const frameObserver = new PerformanceObserver((list) => {
-        const entries = list.getEntries();
-        entries.forEach((entry) => {
-          if (entry.entryType === 'measure' && entry.name.includes('frame')) {
-            this.performanceHistory.push(entry.duration);
-            if (this.performanceHistory.length > this.maxHistorySize) {
-              this.performanceHistory.shift();
+      try {
+        // Observe frame timing
+        const frameObserver = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          entries.forEach((entry) => {
+            if (entry.entryType === 'measure' && entry.name.includes('frame')) {
+              this.performanceHistory.push(entry.duration);
+              if (this.performanceHistory.length > this.maxHistorySize) {
+                this.performanceHistory.shift();
+              }
             }
-          }
+          });
         });
-      });
-      
-      frameObserver.observe({ entryTypes: ['measure'] });
-      this.observers.push(frameObserver);
+        
+        frameObserver.observe({ entryTypes: ['measure'] });
+        this.observers.push(frameObserver);
+      } catch (error) {
+        // Silently fail if PerformanceObserver setup fails
+        console.warn('PerformanceObserver setup failed:', error);
+      }
     }
   }
 
@@ -666,9 +705,18 @@ export class HardwareAccelerationHelper {
 
   // Check if device supports hardware acceleration
   static supportsHardwareAcceleration(): boolean {
-    const testEl = document.createElement('div');
-    testEl.style.transform = 'translateZ(0)';
-    return testEl.style.transform !== '';
+    // Check if we're in a browser environment
+    if (typeof document === 'undefined') {
+      return true; // Assume hardware acceleration is available on server
+    }
+    
+    try {
+      const testEl = document.createElement('div');
+      testEl.style.transform = 'translateZ(0)';
+      return testEl.style.transform !== '';
+    } catch (error) {
+      return true; // Fallback to true if document access fails
+    }
   }
 
   // Get optimal animation properties based on device capabilities
@@ -732,6 +780,18 @@ export class PerformanceOptimizer {
     complexity: number;
     reducedMotion: boolean;
   } {
+    // Check if we're in a browser environment
+    const isBrowser = typeof window !== 'undefined' && typeof navigator !== 'undefined';
+    
+    if (!isBrowser) {
+      // Return default values for server-side rendering
+      return {
+        duration: animationConfig.duration,
+        complexity: animationConfig.complexity,
+        reducedMotion: false,
+      };
+    }
+
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     

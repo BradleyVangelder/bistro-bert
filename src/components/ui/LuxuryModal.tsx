@@ -411,7 +411,7 @@ export function LuxuryModal({
               <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-white/95 backdrop-blur-sm">
                 <div className="flex-1">
                   {title && (
-                    <h2 className="text-2xl font-serif font-light text-gray-900 leading-tight">
+                    <h2 className="text-suisse-h2 text-gray-900 leading-tight">
                       {title}
                     </h2>
                   )}

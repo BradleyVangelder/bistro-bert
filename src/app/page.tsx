@@ -1,15 +1,26 @@
 'use client'
 
-import Link from 'next/link'
-import Image from 'next/image'
 import { useState } from 'react'
 import Footer from '@/components/layout/Footer'
 import ImageGallery from '@/components/ImageGallery'
 import { galleryImages } from '@/data/images'
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema'
-import ReviewSchema from '@/components/ui/ReviewSchema'
-import { RestaurantJsonLd } from '@/components/ui/RestaurantJsonLd'
 import { LoadingState, ImageSkeleton } from '@/components/ui/LoadingState'
+import OptimizedImageNext from '@/components/ui/OptimizedImageNext'
+import { FadeIn, SlideIn } from '@/components/ui/AccessibleMotion'
+import {
+  StaggeredContainer,
+  StaggeredCard,
+  ScrollTriggeredStagger,
+  LuxuryStaggeredReveal
+} from '@/components/ui/StaggeredAnimations'
+import { motion } from 'framer-motion'
+import {
+  RestaurantHeroHeading,
+  RestaurantSectionHeading,
+  RestaurantSubsectionHeading
+} from '@/components/ui/SmartHeadings'
+import ActionButton from '@/components/ui/ActionButton'
 
 // Force dynamic rendering to avoid SSR issues with browser APIs
 export const dynamic = 'force-dynamic'
@@ -26,31 +37,13 @@ export default function Home() {
 
 
   
-  // Sample reviews for structured data
-  const sampleReviews = [
-    {
-      author: 'Jan Janssens',
-      rating: 5,
-      date: '2024-03-15',
-      content: 'Uitzonderlijke culinaire ervaring bij Bistro Bert. De aandacht voor detail en de kwaliteit van de ingrediënten is ongeëvenaard.'
-    },
-    {
-      author: 'Marie Pieters',
-      rating: 5,
-      date: '2024-02-28',
-      content: 'Het menu van Bistro Bert is een feest voor de smaakpapillen. Seizoensgebonden en perfect bereid.'
-    }
-  ]
-
   const breadcrumbItems = [
     { name: 'Home', url: 'https://www.bistro-bert.be' },
   ]
 
   return (
     <>
-      <RestaurantJsonLd />
       <BreadcrumbSchema items={breadcrumbItems} />
-      <ReviewSchema reviews={sampleReviews} />
       
       <div className="min-h-screen bg-white">
         {/* Hero Section - Completely static */}
@@ -60,7 +53,7 @@ export default function Home() {
             role="banner"
           >
             {/* Full-screen static background image */}
-            <div className="absolute inset-0">
+            <div className="absolute inset-0 m-0 p-0">
               {!imagesLoaded.hero && (
                 <div className="absolute inset-0 z-20">
                   <ImageSkeleton
@@ -69,41 +62,71 @@ export default function Home() {
                   />
                 </div>
               )}
-              <Image
+              <OptimizedImageNext
                 src="/images/restaurant/hero-moody-wine-bar.jpg"
-                alt="Menukaart — pagina 1"
+                alt="Elegant moody wine bar interior with warm lighting"
                 fill
                 sizes="100vw"
-                className={`object-cover object-center brightness-65 ${
-                  imagesLoaded.hero ? 'opacity-100' : 'opacity-0'
-                }`}
+                className="object-cover object-center brightness-65 opacity-100"
+                style={{ objectPosition: 'center' }}
                 priority
+                quality={85}
+                placeholder="empty"
                 onLoad={() => setImagesLoaded(prev => ({ ...prev, hero: true }))}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/75 to-black/50" aria-hidden="true" />
+              <div className="absolute inset-0 m-0 p-0 bg-gradient-to-b from-black/90 via-black/75 to-black/50" aria-hidden="true" />
             </div>
 
-            {/* Static hero content */}
-            <div className="relative z-10 h-full flex flex-col justify-end items-start px-6 sm:px-8 md:px-16 lg:px-24 pb-12 md:pb-16 hero-content">
-              <div className="max-w-4xl">
-                {/* Restaurant name with tagline */}
-                <h1 className="typography-hero text-white drop-shadow-lg mb-4 max-w-xs md:max-w-none">
-                  Bistro Bert • Laakdal
-                </h1>
-                <p className="typography-body text-white/95 drop-shadow-lg mb-6 max-w-xs md:max-w-2xl">
-                  Luxe Belgisch genieten — klassiekers met finesse, dagvers en seizoensgebonden.
-                </p>
+            {/* Hero content with staggered animations */}
+            <div className="relative z-10 h-full flex flex-col justify-end items-start px-4 sm:px-8 md:px-16 lg:px-24 pb-8 md:pb-12 hero-content">
+              <div className="max-w-4xl px-4 sm:px-0">
+                <ScrollTriggeredStagger
+                  staggerDelay={300}
+                  direction="up"
+                  initialDelay={500}
+                  className="space-y-6"
+                >
+                  {/* Restaurant name with tagline */}
+                  <div>
+                    <FadeIn delay={0.5} duration={1.2} direction="up">
+                      <RestaurantHeroHeading className="text-white drop-shadow-lg mb-4 max-w-xs md:max-w-none">
+                        Bistro Bert — Seizoenskeuken in Laakdal
+                      </RestaurantHeroHeading>
+                    </FadeIn>
+                  </div>
+                  
+                  <div>
+                    <FadeIn delay={0.8} duration={1} direction="up">
+                      <p className="typography-body text-white/95 drop-shadow-lg mb-6 max-w-xs md:max-w-2xl">
+                        Seizoenskeuken met karakter — dagvers en zorgvuldig bereid in het hart van de Antwerpse Kempen.
+                      </p>
+                    </FadeIn>
+                  </div>
 
-                {/* Static CTA button */}
-                <div>
-                  <a
-                    href="#menu"
-                    className="inline-block mt-4 px-6 md:px-8 py-3 border border-white text-white hover:bg-white hover:text-black transition-colors duration-300 typography-button drop-shadow-lg mobile-button"
-                    aria-label="Navigeer naar onze menukaart"
-                  >
-                    Ontdek de menukaart
-                  </a>
-                </div>
+                   {/* CTA buttons with staggered reveal */}
+                   <div>
+                     <FadeIn delay={1.1} duration={0.8} direction="up">
+                       <div className="flex flex-col sm:flex-row gap-1 sm:gap-4">
+                          <ActionButton
+                            href="/contact"
+                            variant="hero-reserve"
+                            className="mt-4"
+                            ariaLabel="Reserveer een tafel bij Bistro Bert"
+                          >
+                            Reserveer een tafel
+                          </ActionButton>
+                          <ActionButton
+                            href="/menu"
+                            variant="hero-menu"
+                            className="mt-4"
+                            ariaLabel="Navigeer naar onze menukaart"
+                          >
+                            Bekijk de menukaart
+                          </ActionButton>
+                       </div>
+                     </FadeIn>
+                   </div>
+                </ScrollTriggeredStagger>
               </div>
             </div>
           </section>
@@ -114,33 +137,59 @@ export default function Home() {
           <div className="container-dh">
             <div className="max-w-5xl mx-auto px-4 md:px-0">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                {/* Left side - Radical minimalism */}
+                {/* Left side - Radical minimalism with animations */}
                 <div className="space-y-8 lg:space-y-16 order-2 lg:order-1">
-                  <div>
-                    <h2 className="typography-h1 text-black max-w-md md:max-w-none mb-6 md:mb-8">
-                      Verfijnde Belgische Keuken — Lunch, Zakenlunch & Diner
-                    </h2>
-                    <p className="typography-body-large text-gray-600 mt-8 max-w-md">
-                      Klassiekers met schwung: precies bereid, seizoensgebonden en dagvers. Altijd verfijnd, zonder poeha.
-                    </p>
-                    <Link
-                      href="/menu"
-                      className="inline-block mt-8 md:mt-12 px-8 py-3 border border-black text-black hover:bg-black hover:text-white transition-colors typography-button mobile-button"
-                    >
-                      Bekijk onze kaart
-                    </Link>
-                  </div>
+                  <ScrollTriggeredStagger
+                    staggerDelay={250}
+                    direction="up"
+                    className="space-y-8"
+                    threshold={0.2}
+                  >
+                    <div>
+                      <FadeIn delay={0.2} duration={1} direction="up">
+                        <RestaurantSectionHeading className="text-black max-w-md md:max-w-none mb-6 md:mb-8">
+                          Verfijnde Belgische keuken — Lunch & Diner
+                        </RestaurantSectionHeading>
+                      </FadeIn>
+                    </div>
+                    
+                    <div>
+                      <FadeIn delay={0.5} duration={0.8} direction="up">
+                        <p className="typography-body-large text-gray-600 mt-8 max-w-md">
+                          Klassiekers met een lichte toets: seizoensgebonden, dagvers en precies bereid.
+                        </p>
+                      </FadeIn>
+                    </div>
+                    
+                     <div>
+                       <FadeIn delay={0.8} duration={0.6} direction="up">
+                         <ActionButton
+                           href="/menu"
+                           variant="menu"
+                           className="mt-4 md:mt-12"
+                         >
+                           Bekijk de menukaart
+                         </ActionButton>
+                       </FadeIn>
+                     </div>
+                  </ScrollTriggeredStagger>
                 </div>
 
-                {/* Right side - Chef portrait */}
-                <div className="relative h-[400px] md:h-[500px] lg:h-[700px] overflow-hidden order-1 lg:order-2">
-                  <Image
-                    src="/images/restaurant/chef-portrait.jpg"
-                    alt="Menukaart — pagina 2"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
-                  />
+                {/* Right side - Chef portrait with animation */}
+                <div className="order-1 lg:order-2">
+                  <FadeIn delay={0.3} duration={1.2} direction="right">
+                    <div className="relative h-[400px] md:h-[500px] lg:h-[700px] overflow-hidden">
+                      <OptimizedImageNext
+                        src="/images/restaurant/chef-portrait.jpg"
+                        alt="Portret van de chef – Bistro Bert"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover"
+                        quality={80}
+                        placeholder="blur"
+                      />
+                    </div>
+                  </FadeIn>
                 </div>
               </div>
             </div>
@@ -152,79 +201,129 @@ export default function Home() {
           <div className="container-dh">
             <div className="max-w-6xl mx-auto px-4 md:px-0">
               <div className="text-center mb-8 md:mb-12">
-                <h2 className="typography-h1 text-black mb-6 md:mb-8">
-                  Wat je mag verwachten
-                </h2>
+                <FadeIn delay={0.2} duration={1} direction="up">
+                  <RestaurantSectionHeading className="text-black mb-6 md:mb-8 text-center">
+                    Wat je mag verwachten
+                  </RestaurantSectionHeading>
+                </FadeIn>
               </div>
 
               <div className="max-w-4xl mx-auto">
-                <div className="space-y-8 md:space-y-12">
-                  {/* Section 1: Our Philosophy */}
-                  <div className="text-center p-4 md:p-0">
-                    <p className="typography-caption text-gray-500 mb-3 md:mb-4">
-                      Ons Verhaal
-                    </p>
-                    <p className="typography-body-large text-gray-600 max-w-lg md:max-w-3xl mx-auto">
-                      Van traag gegaarde sauzen tot kraakverse garnalen: we koken met twee voeten in de Belgische traditie—licht, precies en vol smaak. Intiem, warm en zonder poeha.
-                    </p>
-                  </div>
+                <StaggeredContainer
+                  staggerDelay={200}
+                  direction="up"
+                  initialDelay={300}
+                  className="space-y-4 md:space-y-12"
+                  triggerOnScroll={true}
+                  scrollOffset={150}
+                >
+                  {/* Section 1: Onze keuken */}
+                  <StaggeredCard className="text-center p-2 md:p-0" whileHover={{}} whileTap={{}}>
+                    <FadeIn delay={0.1} duration={0.8} direction="up">
+                      <RestaurantSubsectionHeading className="text-black mb-3 md:mb-4 font-medium text-center">
+                        Onze keuken
+                      </RestaurantSubsectionHeading>
+                    </FadeIn>
+                    <FadeIn delay={0.3} duration={0.8} direction="up">
+                      <p className="typography-body-large text-gray-600 max-w-lg md:max-w-3xl mx-auto">
+                        Belgische klassiekers, helder en smaakvol. Traditie ontmoet verfijning.
+                      </p>
+                    </FadeIn>
+                  </StaggeredCard>
 
-                  {/* Section 2: Seasonal Approach */}
-                  <div className="text-center p-4 md:p-0">
-                    <p className="typography-caption text-gray-500 mb-3 md:mb-4">
-                      Seizoensgebonden & fris
-                    </p>
-                    <p className="typography-body-large text-gray-600 max-w-lg md:max-w-3xl mx-auto">
-                      Met het seizoen mee: asperges in het voorjaar, hoevekip en Noordzeevis doorheen het jaar, wild wanneer het zover is. Kraakvers, zuiver van smaak, elegant gepresenteerd.
-                    </p>
-                  </div>
+                  {/* Section 2: Seizoensgebonden */}
+                  <StaggeredCard className="text-center p-2 md:p-0" whileHover={{}} whileTap={{}}>
+                    <FadeIn delay={0.1} duration={0.8} direction="up">
+                      <RestaurantSubsectionHeading className="text-black mb-3 md:mb-4 font-medium text-center">
+                        Seizoensgebonden
+                      </RestaurantSubsectionHeading>
+                    </FadeIn>
+                    <FadeIn delay={0.3} duration={0.8} direction="up">
+                      <p className="typography-body-large text-gray-600 max-w-lg md:max-w-3xl mx-auto">
+                        We volgen het ritme van de seizoenen — piekproducten op hun best.
+                      </p>
+                    </FadeIn>
+                  </StaggeredCard>
 
-                  {/* Section 3: Ambiance */}
-                  <div className="text-center p-4 md:p-0">
-                    <p className="typography-caption text-gray-500 mb-3 md:mb-4">
-                      Intieme, stijlvolle sfeer
-                    </p>
-                    <p className="typography-body-large text-gray-600 max-w-lg md:max-w-3xl mx-auto">
-                      Zachte verlichting, warme materialen en comfortabele stoelen. Ongeveer 40 couverts, genoeg ruimte voor een rustig zaken- of romantisch diner.
-                    </p>
-                  </div>
+                  {/* Section 3: Sfeer */}
+                  <StaggeredCard className="text-center p-2 md:p-0" whileHover={{}} whileTap={{}}>
+                    <FadeIn delay={0.1} duration={0.8} direction="up">
+                      <RestaurantSubsectionHeading className="text-black mb-3 md:mb-4 font-medium text-center">
+                        Sfeer
+                      </RestaurantSubsectionHeading>
+                    </FadeIn>
+                    <FadeIn delay={0.3} duration={0.8} direction="up">
+                      <p className="typography-body-large text-gray-600 max-w-lg md:max-w-3xl mx-auto">
+                        Intiem en warm — zachte verlichting, natuurlijke materialen, rustige elegantie.
+                      </p>
+                    </FadeIn>
+                  </StaggeredCard>
 
-                  {/* Section 4: Our Team */}
-                  <div className="text-center p-4 md:p-0">
-                    <p className="typography-caption text-gray-500 mb-3 md:mb-4">
-                      Ons Team
-                    </p>
-                    <p className="typography-body-large text-gray-600 max-w-lg md:max-w-3xl mx-auto">
-                      Chef Bert focust op precisie en sauswerk; in de zaal helpen we graag met wijnsuggesties, allergenenadvies en timing voor een vlotte zakenlunch.
-                    </p>
-                  </div>
-                </div>
+                  {/* Section 4: Service */}
+                  <StaggeredCard className="text-center p-2 md:p-0" whileHover={{}} whileTap={{}}>
+                    <FadeIn delay={0.1} duration={0.8} direction="up">
+                      <RestaurantSubsectionHeading className="text-black mb-3 md:mb-4 font-medium text-center">
+                        Service
+                      </RestaurantSubsectionHeading>
+                    </FadeIn>
+                    <FadeIn delay={0.3} duration={0.8} direction="up">
+                      <p className="typography-body-large text-gray-600 max-w-lg md:max-w-3xl mx-auto">
+                        Attent en ontspannen — doordachte wijnsuggesties en oog voor detail.
+                      </p>
+                    </FadeIn>
+                  </StaggeredCard>
+                </StaggeredContainer>
               </div>
             </div>
           </div>
         </section>
 
+  
         {/* Smaakvolle Verhalen Onvergetelijke Momenten Section */}
         <section className="min-h-[80vh] bg-white py-16 md:py-32">
           <div className="container-dh">
             <div className="max-w-7xl mx-auto px-4 md:px-0">
-              {/* Section header - Minimalist elegance */}
+              {/* Section header with luxury staggered animations */}
               <div className="text-center mb-16 md:mb-24">
-                <h2 className="typography-h1 text-black mb-6 md:mb-8">
-                  Smaakvolle Verhalen — Onvergetelijke Momenten
-                </h2>
-                <p className="typography-body text-gray-600 max-w-lg md:max-w-2xl mx-auto">
-                  Een blik achter de schermen: mise-en-place, het afwerken aan tafel en de sfeer in de zaal. Volg ons op Instagram voor dagelijkse stories.
-                </p>
+                <ScrollTriggeredStagger
+                  staggerDelay={300}
+                  direction="up"
+                  className="space-y-6"
+                  threshold={0.2}
+                >
+                  <div>
+                    <FadeIn delay={0.2} duration={1.2} direction="up">
+                      <RestaurantSectionHeading className="text-black mb-6 md:mb-8 text-center">
+                        Smaakvolle Verhalen — Onvergetelijke Momenten
+                      </RestaurantSectionHeading>
+                    </FadeIn>
+                  </div>
+                  
+                  <div>
+                    <FadeIn delay={0.5} duration={1} direction="up">
+                      <p className="typography-body text-gray-600 max-w-lg md:max-w-2xl mx-auto">
+                        Een blik binnen: de keuken in actie, afwerking aan de pass en de avondlijke sfeer.
+                      </p>
+                    </FadeIn>
+                  </div>
+                  
+                  <div>
+                    <FadeIn delay={0.8} duration={0.8} direction="up">
+                      <div className="w-32 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent mx-auto mb-8 md:mb-12" />
+                    </FadeIn>
+                  </div>
+                </ScrollTriggeredStagger>
               </div>
 
-              {/* Minimalistic Image Gallery */}
+              {/* Minimalistic Image Gallery with animation */}
               <div className="mobile-gallery">
-                <ImageGallery
-                  images={galleryImages.slice(0, 8)}
-                  className="w-full"
-                  enableLightbox={true}
-                />
+                <FadeIn delay={0.4} duration={1.2} direction="up">
+                  <ImageGallery
+                    images={galleryImages.slice(0, 8)}
+                    className="w-full"
+                    enableLightbox={true}
+                  />
+                </FadeIn>
               </div>
             </div>
           </div>
@@ -234,20 +333,39 @@ export default function Home() {
         <section className="py-16 md:py-32 bg-black text-white">
           <div className="container-dh">
             <div className="max-w-4xl mx-auto text-center px-4 md:px-0">
-              <h2 className="typography-h1 leading-[0.9] mb-6 md:mb-8">
-                  Aan Tafel bij Bert — Reserveer vandaag
-              </h2>
-              <p className="typography-body-large text-white/90 mb-8 md:mb-12 max-w-lg md:max-w-2xl mx-auto">
-                Zin in lunch, zakenlunch of diner in Laakdal? Bel of reserveer eenvoudig—we denken graag mee over allergenen, wijn en timing.
-              </p>
-              <div>
-                <Link
-                  href="/contact"
-                  className="inline-block px-6 md:px-8 py-3 border border-white text-white hover:bg-white hover:text-black transition-all duration-500 typography-button mobile-button"
-                >
-                  Reserveer voor lunch of zakenlunch
-                </Link>
-              </div>
+              <ScrollTriggeredStagger
+                staggerDelay={250}
+                direction="up"
+                className="space-y-8"
+                threshold={0.3}
+              >
+                <div>
+                  <FadeIn delay={0.2} duration={1} direction="up">
+                    <RestaurantSectionHeading className="text-white leading-[0.9] mb-6 md:mb-8 text-center">
+                        Reserveer een tafel
+                    </RestaurantSectionHeading>
+                  </FadeIn>
+                </div>
+                
+                <div>
+                  <FadeIn delay={0.5} duration={0.8} direction="up">
+                    <p className="typography-body-large text-white/90 mb-8 md:mb-12 max-w-lg md:max-w-2xl mx-auto">
+                      Lunch, zakenlunch of diner in Laakdal. Meld allergieën of timing—wij passen ons aan.
+                    </p>
+                  </FadeIn>
+                </div>
+                
+                 <div>
+                   <FadeIn delay={0.8} duration={0.6} direction="up">
+                     <ActionButton
+                       href="/contact"
+                       variant="cta"
+                     >
+                       Reserveer een tafel
+                     </ActionButton>
+                   </FadeIn>
+                 </div>
+              </ScrollTriggeredStagger>
             </div>
           </div>
         </section>

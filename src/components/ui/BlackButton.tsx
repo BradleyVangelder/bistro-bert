@@ -15,7 +15,7 @@ export default function BlackButton({
   className = '',
   ...props 
 }: BlackButtonProps) {
-  const baseClasses = 'inline-block px-6 py-3 typography-button w-full sm:w-auto text-center min-w-0 transition-colors focus:outline-none focus:ring-2 focus:ring-burgundy focus:ring-offset-2'
+  const baseClasses = 'inline-block px-3 md:px-6 py-1.5 md:py-3 typography-button w-full sm:w-auto text-center min-w-0 transition-colors focus:outline-none focus:ring-2 focus:ring-burgundy focus:ring-offset-2'
   
   const variantClasses = {
     solid: 'bg-black text-white hover:bg-gray-800',

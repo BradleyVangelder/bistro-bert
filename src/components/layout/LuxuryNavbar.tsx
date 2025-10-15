@@ -28,13 +28,13 @@ const menuItems: MenuItem[] = [
   },
   {
     id: 'over-ons',
-    label: 'Over Ons',
+    label: 'Over ons',
     href: '/over-ons',
     description: 'Leer meer over ons restaurant en onze filosofie'
   },
   {
     id: 'contact',
-    label: 'Reserveringen',
+    label: 'Reserveren',
     href: '/contact',
     description: 'Reserveer uw tafel of vraag naar onze diensten'
   }
@@ -155,17 +155,17 @@ export default function LuxuryNavbar() {
                 {/* Header */}
                 <div className="flex justify-between items-center p-8 border-b border-gray-100">
                   <div className="space-y-2">
-                    <h2 className="text-2xl font-serif font-light text-rich-black">
+                    <h2 className="text-suisse-h2 text-rich-black">
                       Bistro Bert
                     </h2>
                     <div className="w-12 h-px bg-gradient-to-r from-transparent via-burgundy to-transparent" />
                   </div>
                   <button
                     onClick={onClose}
-                    className="p-2 hover:bg-gray-50 rounded-full transition-colors duration-200"
-                    aria-label="Close menu"
+                    className="p-4 hover:bg-gray-50 rounded-full transition-colors duration-200 md:p-2"
+                    aria-label="Sluit menu"
                   >
-                    <X className="w-6 h-6 text-rich-black" />
+                    <X className="w-8 h-8 text-rich-black md:w-6 md:h-6" />
                   </button>
                 </div>
 
@@ -187,7 +187,7 @@ export default function LuxuryNavbar() {
                           }`}
                         >
                           <div className="flex items-center justify-between">
-                            <span className="text-3xl font-serif font-light tracking-tight">
+                            <span className="text-suisse-h2 tracking-tight">
                               {item.label}
                             </span>
                             <div className={`w-16 h-px transition-all duration-300 ${
@@ -216,7 +216,7 @@ export default function LuxuryNavbar() {
                   >
                     <div className="flex items-center space-x-3 text-gray-700">
                       <Phone className="w-4 h-4 text-burgundy" />
-                      <span className="text-sm font-luxury">013 480 139</span>
+                      <span className="text-sm font-luxury">+32 13 48 01 39</span>
                     </div>
                     <div className="flex items-center space-x-3 text-gray-700">
                       <Mail className="w-4 h-4 text-burgundy" />
@@ -269,7 +269,7 @@ export default function LuxuryNavbar() {
                 <div className="w-8 h-8 bg-gradient-to-br from-burgundy to-gold-accent rounded-full flex items-center justify-center">
                   <span className="text-white font-serif text-lg font-bold">B</span>
                 </div>
-                <h1 className="text-lg md:text-xl font-serif font-light tracking-tight text-rich-black transition-all duration-300 group-hover:text-burgundy">
+                <h1 className="heading-serif-nav tracking-tight text-rich-black transition-all duration-300 group-hover:text-burgundy">
                   Bistro Bert
                 </h1>
               </motion.div>
@@ -301,7 +301,7 @@ export default function LuxuryNavbar() {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="w-10 h-10 flex items-center justify-center group relative overflow-hidden rounded-full border border-gray-200 bg-white/50 backdrop-blur-sm absolute right-6 md:right-auto md:relative hover:border-burgundy transition-all duration-300 shadow-sm hover:shadow-md"
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-label={isMenuOpen ? "Sluit menu" : "Open menu"}
             >
               <div className="relative z-10">
                 <div className="w-5 h-4 flex flex-col justify-center items-center">

@@ -27,7 +27,7 @@ export default function Error({
           <p className="typography-body text-gray-700 mb-4">
             Voor directe hulp of reserveringen, neem alstublieft contact met ons op:
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row button-tight-spacing justify-center items-center">
             <a
               href="tel:+3213480139"
               className="flex items-center gap-2 text-burgundy font-medium hover:underline"
@@ -41,7 +41,7 @@ export default function Error({
           </div>
         </div>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+        <div className="flex flex-col sm:flex-row button-tight-spacing justify-center mb-8">
           <button
             onClick={reset}
             className="btn-dh min-w-[160px]"

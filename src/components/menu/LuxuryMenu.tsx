@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Star, ChefHat, Leaf, Wheat } from 'lucide-react'
+import { MenuCategoryHeading, RestaurantSubsectionHeading } from '@/components/ui/SmartHeadings'
 
 interface MenuItem {
   id: string
@@ -144,7 +145,7 @@ export default function LuxuryMenu() {
         transition={{ duration: 0.8 }}
         className="text-center mb-16"
       >
-        <h1 className="text-[3.5rem] md:text-[4rem] font-light text-black leading-[0.9] tracking-[-0.015em] font-serif mb-4">Our Menu</h1>
+        <h1 className="heading-serif-large text-[3.5rem] md:text-[4rem] text-black leading-[0.9] tracking-[-0.015em] mb-4">Our Menu</h1>
         <div className="w-24 h-px bg-gradient-to-r from-transparent via-burgundy to-transparent mx-auto mb-8" />
         <p className="text-[1.3rem] text-gray-600 leading-relaxed font-luxury max-w-3xl mx-auto">
           A culinary journey crafted with passion, using the finest ingredients and innovative techniques
@@ -163,7 +164,7 @@ export default function LuxuryMenu() {
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`px-8 py-3 rounded-full transition-all duration-300 font-luxury font-medium tracking-wide ${
+              className={`px-3 md:px-8 py-1.5 md:py-3 rounded-full transition-all duration-300 font-luxury font-medium tracking-wide ${
                 selectedCategory === category.id
                   ? 'bg-white text-burgundy shadow-md'
                   : 'text-gray-600 hover:text-burgundy'
@@ -186,7 +187,7 @@ export default function LuxuryMenu() {
         >
           {/* Category Header */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-serif font-light mb-2">{currentCategory.name}</h2>
+            <MenuCategoryHeading>{currentCategory.name}</MenuCategoryHeading>
             <p className="text-gray-600">{currentCategory.description}</p>
           </div>
 
@@ -211,7 +212,7 @@ export default function LuxuryMenu() {
 
                   <div className="flex justify-between items-start mb-4">
                     <div className="flex-1">
-                      <h3 className="text-xl font-serif font-light text-rich-black mb-2 flex items-center">
+                      <RestaurantSubsectionHeading className="text-rich-black mb-2 flex items-center">
                         {item.name}
                         {item.dietary && item.dietary.map((diet, idx) => (
                           <span key={idx} className="ml-2 text-burgundy/60" title={diet}>
@@ -224,7 +225,7 @@ export default function LuxuryMenu() {
                       </p>
                     </div>
                     <div className="text-right ml-4">
-                      <span className="text-xl font-serif font-light text-burgundy">
+                      <span className="text-suisse-h4 text-burgundy">
                         {item.price}
                       </span>
                     </div>
@@ -251,7 +252,7 @@ export default function LuxuryMenu() {
         transition={{ duration: 0.8, delay: 0.6 }}
         className="text-center mt-16 p-8 bg-ivory/50 rounded-lg"
       >
-        <h3 className="text-xl font-serif font-light mb-4">A Note from Our Chef</h3>
+        <h3 className="text-suisse-h3 mb-4">A Note from Our Chef</h3>
         <p className="text-gray-600 leading-relaxed max-w-2xl mx-auto">
           Our menu changes seasonally to showcase the finest local ingredients. We accommodate dietary restrictions with advance notice.
           Please inform us of any allergies when making your reservation.

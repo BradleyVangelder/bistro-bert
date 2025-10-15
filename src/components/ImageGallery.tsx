@@ -40,32 +40,33 @@ export default function ImageGallery({
       
       // Check if all images are loaded
       if (newSet.size === images.length) {
-        console.log('[ImageGallery] ✅ All images loaded - checking for scroll issues');
-        // Check for scroll issues after all images are loaded
+        console.log('[ImageGallery] ✅ All images loaded - applying overflow fix');
+        
+        // Fix nested scroll issue by ensuring container has proper overflow
         setTimeout(() => {
-          const galleryGrid = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2');
-          if (galleryGrid) {
-            console.log('[ImageGallery] Gallery grid element:', galleryGrid);
-            console.log('[ImageGallery] Grid scrollHeight:', galleryGrid.scrollHeight);
-            console.log('[ImageGallery] Grid clientHeight:', galleryGrid.clientHeight);
-            console.log('[ImageGallery] Grid overflow:', window.getComputedStyle(galleryGrid).overflow);
-            
-            // Check parent elements for scroll issues
-            let parent = galleryGrid.parentElement;
-            while (parent && parent !== document.body) {
-              const parentStyle = window.getComputedStyle(parent);
-              if (parentStyle.overflow === 'auto' || parentStyle.overflow === 'scroll' ||
-                  parentStyle.overflowY === 'auto' || parentStyle.overflowY === 'scroll') {
-                if (parent.scrollHeight > parent.clientHeight) {
-                  console.log('[ImageGallery] ⚠️ Found scrollable parent:', parent);
-                  console.log('[ImageGallery] Parent classes:', parent.className);
-                  console.log('[ImageGallery] Parent overflow:', parentStyle.overflow);
-                  console.log('[ImageGallery] Parent scrollHeight:', parent.scrollHeight);
-                  console.log('[ImageGallery] Parent clientHeight:', parent.clientHeight);
-                }
-              }
-              parent = parent.parentElement;
-            }
+          const galleryContainer = document.querySelector('.mobile-gallery')?.closest('.container-dh') as HTMLElement;
+          const gallerySection = galleryContainer?.closest('section') as HTMLElement;
+          
+          if (galleryContainer) {
+            console.log('[ImageGallery] 🔧 Applying overflow fix to gallery container');
+            galleryContainer.style.overflow = 'visible';
+            galleryContainer.style.overflowY = 'visible';
+            galleryContainer.style.height = 'auto';
+            galleryContainer.style.maxHeight = 'none';
+            galleryContainer.setAttribute('data-gallery-fixed', 'true');
+          }
+          
+          if (gallerySection) {
+            console.log('[ImageGallery] 🔧 Applying overflow fix to gallery section');
+            gallerySection.style.overflow = 'visible';
+            gallerySection.style.overflowY = 'visible';
+            gallerySection.setAttribute('data-gallery-section', 'true');
+          }
+          
+          // Verify the fix was applied
+          if (galleryContainer) {
+            const finalStyles = window.getComputedStyle(galleryContainer);
+            console.log('[ImageGallery] ✅ Final container overflow:', finalStyles.overflow);
           }
         }, 100);
       }
@@ -153,7 +154,7 @@ export default function ImageGallery({
         {images.map((image, index) => (
           <motion.div
             key={image.id}
-            className="relative overflow-hidden border-0 cursor-pointer group focus-within:ring-2 focus-within:ring-burgundy focus-within:ring-offset-2 rounded"
+            className="relative border-0 cursor-pointer group focus-within:ring-2 focus-within:ring-burgundy focus-within:ring-offset-2 rounded"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{
@@ -176,7 +177,7 @@ export default function ImageGallery({
             }}
           >
             {/* Image Container */}
-            <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
+            <div className="relative aspect-[4/3] overflow-hidden bg-gray-100 rounded">
               {!loadedImages.has(image.id) && (
                 <ImageSkeleton
                   className="absolute inset-0 z-10"

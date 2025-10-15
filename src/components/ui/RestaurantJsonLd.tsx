@@ -4,19 +4,28 @@ export function RestaurantJsonLd() {
   return (
     <Script id="ld-restaurant" type="application/ld+json" dangerouslySetInnerHTML={{
       __html: JSON.stringify({
-        "@context":"https://schema.org",
-        "@type":"Restaurant",
-        "name":"Bistro Bert",
-        "url":"https://www.bistro-bert.be",
-        "telephone":"+32 13 48 01 39",
-        "address":{
-          "@type":"PostalAddress",
-          "streetAddress":"Verboeket 121",
-          "postalCode":"2430",
-          "addressLocality":"Laakdal",
-          "addressCountry":"BE"
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "Bistro Bert",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Verboekt 121",
+          "addressLocality": "Laakdal",
+          "postalCode": "2430",
+          "addressCountry": "BE"
         },
-        "menu":"https://www.bistro-bert.be/menu"
+        "telephone": "+32 13 48 01 39",
+        "servesCuisine": "Belgian",
+        "priceRange": "€€-€€€",
+        "url": "https://www.bistro-bert.be",
+        "menu": "https://www.bistro-bert.be/menukaart",
+        "sameAs": ["https://www.instagram.com/bistrobert"],
+        "openingHoursSpecification": [{
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+          "opens": "10:00",
+          "closes": "22:00"
+        }]
       })
     }} />
   );

@@ -238,22 +238,56 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
     if (!containerRef.current) return
 
     const preventScroll = (event: WheelEvent) => {
-      event.preventDefault()
+      // Only prevent horizontal scrolling that could interfere with PDF navigation
+      // Allow all vertical scrolling to ensure page can be scrolled normally
+      if (containerRef.current?.contains(event.target as Node)) {
+        // Only prevent if it's primarily horizontal scroll (deltaX > deltaY)
+        const isHorizontalScroll = Math.abs(event.deltaX) > Math.abs(event.deltaY)
+
+        if (isHorizontalScroll && Math.abs(event.deltaX) > 10) {
+          event.preventDefault()
+        }
+        // Allow all vertical scrolling to propagate to the page
+      }
     }
 
     const preventTouchScroll = (event: TouchEvent) => {
-      if (event.touches.length === 1) {
-        event.preventDefault()
+      // Only prevent horizontal touch movements that could interfere with PDF navigation
+      if (containerRef.current?.contains(event.target as Node) && event.touches.length === 1) {
+        // Store the initial touch position to determine scroll direction
+        const touch = event.touches[0]
+
+        if (!(event as any).initialTouch) {
+          ;(event as any).initialTouch = { clientX: touch.clientX, clientY: touch.clientY }
+          ;(event as any).hasMoved = false
+          return
+        }
+
+        const initialTouch = (event as any).initialTouch
+        const deltaX = Math.abs(touch.clientX - initialTouch.clientX)
+        const deltaY = Math.abs(touch.clientY - initialTouch.clientY)
+
+        // Only prevent if it's clearly horizontal movement and has moved significantly
+        if (deltaX > deltaY && deltaX > 30 && !(event as any).hasMoved) {
+          ;(event as any).hasMoved = true
+          event.preventDefault()
+        }
       }
     }
 
     const element = containerRef.current
     element.addEventListener('wheel', preventScroll, { passive: false })
     element.addEventListener('touchmove', preventTouchScroll, { passive: false })
+    element.addEventListener('touchstart', (e) => {
+      // Reset initial touch position on touch start
+      delete (e as any).initialTouch
+      delete (e as any).hasMoved
+    }, { passive: true })
 
     return () => {
       element.removeEventListener('wheel', preventScroll)
       element.removeEventListener('touchmove', preventTouchScroll)
+      element.removeEventListener('touchstart', () => {})
     }
   }, [isClient])
 
@@ -417,21 +451,6 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
         <span>Vorige pagina</span>
       </button>
 
-      <AnimatePresence mode="wait">
-        <motion.span
-          key={pageNumber}
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -6 }}
-          transition={{ duration: 0.3 }}
-          className="monochrome-pdf-indicator"
-          aria-live="polite"
-          aria-current="true"
-        >
-          Pagina {pageNumber}{numPages ? ` / ${numPages}` : ''}
-        </motion.span>
-      </AnimatePresence>
-
       <button
         type="button"
         onClick={handleNextPage}
@@ -590,28 +609,11 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
       </div>
 
       {/* Caption showing current page */}
-      <div className="text-center mt-4">
+      <div className="text-center monochrome-pdf-page-caption">
         <p className="text-sm text-gray-600 font-medium">
           Pagina {pageNumber}{numPages ? ` van ${numPages}` : ''}
         </p>
       </div>
-
-      <p className="monochrome-pdf-hint">Gebruik de pijltjestoetsen of knoppen om te navigeren</p>
-      
-      {/* Performance monitoring - only visible in development */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="fixed bottom-4 left-4 bg-black/80 text-white p-3 rounded-lg text-xs font-mono z-50 max-w-xs">
-          <h4 className="font-bold mb-2 text-green-400">PDF Performance</h4>
-          <div className="space-y-1">
-            <div>Current Page: {pageNumber}</div>
-            <div>Total Pages: {numPages || 'Loading...'}</div>
-            <div>Container: {Math.round(containerDimensions.width)}x{Math.round(containerDimensions.height)}</div>
-            <div>Cached Pages: {pageCache.size}</div>
-            <div>Preloading: {isPreloading ? 'Yes' : 'No'}</div>
-            <div>Status: {isLoading ? 'Loading' : 'Ready'}</div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

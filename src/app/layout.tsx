@@ -1,28 +1,60 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display, Cormorant_Garamond, Montserrat } from "next/font/google";
 import Header from "@/components/layout/Header";
 import MainContent from "@/components/layout/MainContent";
 import SkipLinks from "@/components/ui/SkipLinks";
 import WebVitalsMonitor from "@/components/performance/WebVitalsMonitor";
-import { WebVitalsDebug } from "@/components/performance/WebVitalsMonitor";
 import PerformanceOptimizer from "@/components/performance/PerformanceOptimizer";
-import { PerformanceDebug } from "@/components/performance/PerformanceOptimizer";
 import { HighContrastProvider } from "@/contexts/HighContrastContext";
-import "./fonts.css";
+import { RestaurantJsonLd } from "@/components/ui/RestaurantJsonLd";
 import "./globals.css";
 
 const inter = Inter({
   variable: "--font-suisse",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+  preload: true,
+});
+
+const playfairDisplay = Playfair_Display({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+  preload: false, // Load on demand
+});
+
+const cormorantGaramond = Cormorant_Garamond({
+  variable: "--font-elegant",
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+  preload: false, // Load on demand
+});
+
+const montserrat = Montserrat({
+  variable: "--font-luxury",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal"],
+  display: "swap",
+  preload: false, // Load on demand
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Bistro Bert Laakdal — Luxe Belgisch genieten",
+    default: "Bistro Bert Laakdal — Seizoenskeuken",
     template: "%s | Bistro Bert Laakdal"
   },
-  description: "Belgische klassiekers met finesse. Dagvers, seizoensgebonden. Reserveer voor lunch, zakenlunch of diner in Laakdal.",
+  description: "Belgische klassiekers met finesse in Laakdal, Antwerpse Kempen. Dagvers en seizoensgebonden. Reserveer voor lunch of diner.",
+  icons: {
+    icon: "/bistro-bert-logo.png",
+    shortcut: "/bistro-bert-logo.png",
+    apple: "/bistro-bert-logo.png",
+  },
   keywords: [
     "Bistro Bert Laakdal",
     "luxe restaurant",
@@ -48,12 +80,11 @@ export const metadata: Metadata = {
     canonical: "https://www.bistro-bert.be",
     languages: {
       "nl-BE": "https://www.bistro-bert.be/nl",
-      "fr-BE": "https://www.bistro-bert.be/fr",
     },
   },
   openGraph: {
-    title: "Bistro Bert Laakdal — Luxe Belgisch genieten",
-    description: "Belgische klassiekers met finesse. Dagvers, seizoensgebonden. Reserveer voor lunch, zakenlunch of diner in Laakdal.",
+    title: "Bistro Bert Laakdal — Seizoenskeuken",
+    description: "Belgische klassiekers met finesse in Laakdal, Antwerpse Kempen. Dagvers en seizoensgebonden. Reserveer voor lunch of diner.",
     url: "https://www.bistro-bert.be",
     siteName: "Bistro Bert",
     locale: "nl_BE",
@@ -72,51 +103,14 @@ export const metadata: Metadata = {
     site: "@bistrobert",
     creator: "@bistrobert",
     images: ["/images/restaurant/hero-moody-wine-bar.jpg"],
-    title: "Bistro Bert Laakdal — Luxe Belgisch genieten",
-    description: "Belgische klassiekers met finesse. Dagvers, seizoensgebonden. Reserveer voor lunch, zakenlunch of diner in Laakdal.",
+    title: "Bistro Bert Laakdal — Seizoenskeuken",
+    description: "Belgische klassiekers met finesse in Laakdal, Antwerpse Kempen. Dagvers en seizoensgebonden. Reserveer voor lunch of diner.",
   },
 
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
     title: 'Bistro Bert',
-  },
-  other: {
-    'script:ld+json': JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'LocalBusiness',
-      name: 'Bistro Bert',
-      description: 'Luxe restaurant met verfijnde Belgische keuken in Laakdal',
-      url: 'https://www.bistro-bert.be',
-      telephone: '013 480 139',
-      email: 'info@bistro-bert.be',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: 'Verboekt 121',
-        addressLocality: 'Laakdal',
-        postalCode: '2430',
-        addressCountry: 'BE',
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: '51.0843463',
-        longitude: '5.0996063',
-      },
-      openingHours: [
-        'Tuesday-Sunday 10:00-22:00',
-      ],
-      priceRange: '€€€',
-      image: [
-        'https://www.bistro-bert.be/images/restaurant/hero-moody-wine-bar.jpg',
-        'https://www.bistro-bert.be/images/restaurant/dining-room.jpg',
-        'https://www.bistro-bert.be/images/restaurant/cuisine.jpg',
-      ],
-      sameAs: [
-        'https://instagram.com/bistrobert',
-      ],
-      servesCuisine: 'Belgian',
-      acceptsReservations: 'True',
-    }),
   },
 };
 
@@ -129,11 +123,11 @@ export default function RootLayout({
     <html lang="nl">
       <head>
         <link rel="alternate" hrefLang="nl-BE" href="https://www.bistro-bert.be" />
-        <link rel="alternate" hrefLang="fr-BE" href="https://www.bistro-bert.be/fr" />
         <link rel="alternate" hrefLang="x-default" href="https://www.bistro-bert.be" />
+        <RestaurantJsonLd />
       </head>
       <body
-        className={`${inter.variable} font-suisse antialiased`}
+        className={`${inter.variable} ${playfairDisplay.variable} ${cormorantGaramond.variable} ${montserrat.variable} font-suisse antialiased`}
       >
         <HighContrastProvider>
           <SkipLinks />
@@ -143,14 +137,6 @@ export default function RootLayout({
           {/* Performance Monitoring */}
           <WebVitalsMonitor />
           <PerformanceOptimizer />
-
-          {/* Debug Components (development only) */}
-          {process.env.NODE_ENV === 'development' && (
-            <>
-              <WebVitalsDebug />
-              <PerformanceDebug />
-            </>
-          )}
         </HighContrastProvider>
       </body>
     </html>

@@ -15,14 +15,14 @@ const MinimalistPDFViewer = nextDynamic(() => import('@/components/MinimalistPDF
       <div className="container-dh">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h1 className="typography-h1 mb-6 md:mb-8">Onze Menukaart</h1>
+            <h1 className="typography-h1 mb-6 md:mb-8">Onze menukaart</h1>
             <p className="typography-body-large text-gray-600 max-w-3xl mx-auto">
-              Welkom bij onze menukaart waar elk gerecht een verhaal vertelt van Belgische culinaire erfenis, lokale terroir, en meesterlijke vakmanschap. Onze kaart is een levend document dat evolueert met de seizoenen van de Antwerpse Kempen, waarbij we de rijke tradities van de Belgische keuken eren met eigentijdse creativiteit en technische precisie. Hier vindt u vertrouwde klassiekers die met respect en innovatie worden benaderd, naast verrassende seizoensgebonden creaties die de veelzijdigheid van onze lokale ingrediënten vieren. Of u nu komt voor een snelle zakenlunch, een ontspannen middagmaal, of een uitgebreid diner, onze menukaart biedt opties die elke gelegenheid verheffen tot een culinaire ervaring. Elke schotel is het resultaat van urenlange voorbereiding, zorgvuldige ingrediëntselectie, en een diep begrip van de smaken en technieken die de Belgische keuken wereldberoemd hebben gemaakt.
+              Seizoensgebonden, dagvers en precies bereid—dagsuggesties naast onze klassiekers.
             </p>
           </div>
           <div className="mb-20">
             <div className="text-center py-20">
-              <p>Menukaart wordt geladen…</p>
+              <p>Menukaart wordt geladen...</p>
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@ const sampleReviews = [
 export default function MenuContent() {
   const breadcrumbItems = [
     { name: 'Home', url: 'https://bistrobert.be' },
-    { name: 'Menu', url: 'https://bistrobert.be/menu' },
+    { name: 'Menukaart', url: 'https://bistrobert.be/menu' },
   ]
 
   return (
@@ -74,7 +74,7 @@ export default function MenuContent() {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.8 }}
                 >
-                  Onze Menukaart
+                  Onze menukaart
                 </motion.h1>
                 <motion.p
                   className="typography-body-large text-gray-600 max-w-3xl mx-auto"
@@ -82,7 +82,7 @@ export default function MenuContent() {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  Welkom bij onze menukaart waar elk gerecht een verhaal vertelt van Belgische culinaire erfenis, lokale terroir, en meesterlijke vakmanschap. Onze kaart is een levend document dat evolueert met de seizoenen van de Antwerpse Kempen, waarbij we de rijke tradities van de Belgische keuken eren met eigentijdse creativiteit en technische precisie. Hier vindt u vertrouwde klassiekers die met respect en innovatie worden benaderd, naast verrassende seizoensgebonden creaties die de veelzijdigheid van onze lokale ingrediënten vieren. Of u nu komt voor een snelle zakenlunch, een ontspannen middagmaal, of een uitgebreid diner, onze menukaart biedt opties die elke gelegenheid verheffen tot een culinaire ervaring. Elke schotel is het resultaat van urenlange voorbereiding, zorgvuldige ingrediëntselectie, en een diep begrip van de smaken en technieken die de Belgische keuken wereldberoemd hebben gemaakt.
+                  Seizoensgebonden, dagvers en precies bereid—dagsuggesties naast onze klassiekers.
                 </motion.p>
               </div>
 
@@ -99,6 +99,7 @@ export default function MenuContent() {
                   <MinimalistPDFViewer pdfUrl="/menu.pdf" />
                 </div>
 
+
   
                 {/* Reservation CTA - Luxury divider styling */}
                 <motion.div
@@ -110,12 +111,20 @@ export default function MenuContent() {
                   <p className="typography-body text-gray-600 mb-6">
                     Klaar voor lunch of diner?
                   </p>
-                  <a
-                    href="/contact"
-                    className="btn-dh-minimal"
-                  >
-                    Reserveer voor lunch of zakenlunch
-                  </a>
+                  <div className="flex flex-col sm:flex-row button-tight-spacing justify-center">
+                    <a
+                      href="/contact"
+                      className="btn-dh-minimal"
+                    >
+                      Reserveer een tafel
+                    </a>
+                    <a
+                      href="#wijn"
+                      className="btn-dh-secondary"
+                    >
+                      Bekijk wijnen
+                    </a>
+                  </div>
                 </motion.div>
               </motion.div>
             </div>

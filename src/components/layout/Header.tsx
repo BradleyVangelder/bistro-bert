@@ -5,8 +5,9 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Cloud, Thermometer, MapPin, Phone, Mail, Clock, X } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, X } from 'lucide-react'
 import MinimalistMenuButton from './MinimalistMenuButton'
+import WeatherInfo from '../weather/WeatherInfo'
 
 export default function Header() {
   const pathname = usePathname()
@@ -52,24 +53,18 @@ export default function Header() {
   const isWhiteIcon = isHomePage && !hasScrolledFromTop
 
   // Enhanced responsive behavior
-  const logoWidth = isMobile ? 72 : 90
-  const logoHeight = isMobile ? 72 : 90
+  const logoWidth = isMobile ? 96 : 120
+  const logoHeight = isMobile ? 96 : 120
   const containerPadding = isMobile ? 'px-8 pt-3 pb-2' : 'px-8 md:px-16 lg:px-24 pt-4 pb-2'
 
   
   // Navigation items - luxury experience focused
   const navItems = [
     { id: 'menu', label: 'Menukaart', href: '/menu' },
-    { id: 'over-ons', label: 'Over Ons', href: '/over-ons' },
-    { id: 'contact', label: 'Reserveringen', href: '/contact' },
+    { id: 'over-ons', label: 'Over ons', href: '/over-ons' },
+    { id: 'contact', label: 'Reserveren', href: '/contact' },
   ]
 
-  // Static weather data (removes API dependency)
-  const weather = {
-    temperature: 16,
-    condition: 'Partly Cloudy',
-    location: 'Brussels, Belgium'
-  }
 
   return (
     <>
@@ -95,7 +90,7 @@ export default function Header() {
                 alt=""
                 width={logoWidth}
                 height={logoHeight}
-                className="w-auto h-auto"
+                className="object-contain"
                 priority
                 style={{
                   filter: isWhiteIcon ? 'brightness(0) invert(1)' : 'none',
@@ -129,7 +124,7 @@ export default function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/60 z-[55] pointer-events-auto"
+              className="fixed inset-0 bg-black/60 z-[70] pointer-events-auto"
               onClick={() => setIsMenuOpen(false)}
               aria-hidden="true"
             />
@@ -140,40 +135,26 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-              className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white z-[65] pointer-events-auto mobile-nav-container"
+              className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white z-[75] pointer-events-auto mobile-nav-container"
               role="dialog"
               aria-modal="true"
-              aria-labelledby="menu-title"
+              aria-label="Navigatiemenu"
             >
               <div className="h-full flex flex-col">
-                {/* Menu Header - Mobile Friendly */}
-                <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100 bg-white/95 backdrop-blur-sm">
-                  <div className="flex items-center gap-3">
-                    <div className="relative w-16 h-16 md:w-20 md:h-20">
-                      <Image
-                        src="/bistro-bert-logo.png"
-                        alt=""
-                        fill
-                        className="object-contain"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <h2 id="menu-title" className="text-xl font-serif font-light text-black">
-                      Menu
-                    </h2>
-                  </div>
+                {/* Menu Header - Simplified */}
+                <div className="flex justify-end items-center px-6 py-4 bg-white/95 backdrop-blur-sm">
                   <button
                     onClick={() => setIsMenuOpen(false)}
-                    className="w-10 h-10 md:w-8 md:h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors focus:ring-2 focus:ring-burgundy focus:ring-offset-2"
+                    className="w-14 h-14 md:w-12 md:h-12 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors focus:ring-2 focus:ring-gray-800 focus:ring-offset-2"
                     aria-label="Sluit menu"
                   >
-                    <X className="w-6 h-6 md:w-5 md:h-5 text-black" />
+                    <X className="w-8 h-8 md:w-8 md:h-8 text-black" />
                   </button>
                 </div>
 
                 {/* Navigation Items */}
                 <nav
-                  className="flex-1 px-6 py-8 overflow-y-auto"
+                  className="flex-1 px-6 py-2 overflow-y-auto"
                   role="navigation"
                   aria-label="Hoofdnavigatie"
                 >
@@ -187,11 +168,11 @@ export default function Header() {
                       >
                         <Link
                           href={item.href}
-                          className="group block py-4 px-3 focus:outline-none focus:ring-2 focus:ring-burgundy focus:ring-offset-2 rounded mobile-nav-item"
+                          className="group block py-4 px-3 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2 rounded mobile-nav-item"
                           onClick={() => setIsMenuOpen(false)}
                           aria-label={`Navigeer naar ${item.label}`}
                         >
-                          <div className="text-2xl md:text-2xl font-serif font-light text-black leading-tight tracking-tight group-hover:text-gray-600 transition-colors duration-300">
+                          <div className="font-serif text-xl font-medium text-black leading-tight tracking-tight group-hover:text-gray-600 transition-colors duration-300">
                             {item.label}
                           </div>
                           <div className="w-0 h-px bg-black transition-all duration-300 group-hover:w-16 mt-2"></div>
@@ -205,62 +186,56 @@ export default function Header() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
-                    className="mt-8 pt-6 border-t border-gray-100 space-y-4"
+                    className="mt-8 pt-6 border-t border-gray-100 space-y-2 px-3"
                   >
-                    {/* Mobile Weather Info */}
-                    <div className="flex items-center gap-3 text-gray-700 bg-gray-50 rounded-lg px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        <Thermometer className="w-5 h-5 text-burgundy" />
-                        <span className="text-base font-medium font-luxury">{weather.temperature}°C</span>
-                      </div>
-                      <div className="w-px h-4 bg-gray-300" />
-                      <div className="flex items-center gap-2">
-                        <Cloud className="w-5 h-5 text-burgundy" />
-                        <span className="text-sm text-gray-600 font-luxury">{weather.condition}</span>
-                      </div>
+                    <div className="flex items-center gap-2 md:gap-4 text-gray-700 py-2">
+                      <Phone className="w-5 h-5 text-gray-700" />
+                      <a
+                        href="tel:+3213480139"
+                        className="text-base font-luxury"
+                      >
+                        <span>+32 13 48 01 39</span>
+                      </a>
                     </div>
 
-                    <a
-                      href="tel:+3213480139"
-                      className="flex items-center gap-3 text-gray-700 p-3 rounded-lg hover:bg-gray-50 transition-colors mobile-nav-item"
-                    >
-                      <Phone className="w-5 h-5 text-burgundy" />
-                      <span className="text-base font-luxury">+32 13 48 01 39</span>
-                    </a>
-                    
-                    <a
-                      href="mailto:info@bistro-bert.be"
-                      className="flex items-center gap-3 text-gray-700 p-3 rounded-lg hover:bg-gray-50 transition-colors mobile-nav-item"
-                    >
-                      <Mail className="w-5 h-5 text-burgundy" />
-                      <span className="text-base font-luxury">info@bistro-bert.be</span>
-                    </a>
-                    
-                    <div className="flex items-center gap-3 text-gray-700 p-3 rounded-lg bg-gray-50">
-                      <Clock className="w-5 h-5 text-burgundy" />
+                    <div className="flex items-center gap-2 md:gap-4 text-gray-700 py-2">
+                      <Mail className="w-5 h-5 text-gray-700" />
+                      <a
+                        href="mailto:info@bistro-bert.be"
+                        className="text-base font-luxury"
+                      >
+                        <span>info@bistro-bert.be</span>
+                      </a>
+                    </div>
+
+                    <div className="flex items-center gap-2 md:gap-4 text-gray-700 py-2">
+                      <Clock className="w-5 h-5 text-gray-700" />
                       <div>
-                        <span className="text-base font-luxury">Dinsdag t/m zondag</span>
-                        <div className="text-burgundy font-semibold">10:00–22:00</div>
+                        <span className="text-base font-luxury">Dinsdag–Zondag</span>
+                        <div className="text-gray-800 font-semibold">10:00–22:00</div>
                       </div>
                     </div>
-                    
-                    <div className="flex items-start gap-3 text-gray-700 p-3 rounded-lg bg-gray-50">
-                      <MapPin className="w-5 h-5 text-burgundy mt-1" />
+                    <div className="flex items-start gap-3 text-gray-700 py-2">
+                      <MapPin className="w-5 h-5 text-gray-700 mt-1" />
                       <div>
                         <span className="text-base font-luxury">Verboekt 121</span>
                         <div className="text-sm text-gray-600">2430 Laakdal, België</div>
                       </div>
                     </div>
+                    
+                    {/* Weather Information */}
+                    <WeatherInfo />
+                    
                   </motion.div>
                 </nav>
 
                 {/* Mobile Footer */}
                 <div className="px-6 pb-6 pt-4 border-t border-gray-100 bg-gray-50/50">
                   <div className="text-xs text-gray-500 font-light tracking-wider uppercase text-center font-luxury">
-                    Ambachtelijke Perfectie
+                    Belgische Traditie
                   </div>
                   <div className="text-xs text-gray-400 font-light tracking-wider uppercase text-center mt-1 font-luxury">
-                    Since 2024
+                    Sinds 2025
                   </div>
                 </div>
               </div>
