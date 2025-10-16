@@ -265,7 +265,7 @@ export default function ImageGalleryDebug({
             }}
           >
             {/* Image Container */}
-            <div className="relative overflow-hidden bg-gray-100">
+            <div className="relative overflow-hidden bg-white">
               {testMode !== 'no-skeleton' && !loadedImages.has(image.id) && (
                 <ImageSkeleton
                   className="absolute inset-0 z-10"
@@ -276,17 +276,22 @@ export default function ImageGalleryDebug({
                 src={image.src}
                 alt={image.alt}
                 fill
-                className={`object-cover transition-all duration-500 group-hover:scale-105 ${
+                className={`object-fill transition-all duration-500 group-hover:scale-105 ${
                   loadedImages.has(image.id) ? 'opacity-100' : 'opacity-0'
                 }`}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority={image.priority}
                 onLoad={() => handleImageLoad(image.id)}
               />
-            </div>
 
-            {/* Minimal overlay */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300" />
+              {/* Minimal overlay - positioned inside image container */}
+              <div
+                className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300"
+                style={{ touchAction: 'none' }}
+                onWheel={(e) => e.preventDefault()}
+                onTouchMove={(e) => e.preventDefault()}
+              />
+            </div>
           </motion.div>
         ))}
       </div>

@@ -1772,6 +1772,15 @@ textarea::placeholder {
     height: clamp(400px, 85vh, 600px) !important;
     max-height: 85vh !important;
   }
+
+  /* Add margin-top to PDF page layer on mobile */
+  .rpv-core__page-layer {
+    margin-top: 2rem !important;
+  }
+
+  .rpv-core__page-layer--single {
+    margin-top: 2rem !important;
+  }
 }
 
 @media (pointer: coarse) {

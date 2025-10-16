@@ -7,6 +7,7 @@ import WebVitalsMonitor from "@/components/performance/WebVitalsMonitor";
 import PerformanceOptimizer from "@/components/performance/PerformanceOptimizer";
 import { HighContrastProvider } from "@/contexts/HighContrastContext";
 import { RestaurantJsonLd } from "@/components/ui/RestaurantJsonLd";
+import ZenchefWidget from "@/components/ui/ZenchefWidget";
 import "./globals.css";
 
 const inter = Inter({
@@ -125,6 +126,12 @@ export default function RootLayout({
         <link rel="alternate" hrefLang="nl-BE" href="https://www.bistro-bert.be" />
         <link rel="alternate" hrefLang="x-default" href="https://www.bistro-bert.be" />
         <RestaurantJsonLd />
+        {/* Zenchef Widget SDK */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `;(function (d, s, id) {const el = d.getElementsByTagName(s)[0]; if (d.getElementById(id) || el.parentNode == null) {return;} var js = d.createElement(s);  js.id = id; js.async = true; js.src = 'https://sdk.zenchef.com/v1/sdk.min.js';  el.parentNode.insertBefore(js, el); })(document, 'script', 'zenchef-sdk')`
+          }}
+        />
       </head>
       <body
         className={`${inter.variable} ${playfairDisplay.variable} ${cormorantGaramond.variable} ${montserrat.variable} font-suisse antialiased`}
@@ -133,6 +140,9 @@ export default function RootLayout({
           <SkipLinks />
           <Header />
           <MainContent>{children}</MainContent>
+
+          {/* Zenchef Widget - available on all pages */}
+          <ZenchefWidget />
 
           {/* Performance Monitoring */}
           <WebVitalsMonitor />

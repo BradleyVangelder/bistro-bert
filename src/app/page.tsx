@@ -118,7 +118,7 @@ export default function Home() {
                           <ActionButton
                             href="/menu"
                             variant="hero-menu"
-                            className="mt-4"
+                            className="mt-4 mb-8 sm:mb-0"
                             ariaLabel="Navigeer naar onze menukaart"
                           >
                             Bekijk de menukaart

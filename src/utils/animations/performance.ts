@@ -261,20 +261,22 @@ export class AnimationPerformanceMonitor {
     
     // Determine GPU tier (simplified)
     let gpuTier: 'low' | 'medium' | 'high' = 'medium';
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl');
-      if (gl) {
-        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-        if (debugInfo) {
-          const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-          if (renderer.includes('NVIDIA') || renderer.includes('AMD') || renderer.includes('Apple')) {
-            gpuTier = 'high';
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl');
+        if (gl) {
+          const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+          if (debugInfo) {
+            const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+            if (renderer.includes('NVIDIA') || renderer.includes('AMD') || renderer.includes('Apple')) {
+              gpuTier = 'high';
+            }
           }
         }
+      } catch (error) {
+        // Keep default GPU tier if canvas creation fails
       }
-    } catch (error) {
-      // Keep default GPU tier if canvas creation fails
     }
     
     // Determine recommended quality
