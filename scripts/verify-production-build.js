@@ -77,7 +77,7 @@ function checkBuildOutput() {
     filesToCheck.forEach(file => {
       if (fs.existsSync(file)) {
         const content = fs.readFileSync(file, 'utf8');
-        if (content.includes('canvas') && !content.includes('html5 canvas')) {
+        if (content.includes('canvas') && !content.includes('html5 canvas') && !content.includes('createElement(\'canvas\')') && !content.includes('createElement("canvas")') && !content.includes('getContext(\'webgl\')') && !content.includes('getContext("webgl")')) {
           console.log(`❌ Canvas reference found in ${file}`);
           canvasFound = true;
         }

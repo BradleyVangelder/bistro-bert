@@ -177,7 +177,7 @@ export default function ImageGallery({
             }}
           >
             {/* Image Container */}
-            <div className="relative aspect-[4/3] overflow-hidden bg-gray-100 rounded">
+            <div className="relative aspect-[4/3] overflow-hidden bg-white rounded">
               {!loadedImages.has(image.id) && (
                 <ImageSkeleton
                   className="absolute inset-0 z-10"
@@ -188,17 +188,22 @@ export default function ImageGallery({
                 src={image.src}
                 alt={image.alt}
                 fill
-                className={`object-cover transition-all duration-500 group-hover:scale-105 ${
+                className={`object-fill transition-all duration-500 group-hover:scale-105 ${
                   loadedImages.has(image.id) ? 'opacity-100' : 'opacity-0'
                 }`}
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority={image.priority}
                 onLoad={() => handleImageLoad(image.id)}
               />
-            </div>
 
-            {/* Minimal overlay */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300" />
+              {/* Minimal overlay - positioned inside image container */}
+              <div
+                className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300 rounded"
+                style={{ touchAction: 'none' }}
+                onWheel={(e) => e.preventDefault()}
+                onTouchMove={(e) => e.preventDefault()}
+              />
+            </div>
           </motion.div>
         ))}
       </div>
@@ -208,7 +213,7 @@ export default function ImageGallery({
         {enableLightbox && selectedImage && (
           <RemoveScroll>
             <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 overflow-hidden"
+              className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 overflow-hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -301,7 +306,7 @@ export default function ImageGallery({
               {/* Image Info */}
               {selectedImage.title && (
                 <motion.div
-                  className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6"
+                  className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-6 z-[70]"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}

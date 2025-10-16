@@ -35,11 +35,13 @@ export default function ClientContact() {
             >
               Verfijnde Belgische keuken met een doordachte wijnkaart in Laakdal.
             </motion.p>
+
+            {/* Alternative contact methods */}
             <motion.div
               className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center max-w-full"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
             >
                 <motion.a
                   href="mailto:info@bistro-bert.com?subject=Reservatie"
@@ -49,7 +51,7 @@ export default function ClientContact() {
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.2 }}
                 >
-                  Reserveer een tafel
+                  Reserveer via e-mail
                 </motion.a>
                 <motion.a
                   href="tel:+3213480139"
