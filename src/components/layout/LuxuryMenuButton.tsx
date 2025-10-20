@@ -113,7 +113,7 @@ export default function LuxuryMenuButton({ isOpen, onToggle, className = '' }: L
         onClick={onToggle}
         className="
           relative
-          px-8 py-4
+          px-3 md:px-8 py-1.5 md:py-4
           bg-[#800020]
           rounded-lg
           border border-[#D4AF37]
@@ -155,7 +155,7 @@ export default function LuxuryMenuButton({ isOpen, onToggle, className = '' }: L
           </motion.div>
 
           <span className="text-white text-sm font-light tracking-[0.3em] uppercase">
-            {isOpen ? 'Close' : 'Menu'}
+            {isOpen ? 'Sluit' : 'Menukaart'}
           </span>
         </div>
 

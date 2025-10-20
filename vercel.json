@@ -3,48 +3,37 @@
   "name": "bistro-bert",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
-  "installCommand": "npm install",
+  "installCommand": "npm ci --omit=dev --ignore-optional --no-audit --no-fund",
   "framework": "nextjs",
-  "regions": ["bru1"],
+  "regions": ["cdg1"],
   "builds": [
     {
       "src": "package.json",
       "use": "@vercel/next"
     }
   ],
-  "functions": {
-    "src/pages/api/**/*.ts": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "env": {
-    "NEXT_PUBLIC_ENV": "production"
+    "NEXT_PUBLIC_ENV": "production",
+    "NODE_ENV": "production",
+    "SKIP_CANVAS_INSTALL": "true",
+    "PDFJS_DIST_BUILD_SCRIPT": "false",
+    "NPM_CONFIG_IGNORE_SCRIPTS": "true",
+    "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
   },
   "build": {
     "env": {
-      "NEXT_PUBLIC_ENV": "production"
+      "NEXT_PUBLIC_ENV": "production",
+      "NODE_ENV": "production",
+      "SKIP_CANVAS_INSTALL": "true",
+      "PDFJS_DIST_BUILD_SCRIPT": "false",
+      "NPM_CONFIG_IGNORE_SCRIPTS": "true",
+      "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
     }
   },
   "git": {
     "deploymentEnabled": {
       "master": true,
       "staging": true
-    }
-  },
-  "environments": {
-    "production": {
-      "build": {
-        "env": {
-          "NEXT_PUBLIC_ENV": "production"
-        }
-      }
-    },
-    "preview": {
-      "build": {
-        "env": {
-          "NEXT_PUBLIC_ENV": "staging"
-        }
-      }
     }
   }
 }

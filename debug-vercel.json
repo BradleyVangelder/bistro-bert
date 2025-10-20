@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "name": "bistro-bert-debug",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install --omit=dev --omit=optional",
+  "framework": "nextjs",
+  "regions": ["bru1"],
+  "env": {
+    "NEXT_PUBLIC_ENV": "production",
+    "NODE_OPTIONS": "--max-old-space-size=4096",
+    "DEBUG_VERCEL": "true"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_ENV": "production",
+      "NODE_OPTIONS": "--max-old-space-size=4096"
+    }
+  }
+}
