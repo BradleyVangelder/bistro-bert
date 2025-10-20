@@ -96,7 +96,8 @@ export default function MenuPage() {
                     : 'Ambachtelijk bereide desserts, perfect als zoete afsluiting van uw culinaire ervaring.'
                   }
                 </motion.p>
-              </div>
+
+                </div>
 
               {/* Menu Display - The Hero */}
               <motion.div
@@ -113,7 +114,7 @@ export default function MenuPage() {
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.6 }}
                   >
-                    <MinimalistPDFViewer pdfUrl={getPdfUrl()} />
+                    <MinimalistPDFViewer key={`${menuType}-pdf`} pdfUrl={getPdfUrl()} />
                   </motion.div>
                 </div>
 
