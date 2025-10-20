@@ -57,6 +57,29 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
     setIsClient(true)
   }, [])
 
+  // Reset page number when PDF URL changes
+  useEffect(() => {
+    if (!isClient) return
+
+    // Reset to page 1 when PDF URL changes
+    setPageNumber(1)
+    setError(null)
+    setIsPageLoading(false)
+
+    // Clear URL slide parameter to ensure clean state
+    try {
+      const url = new URL(window.location.href)
+      url.searchParams.delete("slide")
+      window.history.replaceState({}, "", url.toString())
+    } catch (error) {
+      console.warn('Failed to clear URL parameters:', error)
+    }
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[PDF DEBUG] PDF URL changed, reset to page 1')
+    }
+  }, [pdfUrl, isClient])
+
   // Set up container dimensions for CLS prevention
   useEffect(() => {
     if (!containerRef.current) return
@@ -81,11 +104,13 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
     }
   }, [])
 
-  // Unified page change function with debouncing
+  // Simplified page change function - button clicks should be immediate
   const changePage = useCallback((newPageNumber: number, source: 'url' | 'viewer' | 'button') => {
     const now = Date.now()
-    const MIN_UPDATE_DELAY = 200 // 200ms minimum between updates
-    
+
+    // For button clicks, be more responsive - only prevent truly rapid clicks
+    const MIN_UPDATE_DELAY = source === 'button' ? 50 : 200
+
     // Get current lastUpdateTime from state to avoid closure issues
     setLastUpdateTime(currentTime => {
       // Prevent rapid successive updates
@@ -95,12 +120,12 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
         }
         return currentTime // Return the same value to update
       }
-      
+
       // Update state
       setUpdateSource(source)
       setPageNumber(newPageNumber)
       setError(null)
-      
+
       // Handle source-specific actions
       if (source !== 'url') {
         // Update URL when the source is not 'url'
@@ -112,22 +137,22 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
           console.warn('Failed to update URL:', error)
         }
       }
-      
+
       if (source !== 'viewer') {
         // Update PDF viewer when the source is not 'viewer'
         jumpToPage(newPageNumber - 1)
         setIsPageLoading(true)
-        
+
         // Set a fallback timeout to ensure loading state doesn't get stuck
         setTimeout(() => {
           setIsPageLoading(false)
         }, 1000)
       }
-      
+
       if (process.env.NODE_ENV === 'development') {
         console.log(`[PDF DEBUG] Page changed to ${newPageNumber} from source: ${source}`)
       }
-      
+
       return now // Return the new timestamp
     })
   }, [jumpToPage])
@@ -168,18 +193,20 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
   }, [pageNumber, isClient, updateSource])
 
   const handlePreviousPage = useCallback(() => {
-    if (pageNumber > 1 && !isPageLoading) {
+    // Be more permissive with button clicks - don't wait for loading to complete
+    if (pageNumber > 1) {
       const newPage = pageNumber - 1
       changePage(newPage, 'button')
     }
-  }, [pageNumber, isPageLoading, changePage])
+  }, [pageNumber, changePage])
 
   const handleNextPage = useCallback(() => {
-    if (numPages && pageNumber < numPages && !isPageLoading) {
+    // Be more permissive with button clicks - don't wait for loading to complete
+    if (numPages && pageNumber < numPages) {
       const newPage = pageNumber + 1
       changePage(newPage, 'button')
     }
-  }, [pageNumber, numPages, isPageLoading, changePage])
+  }, [pageNumber, numPages, changePage])
 
   const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'ArrowLeft') {
@@ -442,7 +469,7 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
       <button
         type="button"
         onClick={handlePreviousPage}
-        disabled={isFirstPage}
+        disabled={isFirstPage || isDocumentLoading}
         className="monochrome-pdf-button"
         aria-label="Vorige pagina"
         aria-current={isFirstPage ? "true" : undefined}
@@ -454,7 +481,7 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
       <button
         type="button"
         onClick={handleNextPage}
-        disabled={isLastPage}
+        disabled={isLastPage || isDocumentLoading}
         className="monochrome-pdf-button"
         aria-label="Volgende pagina"
         aria-current={isLastPage ? "true" : undefined}
