@@ -5,11 +5,22 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { revealPresets, microInteractionPresets } from '@/utils/animations/presets'
 import { ANIMATION_DURATIONS, EASING } from '@/utils/animations/constants'
+import { openZenchefWidget } from '@/utils/zenchef'
+import ActionButton from '@/components/ui/ActionButton'
 
 export default function StickyReserveButton() {
   const [isVisible, setIsVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+
+  const handleReserveClick = () => {
+    const widgetOpened = openZenchefWidget()
+    if (!widgetOpened) {
+      // Don't navigate away - just log the error and let user try again
+      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
+      // Optional: You could show a toast message here instead of navigating away
+    }
+  }
 
   useEffect(() => {
     const checkMobile = () => {
@@ -55,41 +66,14 @@ export default function StickyReserveButton() {
       exit="exit"
       variants={revealPresets.slideRight}
     >
-      <motion.div
-        whileHover={{ scale: 1.05, y: -2 }}
-        whileTap={{ scale: 0.95 }}
-        className="relative group"
+      <ActionButton
+        onClick={handleReserveClick}
+        variant="reserve"
+        ariaLabel="Reserveer een tafel bij Bistro Bert"
+        dataZcAction="open"
       >
-        {/* Luxury background with gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black to-gray-900 rounded-lg opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
-        
-        {/* Gold accent line */}
-        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-yellow-600 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-        
-        {/* Button content */}
-        <Link
-          href="/contact"
-          className="relative block px-3 md:px-6 py-1.5 md:py-3 text-white font-medium text-sm tracking-wide rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300"
-          aria-label="Reserveer een tafel bij Bistro Bert"
-        >
-          <div className="flex items-center space-x-2">
-            <span className="relative z-10">Reserveer een tafel</span>
-            <svg 
-              className="w-4 h-4 relative z-10 transform group-hover:translate-x-1 transition-transform duration-300" 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        </Link>
-        
-        {/* Subtle glow effect on hover */}
-        <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-r from-yellow-600/20 to-transparent rounded-lg blur-sm" />
-        </div>
-      </motion.div>
+        Reserveer een tafel
+      </ActionButton>
     </motion.div>
   )
 
@@ -113,29 +97,17 @@ export default function StickyReserveButton() {
             whileTap={{ scale: 0.98 }}
             className="relative group"
           >
-            {/* Luxury button with gradient */}
-            <Link
-              href="/contact"
-              className="block w-full bg-gradient-to-r from-black to-gray-900 text-white text-center py-1.5 md:py-4 px-3 md:px-6 rounded-lg font-medium text-base shadow-lg hover:shadow-xl transition-all duration-300"
-              aria-label="Reserveer een tafel bij Bistro Bert"
+            <ActionButton
+              onClick={handleReserveClick}
+              variant="reserve"
+              ariaLabel="Reserveer een tafel bij Bistro Bert"
+              dataZcAction="open"
+              className="w-full"
             >
-              <div className="flex items-center justify-center space-x-3">
-                <span className="relative z-10">Reserveer een tafel</span>
-                <svg 
-                  className="w-5 h-5 relative z-10 transform group-hover:translate-x-1 transition-transform duration-300" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-              
-              {/* Gold accent on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-yellow-600/10 to-transparent rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-            </Link>
+              Reserveer een tafel
+            </ActionButton>
           </motion.div>
-          
+
           {/* Subtle text hint */}
           <p className="text-center text-xs text-gray-500 mt-2">
             Ervaar culinaire excellentie

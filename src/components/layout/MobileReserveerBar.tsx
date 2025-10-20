@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import ActionButton from '@/components/ui/ActionButton'
 
 export default function MobileReserveerBar() {
   const [isVisible, setIsVisible] = useState(false)
@@ -39,13 +40,14 @@ export default function MobileReserveerBar() {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg md:hidden">
       <div className="container-dh px-4 py-3">
-        <Link
+        <ActionButton
           href="/contact"
-          className="block w-full bg-black text-white text-center py-1.5 md:py-3 px-3 md:px-6 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-300"
-          aria-label="Reserveer een tafel bij Bistro Bert"
+          variant="reserve"
+          className="w-full"
+          ariaLabel="Reserveer een tafel bij Bistro Bert"
         >
           Reserveer een tafel
-        </Link>
+        </ActionButton>
       </div>
     </div>
   )

@@ -21,6 +21,7 @@ import {
   RestaurantSubsectionHeading
 } from '@/components/ui/SmartHeadings'
 import ActionButton from '@/components/ui/ActionButton'
+import { openZenchefWidget, fallbackToContactPage } from '@/utils/zenchef'
 
 // Force dynamic rendering to avoid SSR issues with browser APIs
 export const dynamic = 'force-dynamic'
@@ -32,6 +33,15 @@ export default function Home() {
     dining: false,
     ambiance: false
   })
+
+  const handleReserveClick = () => {
+    const widgetOpened = openZenchefWidget()
+    if (!widgetOpened) {
+      // Don't navigate away - just log the error and let user try again
+      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
+      // Optional: You could show a toast message here instead of navigating away
+    }
+  }
 
 
 
@@ -63,8 +73,8 @@ export default function Home() {
                 </div>
               )}
               <OptimizedImageNext
-                src="/images/restaurant/hero-moody-wine-bar.jpg"
-                alt="Elegant moody wine bar interior with warm lighting"
+                src="/images/hero/hero.jpeg"
+                alt="Bistro Bert - Seizoenskeuken in Laakdal"
                 fill
                 sizes="100vw"
                 className="object-cover object-center brightness-65 opacity-100"
@@ -74,7 +84,7 @@ export default function Home() {
                 placeholder="empty"
                 onLoad={() => setImagesLoaded(prev => ({ ...prev, hero: true }))}
               />
-              <div className="absolute inset-0 m-0 p-0 bg-gradient-to-b from-black/90 via-black/75 to-black/50" aria-hidden="true" />
+              <div className="absolute inset-0 m-0 p-0 bg-gradient-to-b from-black/60 via-black/45 to-black/30" aria-hidden="true" />
             </div>
 
             {/* Hero content with staggered animations */}
@@ -103,27 +113,17 @@ export default function Home() {
                     </FadeIn>
                   </div>
 
-                   {/* CTA buttons with staggered reveal */}
+                   {/* CTA button with staggered reveal */}
                    <div>
                      <FadeIn delay={1.1} duration={0.8} direction="up">
-                       <div className="flex flex-col sm:flex-row gap-1 sm:gap-4">
-                          <ActionButton
-                            href="/contact"
-                            variant="hero-reserve"
-                            className="mt-4"
-                            ariaLabel="Reserveer een tafel bij Bistro Bert"
-                          >
-                            Reserveer een tafel
-                          </ActionButton>
-                          <ActionButton
-                            href="/menu"
-                            variant="hero-menu"
-                            className="mt-4 mb-8 sm:mb-0"
-                            ariaLabel="Navigeer naar onze menukaart"
-                          >
-                            Bekijk de menukaart
-                          </ActionButton>
-                       </div>
+                       <ActionButton
+                         href="/menu"
+                         variant="hero-menu"
+                         className="mt-4 mb-8"
+                         ariaLabel="Navigeer naar onze menukaart"
+                       >
+                         Bekijk de menukaart
+                       </ActionButton>
                      </FadeIn>
                    </div>
                 </ScrollTriggeredStagger>
@@ -133,72 +133,83 @@ export default function Home() {
         </div>
 
         {/* Menu Section - Ultra-refined */}
-        <section id="menu" className="relative min-h-screen bg-white py-16 md:py-20 lg:py-40">
+        <section id="menu" className="relative bg-white py-12 md:py-16 lg:py-24">
           <div className="container-dh">
-            <div className="max-w-5xl mx-auto px-4 md:px-0">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-                {/* Left side - Radical minimalism with animations */}
-                <div className="space-y-8 lg:space-y-16 order-2 lg:order-1">
-                  <ScrollTriggeredStagger
-                    staggerDelay={250}
-                    direction="up"
-                    className="space-y-8"
-                    threshold={0.2}
-                  >
-                    <div>
-                      <FadeIn delay={0.2} duration={1} direction="up">
-                        <RestaurantSectionHeading className="text-black max-w-md md:max-w-none mb-6 md:mb-8">
-                          Verfijnde Belgische keuken — Lunch & Diner
-                        </RestaurantSectionHeading>
-                      </FadeIn>
-                    </div>
-                    
-                    <div>
-                      <FadeIn delay={0.5} duration={0.8} direction="up">
-                        <p className="typography-body-large text-gray-600 mt-8 max-w-md">
-                          Klassiekers met een lichte toets: seizoensgebonden, dagvers en precies bereid.
-                        </p>
-                      </FadeIn>
-                    </div>
-                    
-                     <div>
-                       <FadeIn delay={0.8} duration={0.6} direction="up">
-                         <ActionButton
-                           href="/menu"
-                           variant="menu"
-                           className="mt-4 md:mt-12"
-                         >
-                           Bekijk de menukaart
-                         </ActionButton>
-                       </FadeIn>
-                     </div>
-                  </ScrollTriggeredStagger>
-                </div>
-
-                {/* Right side - Chef portrait with animation */}
-                <div className="order-1 lg:order-2">
-                  <FadeIn delay={0.3} duration={1.2} direction="right">
-                    <div className="relative h-[400px] md:h-[500px] lg:h-[700px] overflow-hidden">
-                      <OptimizedImageNext
-                        src="/images/restaurant/chef-portrait.jpg"
-                        alt="Portret van de chef – Bistro Bert"
-                        fill
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover"
-                        quality={80}
-                        placeholder="blur"
-                      />
-                    </div>
+            <div className="max-w-4xl mx-auto px-4 md:px-0 text-center">
+              <ScrollTriggeredStagger
+                staggerDelay={250}
+                direction="up"
+                className="space-y-6"
+                threshold={0.2}
+              >
+                <div>
+                  <FadeIn delay={0.2} duration={1} direction="up">
+                    <RestaurantSectionHeading className="text-black max-w-3xl mx-auto mb-6">
+                      Verfijnde Belgische keuken — Lunch & Diner
+                    </RestaurantSectionHeading>
                   </FadeIn>
                 </div>
-              </div>
+
+                <div>
+                  <FadeIn delay={0.5} duration={0.8} direction="up">
+                    <p className="typography-body-large text-gray-600 max-w-2xl mx-auto">
+                      Klassiekers met een lichte toets: seizoensgebonden, dagvers en precies bereid.
+                    </p>
+                  </FadeIn>
+                </div>
+
+                 <div>
+                   <FadeIn delay={0.8} duration={0.6} direction="up">
+                     <ActionButton
+                       href="/menu"
+                       variant="menu"
+                       className="mt-6"
+                     >
+                       Bekijk de menukaart
+                     </ActionButton>
+                   </FadeIn>
+                 </div>
+              </ScrollTriggeredStagger>
             </div>
           </div>
         </section>
 
         {/* Unique Selling Points */}
-        <section className="min-h-screen bg-gray-50 py-16 md:py-20 lg:py-40">
-          <div className="container-dh">
+        <section className="min-h-screen bg-gray-50 py-16 md:py-20 lg:py-40 relative overflow-hidden">
+          {/* Italian marble background */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: `
+                linear-gradient(45deg, #f8f6f3 25%, transparent 25%),
+                linear-gradient(-45deg, #f8f6f3 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #f8f6f3 75%),
+                linear-gradient(-45deg, transparent 75%, #f8f6f3 75%),
+                linear-gradient(135deg, #faf9f7 0%, #f5f2ed 50%, #f9f7f4 100%),
+                radial-gradient(ellipse at 20% 30%, rgba(245, 242, 237, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(250, 249, 247, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 80%, rgba(249, 247, 244, 0.15) 0%, transparent 40%)
+              `,
+              backgroundSize: '40px 40px, 40px 40px, 20px 20px, 20px 20px, 100% 100%, 100% 100%, 100% 100%, 100% 100%',
+              backgroundPosition: '0 0, 0 20px, 20px 0, 0 0, 0 0, 0 0, 0 0, 0 0',
+              opacity: 0.15
+            }}
+          />
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: `
+                radial-gradient(ellipse at 25% 25%, rgba(245, 242, 237, 0.2) 0%, transparent 40%),
+                radial-gradient(ellipse at 75% 75%, rgba(250, 249, 247, 0.15) 0%, transparent 35%),
+                radial-gradient(ellipse at 50% 10%, rgba(249, 247, 244, 0.1) 0%, transparent 30%),
+                radial-gradient(ellipse at 10% 60%, rgba(248, 246, 243, 0.12) 0%, transparent 45%),
+                radial-gradient(ellipse at 90% 40%, rgba(246, 244, 241, 0.08) 0%, transparent 40%)
+              `,
+              backgroundSize: '100% 100%',
+              opacity: 0.3
+            }}
+          />
+          <div className="container-dh relative z-10">
             <div className="max-w-6xl mx-auto px-4 md:px-0">
               <div className="text-center mb-8 md:mb-12">
                 <FadeIn delay={0.2} duration={1} direction="up">
@@ -279,11 +290,10 @@ export default function Home() {
         </section>
 
   
-        {/* Smaakvolle Verhalen Onvergetelijke Momenten Section */}
-        <section className="min-h-[80vh] bg-white py-16 md:py-32">
+        {/* Smaakvolle Verhalen Onvergetelijke Momenten Section - Hidden for now */}
+        {/* <section className="min-h-[80vh] bg-white py-16 md:py-32">
           <div className="container-dh">
             <div className="max-w-7xl mx-auto px-4 md:px-0">
-              {/* Section header with luxury staggered animations */}
               <div className="text-center mb-16 md:mb-24">
                 <ScrollTriggeredStagger
                   staggerDelay={300}
@@ -298,7 +308,7 @@ export default function Home() {
                       </RestaurantSectionHeading>
                     </FadeIn>
                   </div>
-                  
+
                   <div>
                     <FadeIn delay={0.5} duration={1} direction="up">
                       <p className="typography-body text-gray-600 max-w-lg md:max-w-2xl mx-auto">
@@ -306,7 +316,7 @@ export default function Home() {
                       </p>
                     </FadeIn>
                   </div>
-                  
+
                   <div>
                     <FadeIn delay={0.8} duration={0.8} direction="up">
                       <div className="w-32 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent mx-auto mb-8 md:mb-12" />
@@ -315,7 +325,6 @@ export default function Home() {
                 </ScrollTriggeredStagger>
               </div>
 
-              {/* Minimalistic Image Gallery with animation */}
               <div className="mobile-gallery">
                 <FadeIn delay={0.4} duration={1.2} direction="up">
                   <ImageGallery
@@ -327,7 +336,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Call to Action Section */}
         <section className="py-16 md:py-32 bg-black text-white">
@@ -358,8 +367,10 @@ export default function Home() {
                  <div>
                    <FadeIn delay={0.8} duration={0.6} direction="up">
                      <ActionButton
-                       href="/contact"
+                       onClick={handleReserveClick}
                        variant="cta"
+                       ariaLabel="Open reserveringswidget"
+                       dataZcAction="open"
                      >
                        Reserveer een tafel
                      </ActionButton>

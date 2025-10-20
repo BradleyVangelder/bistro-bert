@@ -6,6 +6,7 @@ import ReviewSchema from '@/components/ui/ReviewSchema'
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema'
 import { MenuJsonLd } from '@/components/ui/MenuJsonLd'
 import PDFPerformanceMonitor from '@/components/performance/PDFPerformanceMonitor'
+import ActionButton from '@/components/ui/ActionButton'
 import nextDynamic from 'next/dynamic'
 
 const MinimalistPDFViewer = nextDynamic(() => import('@/components/MinimalistPDFViewer'), {
@@ -112,18 +113,18 @@ export default function MenuContent() {
                     Klaar voor lunch of diner?
                   </p>
                   <div className="flex flex-col sm:flex-row button-tight-spacing justify-center">
-                    <a
+                    <ActionButton
                       href="/contact"
-                      className="btn-dh-minimal"
+                      variant="reserve"
                     >
                       Reserveer een tafel
-                    </a>
-                    <a
+                    </ActionButton>
+                    <ActionButton
                       href="#wijn"
-                      className="btn-dh-secondary"
+                      variant="menu"
                     >
                       Bekijk wijnen
-                    </a>
+                    </ActionButton>
                   </div>
                 </motion.div>
               </motion.div>
