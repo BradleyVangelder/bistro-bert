@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import Link from 'next/link'
+import ActionButton from '@/components/ui/ActionButton'
 
 export default function Error({
   error,
@@ -42,20 +43,22 @@ export default function Error({
         </div>
         
         <div className="flex flex-col sm:flex-row button-tight-spacing justify-center mb-8">
-          <button
+          <ActionButton
             onClick={reset}
-            className="btn-dh min-w-[160px]"
-            aria-label="Probeer opnieuw"
+            variant="menu"
+            className="min-w-[160px]"
+            ariaLabel="Probeer opnieuw"
           >
             Probeer opnieuw
-          </button>
-          <Link
+          </ActionButton>
+          <ActionButton
             href="/"
-            className="btn-dh-secondary min-w-[160px]"
-            aria-label="Ga naar de homepagina"
+            variant="reserve"
+            className="min-w-[160px]"
+            ariaLabel="Ga naar de homepagina"
           >
             Homepagina
-          </Link>
+          </ActionButton>
         </div>
         
         <div className="mt-8">

@@ -14,7 +14,7 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
   const navItems = [
     { label: 'Menukaart', href: '/menu', icon: '📋' },
     { label: 'Over ons', href: '/over-ons', icon: 'ℹ️' },
-    { label: 'Reserveren', href: '/contact', icon: '📞' },
+    { label: 'Contact', href: '/contact', icon: '📞' },
   ];
 
   return (

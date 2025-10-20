@@ -5,10 +5,12 @@ import Link from 'next/link'
 
 interface ActionButtonProps {
   children: React.ReactNode
-  href: string
+  href?: string
   variant?: 'hero-reserve' | 'hero-menu' | 'menu' | 'cta' | 'reserve'
   className?: string
   ariaLabel?: string
+  onClick?: () => void
+  dataZcAction?: string
 }
 
 export function ActionButton({
@@ -16,13 +18,15 @@ export function ActionButton({
   href,
   variant = 'menu',
   className = '',
-  ariaLabel
+  ariaLabel,
+  onClick,
+  dataZcAction
 }: ActionButtonProps) {
   const baseClasses = 'inline-block px-3 md:px-8 py-1.5 md:py-3 transition-colors typography-button mobile-button'
 
   const variantClasses = {
-    'hero-reserve': 'bg-white text-black hover:bg-transparent hover:text-white border border-white drop-shadow-lg',
-    'hero-menu': 'border border-white text-white hover:bg-white hover:text-black drop-shadow-lg',
+    'hero-reserve': 'bg-white text-black hover:bg-black hover:text-white border border-white',
+    'hero-menu': 'border border-white text-white hover:bg-white hover:text-black',
     'menu': 'border border-black text-black hover:bg-black hover:text-white',
     'cta': 'border border-white text-white hover:bg-white hover:text-black',
     'reserve': 'bg-black text-white hover:bg-gray-800 border border-black'
@@ -36,13 +40,25 @@ export function ActionButton({
 
   return (
     <motion.div {...motionProps}>
-      <Link
-        href={href}
-        className={`${baseClasses} ${variantClasses[variant]} ${className}`}
-        aria-label={ariaLabel}
-      >
-        {children}
-      </Link>
+      {onClick ? (
+        <button
+          onClick={onClick}
+          className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+          aria-label={ariaLabel}
+          type="button"
+          data-zc-action={dataZcAction}
+        >
+          {children}
+        </button>
+      ) : (
+        <Link
+          href={href || '#'}
+          className={`${baseClasses} ${variantClasses[variant]} ${className}`}
+          aria-label={ariaLabel}
+        >
+          {children}
+        </Link>
+      )}
     </motion.div>
   )
 }

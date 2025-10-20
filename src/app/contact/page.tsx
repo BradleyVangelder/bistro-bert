@@ -4,12 +4,14 @@ import EventSchema from '@/components/ui/EventSchema'
 import ClientContact from './ClientContact'
 
 export const metadata: Metadata = {
-  title: "Reserveer | Bistro Bert Laakdal",
-  description: "Boek je tafel voor lunch of diner. We stemmen tempo en dieetwensen met plezier af in Laakdal.",
+  title: "Contact & Reserveren | Bistro Bert Laakdal",
+  description: "Neem contact op of reserveer direct online voor lunch of diner. We stemmen tempo en dieetwensen met plezier af in Laakdal.",
   keywords: [
+    "Bistro Bert contact",
     "Bistro Bert reserveren",
+    "restaurant contact Laakdal",
     "restaurant reserveren Laakdal",
-    "luxe restaurant reserveren",
+    "luxe restaurant contact",
     "fine dining reserveren",
     "tafel reserveren",
     "restaurant België",
@@ -20,8 +22,8 @@ export const metadata: Metadata = {
     "Laakdal"
   ],
   openGraph: {
-    title: "Reserveer | Bistro Bert Laakdal",
-    description: "Boek je tafel voor lunch of diner. We stemmen tempo en dieetwensen met plezier af in Laakdal.",
+    title: "Contact & Reserveren | Bistro Bert Laakdal",
+    description: "Neem contact op of reserveer direct online voor lunch of diner. We stemmen tempo en dieetwensen met plezier af in Laakdal.",
     url: "https://www.bistro-bert.be/contact",
     images: [
       {
@@ -35,8 +37,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     images: ["/images/restaurant/dining-room.jpg"],
-    title: "Reserveer | Bistro Bert Laakdal",
-    description: "Boek je tafel voor lunch of diner. We stemmen tempo en dieetwensen met plezier af in Laakdal.",
+    title: "Contact & Reserveren | Bistro Bert Laakdal",
+    description: "Neem contact op of reserveer direct online voor lunch of diner. We stemmen tempo en dieetwensen met plezier af in Laakdal.",
   },
   alternates: {
     canonical: "https://www.bistro-bert.be/contact",
@@ -97,7 +99,7 @@ const sampleEvents = [
 
 const breadcrumbItems = [
   { name: 'Home', url: 'https://www.bistro-bert.be' },
-  { name: 'Reserveren', url: 'https://www.bistro-bert.be/contact' },
+  { name: 'Contact & Reserveren', url: 'https://www.bistro-bert.be/contact' },
 ]
 
 export default function ContactPage() {

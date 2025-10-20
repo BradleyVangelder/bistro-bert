@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/StaggeredAnimations'
 import { useStaggeredAnimation } from '@/hooks/animations/useStaggeredAnimation'
 import ActionButton from '@/components/ui/ActionButton'
+import { openZenchefWidget } from '@/utils/zenchef'
 
 // Sample reviews for structured data
 const sampleReviews = [
@@ -35,6 +36,15 @@ export default function OverOnsContent() {
     { name: 'Home', url: 'https://bistrobert.be' },
     { name: 'Over Ons', url: 'https://bistrobert.be/over-ons' },
   ]
+
+  const handleReserveClick = () => {
+    const widgetOpened = openZenchefWidget()
+    if (!widgetOpened) {
+      // Don't navigate away - just log the error and let user try again
+      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
+      // Optional: You could show a toast message here instead of navigating away
+    }
+  }
 
   // Custom staggered animations for different sections
   const headerAnimation = useStaggeredAnimation({
@@ -263,9 +273,11 @@ export default function OverOnsContent() {
                        Bekijk de menukaart
                      </ActionButton>
                      <ActionButton
-                       href="/contact"
+                       onClick={handleReserveClick}
                        variant="reserve"
                        className="px-8 py-3"
+                       ariaLabel="Open reserveringswidget"
+                       dataZcAction="open"
                      >
                        Reserveer een tafel
                      </ActionButton>

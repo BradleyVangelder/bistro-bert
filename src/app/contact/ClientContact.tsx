@@ -3,9 +3,20 @@
 import { motion } from 'framer-motion'
 import Footer from '@/components/layout/Footer'
 import ContactInfo from '@/components/contact/ContactInfo'
+import ZenchefWidget from '@/components/ui/ZenchefWidget'
 import { RestaurantSectionHeading } from '@/components/ui/SmartHeadings'
+import ActionButton from '@/components/ui/ActionButton'
+import { openZenchefWidget, fallbackToContactPage } from '@/utils/zenchef'
 
 export default function ClientContact() {
+  const handleReserveClick = () => {
+    const widgetOpened = openZenchefWidget()
+    if (!widgetOpened) {
+      // Don't navigate away - just log the error and let user try again
+      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
+      // Optional: You could show a toast message here instead of navigating away
+    }
+  }
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
@@ -38,31 +49,26 @@ export default function ClientContact() {
 
             {/* Alternative contact methods */}
             <motion.div
-              className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center max-w-full"
+              className="mt-8 flex flex-col sm:flex-row button-tight-spacing justify-center max-w-full"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-                <motion.a
-                  href="mailto:info@bistro-bert.com?subject=Reservatie"
-                  className="inline-flex items-center justify-center px-3 md:px-8 py-1.5 md:py-4 bg-black text-white hover:bg-gray-800 transition-colors typography-button w-full sm:w-auto min-w-0"
-                  aria-label="Stuur e-mail naar Bistro Bert: info@bistro-bert.com"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  Reserveer via e-mail
-                </motion.a>
-                <motion.a
+                <ActionButton
                   href="tel:+3213480139"
-                  className="inline-flex items-center justify-center px-3 md:px-8 py-1.5 md:py-4 bg-black text-white hover:bg-gray-800 transition-colors typography-button w-full sm:w-auto min-w-0"
-                  aria-label="Bel Bistro Bert direct: +32 13 48 01 39"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
+                  variant="menu"
+                  ariaLabel="Bel Bistro Bert direct: +32 13 48 01 39"
                 >
                   BEL: +32 13 48 01 39
-                </motion.a>
+                </ActionButton>
+                <ActionButton
+                  onClick={handleReserveClick}
+                  variant="reserve"
+                  ariaLabel="Open reserveringswidget"
+                  dataZcAction="open"
+                >
+                  Reserveer een tafel
+                </ActionButton>
             </motion.div>
             <motion.p
               className="mt-4 text-center text-gray-600 typography-body-small"
@@ -76,12 +82,13 @@ export default function ClientContact() {
         </div>
       </section>
 
+  
       {/* Contact Information Section */}
       <motion.section
         className="section-dh"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
+        transition={{ duration: 0.8, delay: 1.0 }}
       >
         <div className="container-dh">
           <ContactInfo />
