@@ -52,7 +52,10 @@ export const metadata: Metadata = {
   },
   description: "Belgische klassiekers met finesse in Laakdal, Antwerpse Kempen. Dagvers en seizoensgebonden. Reserveer voor lunch of diner.",
   icons: {
-    icon: "/bistro-bert-logo.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/bistro-bert-logo.png", sizes: "32x32", type: "image/png" },
+    ],
     shortcut: "/bistro-bert-logo.png",
     apple: "/bistro-bert-logo.png",
   },
