@@ -5,6 +5,7 @@ import MainContent from "@/components/layout/MainContent";
 import SkipLinks from "@/components/ui/SkipLinks";
 import WebVitalsMonitor from "@/components/performance/WebVitalsMonitor";
 import PerformanceOptimizer from "@/components/performance/PerformanceOptimizer";
+import { VercelAnalytics } from "@/components/analytics/VercelAnalytics";
 import { HighContrastProvider } from "@/contexts/HighContrastContext";
 import { RestaurantJsonLd } from "@/components/ui/RestaurantJsonLd";
 import ZenchefWidget from "@/components/ui/ZenchefWidget";
@@ -150,6 +151,9 @@ export default function RootLayout({
           {/* Performance Monitoring */}
           <WebVitalsMonitor />
           <PerformanceOptimizer />
+
+          {/* Vercel Analytics */}
+          <VercelAnalytics />
         </HighContrastProvider>
       </body>
     </html>
