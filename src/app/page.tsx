@@ -100,7 +100,7 @@ export default function Home() {
                   <div>
                     <FadeIn delay={0.5} duration={1.2} direction="up">
                       <RestaurantHeroHeading className="text-white drop-shadow-lg mb-4 max-w-xs md:max-w-none">
-                        Bistro Bert — Seizoenskeuken in Laakdal
+                        Bistro Bert — Seizoensgebonden keuken in Laakdal
                       </RestaurantHeroHeading>
                     </FadeIn>
                   </div>
@@ -108,7 +108,7 @@ export default function Home() {
                   <div>
                     <FadeIn delay={0.8} duration={1} direction="up">
                       <p className="typography-body text-white/95 drop-shadow-lg mb-6 max-w-xs md:max-w-2xl">
-                        Seizoenskeuken met karakter — dagvers en zorgvuldig bereid in het hart van de Antwerpse Kempen.
+                        Seizoensgebonden klassiekers met karakter. Dagvers en met zorg bereid, hier in Laakdal.
                       </p>
                     </FadeIn>
                   </div>
@@ -145,7 +145,7 @@ export default function Home() {
                 <div>
                   <FadeIn delay={0.2} duration={1} direction="up">
                     <RestaurantSectionHeading className="text-black max-w-3xl mx-auto mb-6">
-                      Verfijnde Belgische keuken — Lunch & Diner
+                      Verfijnde seizoenskeuken — Lunch & Diner
                     </RestaurantSectionHeading>
                   </FadeIn>
                 </div>

@@ -66,10 +66,10 @@ export default function OverOnsPage() {
                   className="text-center mb-16"
                 >
                   <RestaurantSectionHeading className="text-center mb-8">
-                    Over Bistro Bert
+                    Ons verhaal
                   </RestaurantSectionHeading>
                   <p className="typography-body-large text-gray-600 max-w-3xl mx-auto">
-                    We koken Belgische klassiekers met een moderne toets, pure smaken uit eigen keuken en lokale seizoensproducten.
+                    In onze keuken combineren wij traditie met moderne technieken. Met passie voor verse, seizoensgebonden ingrediënten.
                   </p>
                 </motion.div>
 
