@@ -92,7 +92,7 @@ export default function MenuPage() {
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
                   {menuType === 'menu'
-                    ? 'Menu vol dagverse suggesties en klassiekers. Seizoensgebonden en met passie bereid.'
+                    ? 'Seizoensgebonden, dagvers en precies bereid—dagsuggesties naast onze klassiekers.'
                     : 'Ambachtelijk bereide desserts, perfect als zoete afsluiting van uw culinaire ervaring.'
                   }
                 </motion.p>
