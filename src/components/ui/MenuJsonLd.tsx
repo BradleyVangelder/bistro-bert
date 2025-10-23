@@ -1,6 +1,6 @@
 import Script from "next/script";
 
-import { menuSections } from "@/data/menu";
+import { visibleMenuSections } from "@/data/menu";
 
 import { RESTAURANT_ID } from "./RestaurantJsonLd";
 
@@ -28,7 +28,7 @@ export function MenuJsonLd() {
     about: {
       "@id": RESTAURANT_ID
     },
-    hasMenuSection: menuSections.map((section) => ({
+    hasMenuSection: visibleMenuSections.map((section) => ({
       "@type": "MenuSection",
       name: section.name,
       description: section.description,

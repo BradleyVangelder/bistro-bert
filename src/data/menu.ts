@@ -76,3 +76,12 @@ export const menuSections: MenuSection[] = [
     ]
   }
 ];
+
+const hiddenMenuSectionIds = new Set<MenuSection['id']>([
+  "starters",
+  "mains",
+]);
+
+export const visibleMenuSections = menuSections.filter(
+  (section) => !hiddenMenuSectionIds.has(section.id)
+);

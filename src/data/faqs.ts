@@ -37,6 +37,6 @@ export const faqItems: FaqItem[] = [
   {
     question: "Welke betaalmethoden accepteren jullie?",
     answer:
-      "We aanvaarden bankkaarten, kredietkaarten en contante betalingen. Voor zakelijke facturatie voorzien we een digitale factuur na uw bezoek."
+      "We aanvaarden bankkaarten, kredietkaarten en contante betalingen."
   }
 ];

@@ -40,12 +40,12 @@ export default function FaqPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
 
-      <div className="min-h-screen bg-white navbar-spacer">
-        <section className="py-16 md:py-24">
+      <div className="min-h-screen bg-white">
+        <section className="navbar-spacer pt-32 pb-20 md:pt-36 md:pb-24">
           <div className="container-dh">
             <div className="max-w-4xl mx-auto px-4 md:px-0">
               <header className="mb-12 text-center">
-                <h1 className="heading-serif-large text-black mb-6">
+                <h1 className="text-suisse-h2 font-serif text-black mb-6 md:mb-8">
                   Veelgestelde vragen over Bistro Bert
                 </h1>
                 <p className="typography-body-large text-gray-600">
