@@ -1,40 +1,34 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import Footer from '@/components/layout/Footer'
 import ReviewSchema from '@/components/ui/ReviewSchema'
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema'
 import { MenuJsonLd } from '@/components/ui/MenuJsonLd'
 import MinimalistPDFViewer from '@/components/MinimalistPDFViewer'
-import { RestaurantSectionHeading } from '@/components/ui/SmartHeadings'
+import { RestaurantSectionHeading, RestaurantSubsectionHeading } from '@/components/ui/SmartHeadings'
 import MenuDessertSelector from '@/components/menu/MenuDessertSelector'
 import ActionButton from '@/components/ui/ActionButton'
 import { openZenchefWidget } from '@/utils/zenchef'
+import { menuSections } from '@/data/menu'
+import { spotlightReviews } from '@/data/reviews'
 
 // Force dynamic rendering for this page to avoid SSR issues with PDF viewer
 export const dynamic = 'force-dynamic'
 
 // Page-specific metadata for Menu is now handled in the root layout.tsx
 
-// Sample reviews for structured data
-const sampleReviews = [
-  {
-    author: 'Jan Janssens',
-    rating: 5,
-    date: '2024-03-15',
-    content: 'Uitzonderlijke culinaire ervaring bij Bistro Bert. De aandacht voor detail en de kwaliteit van de ingrediënten is ongeëvenaard.'
-  },
-  {
-    author: 'Marie Pieters',
-    rating: 5,
-    date: '2024-02-28',
-    content: 'Het menu van Bistro Bert is een feest voor de smaakpapillen. Seizoensgebonden en perfect bereid.'
-  }
-]
-
 export default function MenuPage() {
   const [menuType, setMenuType] = useState<'menu' | 'dessert'>('menu')
+
+  const sectionsToDisplay = useMemo(() => {
+    if (menuType === 'dessert') {
+      return menuSections.filter(section => section.id === 'desserts')
+    }
+
+    return menuSections.filter(section => section.id !== 'desserts')
+  }, [menuType])
 
   const breadcrumbItems = [
     { name: 'Home', url: 'https://www.bistro-bert.be' },
@@ -58,7 +52,7 @@ export default function MenuPage() {
     <>
       <MenuJsonLd />
       <BreadcrumbSchema items={breadcrumbItems} />
-      <ReviewSchema reviews={sampleReviews} />
+      <ReviewSchema reviews={spotlightReviews} />
       
       <div className="min-h-screen bg-white">
 
@@ -98,6 +92,49 @@ export default function MenuPage() {
                 </motion.p>
 
                 </div>
+
+              {/* Text-first menu content for crawlers and guests */}
+              <div className="mb-12 md:mb-16">
+                <motion.div
+                  key={`${menuType}-sections`}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="space-y-10"
+                >
+                  {sectionsToDisplay.map(section => (
+                    <article key={section.id} className="text-left">
+                      <RestaurantSubsectionHeading className="text-left text-black">
+                        {section.name}
+                      </RestaurantSubsectionHeading>
+                      {section.description && (
+                        <p className="typography-body text-gray-600 mb-4">
+                          {section.description}
+                        </p>
+                      )}
+                      <ul className="space-y-4">
+                        {section.items.map(item => (
+                          <li key={item.name} className="border border-gray-100 rounded-lg p-4">
+                            <h4 className="font-serif text-lg text-black">
+                              {item.name}
+                            </h4>
+                            {item.description && (
+                              <p className="typography-body text-gray-600 mt-2">
+                                {item.description}
+                              </p>
+                            )}
+                            {item.dietary && (
+                              <p className="typography-small text-gray-500 mt-3">
+                                Dieetopties: {item.dietary.join(', ')}
+                              </p>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </article>
+                  ))}
+                </motion.div>
+              </div>
 
               {/* Menu Display - The Hero */}
               <motion.div

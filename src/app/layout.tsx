@@ -83,9 +83,6 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.bistro-bert.be"),
   alternates: {
     canonical: "https://www.bistro-bert.be",
-    languages: {
-      "nl-BE": "https://www.bistro-bert.be/nl",
-    },
   },
   openGraph: {
     title: "Bistro Bert Laakdal — Seizoenskeuken",

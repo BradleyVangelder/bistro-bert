@@ -1,12 +1,12 @@
 "use client"
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Footer from '@/components/layout/Footer'
 import ContactInfo from '@/components/contact/ContactInfo'
-import ZenchefWidget from '@/components/ui/ZenchefWidget'
 import { RestaurantSectionHeading } from '@/components/ui/SmartHeadings'
 import ActionButton from '@/components/ui/ActionButton'
-import { openZenchefWidget, fallbackToContactPage } from '@/utils/zenchef'
+import { openZenchefWidget } from '@/utils/zenchef'
 
 export default function ClientContact() {
   const handleReserveClick = () => {
@@ -76,7 +76,8 @@ export default function ClientContact() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              We denken graag mee over allergenen, wijn en timing.
+              We denken graag mee over allergenen, wijn en timing. Bekijk ook onze{' '}
+              <Link href="/faq" className="link-dh-minimal">FAQ</Link> voor praktische antwoorden.
             </motion.p>
           </div>
         </div>
@@ -103,13 +104,13 @@ export default function ClientContact() {
           transition={{ duration: 0.8, delay: 1.0 }}
         >
            <iframe
-             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2521.2846153846154!2d5.0996063!3d51.0843463!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3a4b7e3e3e3e3%3A0x4c3e5b5e5e5e5e5!2sVerboekt%20121%2C%202430%20Laakdal%2C%20Belgium!5e0!3m2!1sen!2sbe!4v1234567890!5m2!1sen!2sbe"
+             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2474.1798941469312!2d5.097027276030925!3d51.08434637172845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c153799b7c45a3%3A0x12f0ec6a55ce499a!2sVerboekt%20121%2C%202430%20Laakdal!5e0!3m2!1snl!2sbe!4v1730050000000!5m2!1snl!2sbe"
              className="w-full h-full"
              style={{ border: 0 }}
              allowFullScreen
              loading="lazy"
              referrerPolicy="no-referrer-when-downgrade"
-             title="Bistro Bert Locatie in Laakdal"
+             title="Bistro Bert locatie in Laakdal"
            />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
       </motion.section>

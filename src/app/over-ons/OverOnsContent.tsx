@@ -14,27 +14,12 @@ import {
 import { useStaggeredAnimation } from '@/hooks/animations/useStaggeredAnimation'
 import ActionButton from '@/components/ui/ActionButton'
 import { openZenchefWidget } from '@/utils/zenchef'
-
-// Sample reviews for structured data
-const sampleReviews = [
-  {
-    author: 'Jan Janssens',
-    rating: 5,
-    date: '2024-03-15',
-    content: 'Uitzonderlijke culinaire ervaring bij Bistro Bert. De aandacht voor detail en de kwaliteit van de ingrediënten is ongeëvenaard.'
-  },
-  {
-    author: 'Marie Pieters',
-    rating: 5,
-    date: '2024-02-28',
-    content: 'Het menu van Bistro Bert is een feest voor de smaakpapillen. Seizoensgebonden en perfect bereid.'
-  }
-]
+import { spotlightReviews } from '@/data/reviews'
 
 export default function OverOnsContent() {
   const breadcrumbItems = [
-    { name: 'Home', url: 'https://bistrobert.be' },
-    { name: 'Over Ons', url: 'https://bistrobert.be/over-ons' },
+    { name: 'Home', url: 'https://www.bistro-bert.be' },
+    { name: 'Over Ons', url: 'https://www.bistro-bert.be/over-ons' },
   ]
 
   const handleReserveClick = () => {
@@ -85,7 +70,7 @@ export default function OverOnsContent() {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbItems} />
-      <ReviewSchema reviews={sampleReviews} />
+      <ReviewSchema reviews={spotlightReviews} />
 
       <div className="min-h-screen bg-white">
         {/* Main Content */}

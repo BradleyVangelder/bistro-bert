@@ -60,9 +60,10 @@ export default function Header() {
   
   // Navigation items - luxury experience focused
   const navItems = [
+    { id: 'contact', label: 'Contact', href: '/contact' },
     { id: 'menu', label: 'Menukaart', href: '/menu' },
     { id: 'over-ons', label: 'Over ons', href: '/over-ons' },
-    { id: 'contact', label: 'Contact', href: '/contact' },
+    { id: 'faq', label: 'FAQ', href: '/faq' },
   ]
 
 
@@ -175,7 +176,7 @@ export default function Header() {
                           <div className="font-serif text-xl font-medium text-black leading-tight tracking-tight group-hover:text-gray-600 transition-colors duration-300">
                             {item.label}
                           </div>
-                          <div className="w-0 h-px bg-black transition-all duration-300 group-hover:w-16 mt-2"></div>
+                          <div className="w-0 h-px bg-black transition-all duration-300 group-hover:w-10 mt-2"></div>
                         </Link>
                       </motion.div>
                     ))}

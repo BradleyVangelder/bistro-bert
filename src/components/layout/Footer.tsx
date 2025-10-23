@@ -9,6 +9,7 @@ export default function Footer() {
   const navItems = [
     { id: 'menu', label: 'Menukaart', href: '/menu' },
     { id: 'over-ons', label: 'Over ons', href: '/over-ons' },
+    { id: 'faq', label: 'FAQ', href: '/faq' },
     { id: 'contact', label: 'Contact', href: '/contact' },
   ]
 

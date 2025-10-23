@@ -1,3 +1,5 @@
+import { RESTAURANT_ID } from "./RestaurantJsonLd";
+
 interface EventSchemaProps {
   events: Array<{
     name: string;
@@ -10,42 +12,43 @@ interface EventSchemaProps {
 }
 
 export default function EventSchema({ events }: EventSchemaProps) {
+  if (!events.length) {
+    return null;
+  }
+
   const eventSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Restaurant',
-    name: 'Bistro Bert',
-    location: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Verboekt 121',
-      addressLocality: 'Laakdal',
-      postalCode: '2430',
-      addressCountry: 'BE',
-    },
-    event: events.map(event => ({
-      '@type': 'FoodEvent',
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "@id": RESTAURANT_ID,
+    name: "Bistro Bert",
+    event: events.map((event, index) => ({
+      "@type": "FoodEvent",
       name: event.name,
       description: event.description,
       startDate: event.startDate,
       endDate: event.endDate,
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      eventStatus: "https://schema.org/EventScheduled",
       location: {
-        '@type': 'Place',
-        name: 'Bistro Bert',
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: 'Verboekt 121',
-          addressLocality: 'Laakdal',
-          postalCode: '2430',
-          addressCountry: 'BE',
-        },
+        "@id": RESTAURANT_ID
       },
-      offers: event.price ? {
-        '@type': 'Offer',
-        price: event.price,
-        priceCurrency: 'EUR',
-        availability: 'https://schema.org/InStock',
-      } : undefined,
-    })),
-  };
+      organizer: {
+        "@type": "Organization",
+        name: "Bistro Bert",
+        url: "https://www.bistro-bert.be"
+      },
+      offers: event.price
+        ? {
+            "@type": "Offer",
+            price: event.price.replace(/[^0-9,\.]/g, "").replace(",", "."),
+            priceCurrency: "EUR",
+            availability: "https://schema.org/InStock",
+            url: "https://www.bistro-bert.be/contact"
+          }
+        : undefined,
+      identifier: `event-${index}`
+    }))
+  } as const;
 
   return (
     <script
