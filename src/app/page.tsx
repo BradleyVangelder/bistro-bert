@@ -22,7 +22,8 @@ import {
 } from '@/components/ui/SmartHeadings'
 import ActionButton from '@/components/ui/ActionButton'
 import { openZenchefWidget, fallbackToContactPage } from '@/utils/zenchef'
-import chefPortrait from '../../public/images/restaurant/chef.jpg'
+// Use public path string to avoid static import blur processing
+const chefPortraitSrc = '/images/restaurant/chef.jpg'
 
 // Force dynamic rendering to avoid SSR issues with browser APIs
 export const dynamic = 'force-dynamic'
@@ -183,7 +184,7 @@ export default function Home() {
                         <div className="absolute inset-0 bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse" aria-hidden="true" />
                       )}
                       <OptimizedImageNext
-                        src={chefPortrait}
+                        src={chefPortraitSrc}
                         alt="Chef Bert in de keuken van Bistro Bert"
                         fill
                         className="object-cover"
