@@ -27,7 +27,7 @@ export const faqItems: FaqItem[] = [
   {
     question: "Wat zijn de openingsuren?",
     answer:
-      "We ontvangen gasten van dinsdag tot en met zondag. Lunch serveren we van 10:00 tot 17:00 en diner van 17:00 tot 22:00. Op maandag zijn we gesloten."
+      "We ontvangen gasten van dinsdag tot en met zondag. Lunch serveren we van 10:00 tot 17:00 en diner van 17:00 tot 23:00. Op maandag zijn we gesloten."
   },
   {
     question: "Verkopen jullie cadeaubonnen?",
