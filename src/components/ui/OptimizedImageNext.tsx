@@ -1,11 +1,11 @@
 'use client'
 
-import Image from 'next/image'
+import Image, { type StaticImageData } from 'next/image'
 import { useState, useCallback } from 'react'
 import { cn } from '@/utils/cn'
 
 interface OptimizedImageNextProps {
-  src: string
+  src: string | StaticImageData
   alt: string
   width?: number
   height?: number
@@ -20,6 +20,7 @@ interface OptimizedImageNextProps {
   loading?: 'lazy' | 'eager'
   onLoad?: () => void
   onError?: () => void
+  unoptimized?: boolean
 }
 
 export default function OptimizedImageNext({
@@ -38,6 +39,7 @@ export default function OptimizedImageNext({
   loading,
   onLoad,
   onError,
+  unoptimized = false,
 }: OptimizedImageNextProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
@@ -54,7 +56,7 @@ export default function OptimizedImageNext({
   }, [onError])
 
   // Generate low-quality blur placeholder
-  const generateBlurDataURL = (src: string) => {
+  const generateBlurDataURL = () => {
     if (blurDataURL) return blurDataURL
     
     // Generate a simple placeholder data URL
@@ -87,7 +89,7 @@ export default function OptimizedImageNext({
         {isLoading && placeholder === 'blur' && (
           <div className="absolute inset-0 bg-gray-100 animate-pulse z-0">
             <Image
-              src={generateBlurDataURL(src)}
+              src={generateBlurDataURL()}
               alt=""
               fill
               className="object-cover blur-2xl scale-110"
@@ -104,7 +106,8 @@ export default function OptimizedImageNext({
           priority={priority}
           loading={loading || (priority ? 'eager' : 'lazy')}
           placeholder={placeholder}
-          blurDataURL={placeholder === 'blur' ? generateBlurDataURL(src) : undefined}
+          blurDataURL={placeholder === 'blur' ? generateBlurDataURL() : undefined}
+          unoptimized={unoptimized}
           className={cn(
             className,
             'duration-700 ease-in-out',
@@ -125,7 +128,7 @@ export default function OptimizedImageNext({
       {isLoading && placeholder === 'blur' && (
         <div className="absolute inset-0 bg-gray-100 animate-pulse">
           <Image
-            src={generateBlurDataURL(src)}
+            src={generateBlurDataURL()}
             alt=""
             fill
             className="object-cover blur-2xl scale-110"
@@ -143,7 +146,8 @@ export default function OptimizedImageNext({
         priority={priority}
         loading={loading || (priority ? 'eager' : 'lazy')}
         placeholder={placeholder}
-        blurDataURL={placeholder === 'blur' ? generateBlurDataURL(src) : undefined}
+        blurDataURL={placeholder === 'blur' ? generateBlurDataURL() : undefined}
+        unoptimized={unoptimized}
         className={cn(
           'duration-700 ease-in-out',
           isLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0'

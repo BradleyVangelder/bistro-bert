@@ -60,9 +60,10 @@ export default function Header() {
   
   // Navigation items - luxury experience focused
   const navItems = [
+    { id: 'contact', label: 'Contact', href: '/contact' },
     { id: 'menu', label: 'Menukaart', href: '/menu' },
     { id: 'over-ons', label: 'Over ons', href: '/over-ons' },
-    { id: 'contact', label: 'Contact', href: '/contact' },
+    { id: 'faq', label: 'FAQ', href: '/faq' },
   ]
 
 
@@ -175,7 +176,7 @@ export default function Header() {
                           <div className="font-serif text-xl font-medium text-black leading-tight tracking-tight group-hover:text-gray-600 transition-colors duration-300">
                             {item.label}
                           </div>
-                          <div className="w-0 h-px bg-black transition-all duration-300 group-hover:w-16 mt-2"></div>
+                          <div className="w-0 h-px bg-black transition-all duration-300 group-hover:w-10 mt-2"></div>
                         </Link>
                       </motion.div>
                     ))}
@@ -212,7 +213,7 @@ export default function Header() {
                       <Clock className="w-5 h-5 text-gray-700" />
                       <div>
                         <span className="text-base font-luxury">Dinsdag–Zondag</span>
-                        <div className="text-gray-800 font-semibold">10:00–22:00</div>
+                        <div className="text-gray-800 font-semibold">10:00–23:00</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 text-gray-700 py-2">

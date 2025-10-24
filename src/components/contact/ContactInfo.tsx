@@ -42,7 +42,7 @@ export default function ContactInfo() {
             </div>
             <div>
               <h3 className="font-luxury font-medium text-rich-black mb-1">Reserveringen</h3>
-              <p className="text-gray-600 font-luxury">+32 13 48 01 39 — 10:00–22:00</p>
+              <p className="text-gray-600 font-luxury">+32 13 48 01 39 — 10:00–23:00</p>
             </div>
           </div>
         </motion.div>
@@ -69,7 +69,7 @@ export default function ContactInfo() {
             </div>
             <div>
               <h3 className="font-luxury font-medium text-rich-black mb-1">Openingstijden</h3>
-              <p className="text-gray-600 font-luxury">Dinsdag–Zondag: 10:00–22:00</p>
+              <p className="text-gray-600 font-luxury">Dinsdag–Zondag: 10:00–23:00</p>
               <p className="text-sm text-gray-500">Maandag gesloten</p>
             </div>
           </div>
