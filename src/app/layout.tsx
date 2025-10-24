@@ -54,8 +54,9 @@ export const metadata: Metadata = {
   description: "Restaurant in Laakdal met seizoensgebonden keuken. Dagverse klassiekers bereid met passie. Reserveer lunch of diner.",
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
       { url: "/bistro-bert-logo.png", sizes: "32x32", type: "image/png" },
+      { url: "/bistro-bert-logo.png", sizes: "192x192", type: "image/png" },
+      { url: "/bistro-bert-logo.png", sizes: "512x512", type: "image/png" },
     ],
     shortcut: "/bistro-bert-logo.png",
     apple: "/bistro-bert-logo.png",
