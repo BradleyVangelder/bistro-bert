@@ -65,7 +65,7 @@ export const metadata: Metadata = {
         longitude: '5.0996063',
       },
       openingHours: [
-        'Tuesday-Sunday 10:00-23:00',
+        'Tuesday-Sunday 11:00-23:00',
       ],
       priceRange: '€€€',
       image: [
