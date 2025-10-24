@@ -65,7 +65,7 @@ export function RestaurantJsonLd() {
           "Saturday",
           "Sunday"
         ],
-        opens: "10:00",
+        opens: "11:00",
         closes: "23:00"
       }
     ]
