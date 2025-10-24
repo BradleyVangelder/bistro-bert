@@ -15,27 +15,27 @@ export default function MenuDessertSelector({ selectedType, onTypeChange }: Menu
       transition={{ duration: 0.4 }}
       className="flex justify-center mb-8 md:mb-12"
     >
-      <div className="inline-flex rounded-sm border border-black overflow-hidden">
+      <div className="flex flex-wrap justify-center gap-3">
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
+          type="button"
           onClick={() => onTypeChange('menu')}
-          className={`px-6 py-2.5 text-sm font-medium transition-all duration-200 ${
-            selectedType === 'menu'
-              ? 'bg-black text-white'
-              : 'bg-white text-black hover:bg-gray-50'
+          aria-pressed={selectedType === 'menu'}
+          className={`monochrome-pdf-button menu-toggle-button${
+            selectedType === 'menu' ? ' menu-toggle-button--active' : ''
           }`}
         >
-          Menukaart
+          Lunch & diner
         </motion.button>
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
+          type="button"
           onClick={() => onTypeChange('dessert')}
-          className={`px-6 py-2.5 text-sm font-medium transition-all duration-200 border-l border-black ${
-            selectedType === 'dessert'
-              ? 'bg-black text-white'
-              : 'bg-white text-black hover:bg-gray-50'
+          aria-pressed={selectedType === 'dessert'}
+          className={`monochrome-pdf-button menu-toggle-button${
+            selectedType === 'dessert' ? ' menu-toggle-button--active' : ''
           }`}
         >
           Desserts

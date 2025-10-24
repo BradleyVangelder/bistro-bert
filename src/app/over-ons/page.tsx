@@ -8,24 +8,9 @@ import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema'
 import { RestaurantSectionHeading, RestaurantSubsectionHeading } from '@/components/ui/SmartHeadings'
 import ActionButton from '@/components/ui/ActionButton'
 import { openZenchefWidget } from '@/utils/zenchef'
+import { spotlightReviews } from '@/data/reviews'
 
-// Page-specific metadata for Over ons is now handled in the root layout.tsx
-
-// Sample reviews for structured data
-const sampleReviews = [
-  {
-    author: 'Jan Janssens',
-    rating: 5,
-    date: '2024-03-15',
-    content: 'Uitzonderlijke culinaire ervaring bij Bistro Bert. De aandacht voor detail en de kwaliteit van de ingrediënten is ongeëvenaard.'
-  },
-  {
-    author: 'Marie Pieters',
-    rating: 5,
-    date: '2024-02-28',
-    content: 'Het menu van Bistro Bert is een feest voor de smaakpapillen. Seizoensgebonden en perfect bereid.'
-  }
-]
+// Page-specific metadata for Over ons is now handled in de root layout.tsx
 
 export default function OverOnsPage() {
   const breadcrumbItems = [
@@ -45,7 +30,7 @@ export default function OverOnsPage() {
   return (
     <>
       <BreadcrumbSchema items={breadcrumbItems} />
-      <ReviewSchema reviews={sampleReviews} />
+      <ReviewSchema reviews={spotlightReviews} />
 
       <div className="min-h-screen bg-white">
         {/* Header Section */}
@@ -66,10 +51,10 @@ export default function OverOnsPage() {
                   className="text-center mb-16"
                 >
                   <RestaurantSectionHeading className="text-center mb-8">
-                    Over Bistro Bert
+                    Ons verhaal
                   </RestaurantSectionHeading>
                   <p className="typography-body-large text-gray-600 max-w-3xl mx-auto">
-                    We koken Belgische klassiekers met een moderne toets, pure smaken uit eigen keuken en lokale seizoensproducten.
+                    In onze keuken combineren wij traditie met moderne technieken. Met passie voor verse, seizoensgebonden ingrediënten.
                   </p>
                 </motion.div>
 

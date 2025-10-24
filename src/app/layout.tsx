@@ -48,10 +48,10 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: "Bistro Bert Laakdal — Seizoenskeuken",
-    template: "%s | Bistro Bert Laakdal"
+    default: "Bistro Bert — Restaurant in Laakdal",
+    template: "%s | Bistro Bert"
   },
-  description: "Belgische klassiekers met finesse in Laakdal, Antwerpse Kempen. Dagvers en seizoensgebonden. Reserveer voor lunch of diner.",
+  description: "Restaurant in Laakdal met seizoensgebonden keuken. Dagverse klassiekers bereid met passie. Reserveer lunch of diner.",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -83,9 +83,6 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.bistro-bert.be"),
   alternates: {
     canonical: "https://www.bistro-bert.be",
-    languages: {
-      "nl-BE": "https://www.bistro-bert.be/nl",
-    },
   },
   openGraph: {
     title: "Bistro Bert Laakdal — Seizoenskeuken",

@@ -22,6 +22,8 @@ import {
 } from '@/components/ui/SmartHeadings'
 import ActionButton from '@/components/ui/ActionButton'
 import { openZenchefWidget, fallbackToContactPage } from '@/utils/zenchef'
+// Use public path string to avoid static import blur processing
+const chefPortraitSrc = '/images/restaurant/chef.jpg'
 
 // Force dynamic rendering to avoid SSR issues with browser APIs
 export const dynamic = 'force-dynamic'
@@ -100,7 +102,7 @@ export default function Home() {
                   <div>
                     <FadeIn delay={0.5} duration={1.2} direction="up">
                       <RestaurantHeroHeading className="text-white drop-shadow-lg mb-4 max-w-xs md:max-w-none">
-                        Bistro Bert — Seizoenskeuken in Laakdal
+                        Bistro Bert — Seizoensgebonden keuken in Laakdal
                       </RestaurantHeroHeading>
                     </FadeIn>
                   </div>
@@ -108,7 +110,7 @@ export default function Home() {
                   <div>
                     <FadeIn delay={0.8} duration={1} direction="up">
                       <p className="typography-body text-white/95 drop-shadow-lg mb-6 max-w-xs md:max-w-2xl">
-                        Seizoenskeuken met karakter — dagvers en zorgvuldig bereid in het hart van de Antwerpse Kempen.
+                        Seizoensgebonden klassiekers met karakter. Dagvers en met zorg bereid, hier in Laakdal.
                       </p>
                     </FadeIn>
                   </div>
@@ -135,41 +137,66 @@ export default function Home() {
         {/* Menu Section - Ultra-refined */}
         <section id="menu" className="relative bg-white py-12 md:py-16 lg:py-24">
           <div className="container-dh">
-            <div className="max-w-4xl mx-auto px-4 md:px-0 text-center">
-              <ScrollTriggeredStagger
-                staggerDelay={250}
-                direction="up"
-                className="space-y-6"
-                threshold={0.2}
-              >
-                <div>
-                  <FadeIn delay={0.2} duration={1} direction="up">
-                    <RestaurantSectionHeading className="text-black max-w-3xl mx-auto mb-6">
-                      Verfijnde Belgische keuken — Lunch & Diner
-                    </RestaurantSectionHeading>
-                  </FadeIn>
-                </div>
+            <div className="max-w-6xl mx-auto grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start">
+              <div className="px-4 md:px-0 text-center lg:text-left">
+                <ScrollTriggeredStagger
+                  staggerDelay={250}
+                  direction="up"
+                  className="space-y-6"
+                  threshold={0.2}
+                >
+                  <div>
+                    <FadeIn delay={0.2} duration={1} direction="up">
+                      <RestaurantSectionHeading className="text-black max-w-3xl mx-auto mb-6 lg:mx-0 lg:text-left">
+                        Verfijnde Belgische keuken — Lunch &amp; Diner
+                      </RestaurantSectionHeading>
+                    </FadeIn>
+                  </div>
 
-                <div>
-                  <FadeIn delay={0.5} duration={0.8} direction="up">
-                    <p className="typography-body-large text-gray-600 max-w-2xl mx-auto">
-                      Klassiekers met een lichte toets: seizoensgebonden, dagvers en precies bereid.
-                    </p>
-                  </FadeIn>
-                </div>
+                  <div>
+                    <FadeIn delay={0.5} duration={0.8} direction="up">
+                      <p className="typography-body-large text-gray-600 max-w-2xl mx-auto lg:mx-0">
+                        Klassiekers met een lichte toets: seizoensgebonden, dagvers en precies bereid.
+                      </p>
+                    </FadeIn>
+                  </div>
 
-                 <div>
-                   <FadeIn delay={0.8} duration={0.6} direction="up">
-                     <ActionButton
-                       href="/menu"
-                       variant="menu"
-                       className="mt-6"
-                     >
-                       Bekijk de menukaart
-                     </ActionButton>
-                   </FadeIn>
-                 </div>
-              </ScrollTriggeredStagger>
+                  <div>
+                    <FadeIn delay={0.8} duration={0.6} direction="up">
+                      <ActionButton
+                        href="/menu"
+                        variant="menu"
+                        className="mt-6 mx-auto lg:mx-0"
+                      >
+                        Bekijk de menukaart
+                      </ActionButton>
+                    </FadeIn>
+                  </div>
+                </ScrollTriggeredStagger>
+              </div>
+
+              <div className="px-4 md:px-0">
+                <FadeIn delay={0.4} duration={1} direction="up">
+                  <div className="relative mx-auto max-w-md lg:max-w-lg">
+                    <div className="absolute -inset-4 hidden lg:block bg-gradient-to-br from-burgundy/10 via-transparent to-burgundy/5 blur-2xl" aria-hidden="true" />
+                    <div className="relative aspect-[2/3] min-h-[420px] lg:min-h-[520px] overflow-hidden ring-1 ring-black/5">
+                      {!imagesLoaded.chef && (
+                        <div className="absolute inset-0 bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse" aria-hidden="true" />
+                      )}
+                      <OptimizedImageNext
+                        src={chefPortraitSrc}
+                        alt="Chef Bert in de keuken van Bistro Bert"
+                        fill
+                        className="object-cover"
+                        quality={85}
+                        sizes="(max-width: 1023px) 80vw, 420px"
+                        onLoad={() => setImagesLoaded(prev => ({ ...prev, chef: true }))}
+                        onError={() => setImagesLoaded(prev => ({ ...prev, chef: true }))}
+                      />
+                    </div>
+                  </div>
+                </FadeIn>
+              </div>
             </div>
           </div>
         </section>

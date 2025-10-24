@@ -5,7 +5,7 @@ import ClientContact from './ClientContact'
 
 export const metadata: Metadata = {
   title: "Contact & Reserveren | Bistro Bert Laakdal",
-  description: "Neem contact op of reserveer direct online voor lunch of diner. We stemmen tempo en dieetwensen met plezier af in Laakdal.",
+  description: "Reserveer uw tafel voor lunch of diner. Wij stemmen alles af op uw wensen — timing, dieet, sfeer.",
   keywords: [
     "Bistro Bert contact",
     "Bistro Bert reserveren",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
         longitude: '5.0996063',
       },
       openingHours: [
-        'Tuesday-Sunday 10:00-22:00',
+        'Tuesday-Sunday 10:00-23:00',
       ],
       priceRange: '€€€',
       image: [

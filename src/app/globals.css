@@ -1524,6 +1524,16 @@ textarea::placeholder {
   stroke: currentColor;
 }
 
+.menu-toggle-button {
+  margin-top: 0;
+}
+
+.menu-toggle-button--active {
+  background: var(--rich-black);
+  color: var(--pure-white);
+  border-color: var(--rich-black);
+}
+
 .monochrome-pdf-indicator {
   font-family: var(--font-serif);
   font-size: 0.85rem;
@@ -2554,4 +2564,3 @@ html body main section:has(.mobile-gallery) .container-dh {
     user-select: none;
   }
 }
-
