@@ -1,15 +1,24 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-    // turbopack: {
-    //   root: process.cwd(),
-    // },
+  // turbopack: {
+  //   root: process.cwd(),
+  // },
   outputFileTracingRoot: process.cwd(),
   images: {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    domains: ['images.unsplash.com', 'localhost'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
     dangerouslyAllowSVG: false,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
@@ -29,13 +38,6 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
     scrollRestoration: true,
   },
-  // Font optimization
-  optimizeFonts: true,
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
@@ -43,26 +45,31 @@ const nextConfig: NextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   webpack: (config, { isServer, dev }) => {
     // Completely exclude canvas and all related native dependencies
     config.externals = config.externals || [];
 
     // Always exclude canvas and native dependencies for production
     if (!dev) {
-      config.externals.push({
-        'canvas': 'commonjs canvas',
-        'cairo': 'commonjs cairo',
-        'pango': 'commonjs pango',
-        'gdk-pixbuf-2.0': 'commonjs gdk-pixbuf-2.0',
-        'pangocairo': 'commonjs pangocairo',
-        'pixman-1': 'commonjs pixman-1',
-        'fontconfig': 'commonjs fontconfig',
-        'freetype2': 'commonjs freetype2',
-        'harfbuzz': 'commonjs harfbuzz',
-        'libpng': 'commonjs libpng',
-        'libjpeg': 'commonjs libjpeg',
-        'giflib': 'commonjs giflib'
-      });
+      // We do NOT want to make canvas external, because that preserves the 'require("canvas")' call.
+      // Since we don't install canvas on Vercel (optional dependency), that require call fails/crashes.
+      // Instead, we let the alias rule below (lines 111-114) handle it by replacing it with false/empty module.
+
+      // config.externals.push({
+      //   'canvas': 'commonjs canvas',
+      //   'cairo': 'commonjs cairo',
+      //   'pango': 'commonjs pango',
+      //   'gdk-pixbuf-2.0': 'commonjs gdk-pixbuf-2.0',
+      //   'pangocairo': 'commonjs pangocairo',
+      //   'pixman-1': 'commonjs pixman-1',
+      //   'fontconfig': 'commonjs fontconfig',
+      //   'freetype2': 'commonjs freetype2',
+      //   'harfbuzz': 'commonjs harfbuzz',
+      //   'libpng': 'commonjs libpng',
+      //   'libjpeg': 'commonjs libjpeg',
+      //   'giflib': 'commonjs giflib'
+      // });
     }
 
     // Handle canvas only in development server-side

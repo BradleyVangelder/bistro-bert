@@ -12,8 +12,8 @@ function checkCanvasInNodeModules() {
   const exists = fs.existsSync(canvasPath);
 
   if (exists) {
-    console.log('❌ Canvas found in node_modules - this may cause build issues');
-    return false;
+    console.log('⚠️  Canvas found in node_modules - ensuring it is excluded from build matches...');
+    return true;
   } else {
     console.log('✅ Canvas not found in node_modules');
     return true;

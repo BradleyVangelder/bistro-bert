@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion'
 
 interface MenuDessertSelectorProps {
-  selectedType: 'menu' | 'dessert'
-  onTypeChange: (type: 'menu' | 'dessert') => void
+  selectedType: 'menu' | 'dessert' | 'suggestions'
+  onTypeChange: (type: 'menu' | 'dessert' | 'suggestions') => void
 }
 
 export default function MenuDessertSelector({ selectedType, onTypeChange }: MenuDessertSelectorProps) {
@@ -22,9 +22,8 @@ export default function MenuDessertSelector({ selectedType, onTypeChange }: Menu
           type="button"
           onClick={() => onTypeChange('menu')}
           aria-pressed={selectedType === 'menu'}
-          className={`monochrome-pdf-button menu-toggle-button${
-            selectedType === 'menu' ? ' menu-toggle-button--active' : ''
-          }`}
+          className={`monochrome-pdf-button menu-toggle-button${selectedType === 'menu' ? ' menu-toggle-button--active' : ''
+            }`}
         >
           Lunch & diner
         </motion.button>
@@ -32,11 +31,21 @@ export default function MenuDessertSelector({ selectedType, onTypeChange }: Menu
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           type="button"
+          onClick={() => onTypeChange('suggestions')}
+          aria-pressed={selectedType === 'suggestions'}
+          className={`monochrome-pdf-button menu-toggle-button${selectedType === 'suggestions' ? ' menu-toggle-button--active' : ''
+            }`}
+        >
+          Suggesties
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          type="button"
           onClick={() => onTypeChange('dessert')}
           aria-pressed={selectedType === 'dessert'}
-          className={`monochrome-pdf-button menu-toggle-button${
-            selectedType === 'dessert' ? ' menu-toggle-button--active' : ''
-          }`}
+          className={`monochrome-pdf-button menu-toggle-button${selectedType === 'dessert' ? ' menu-toggle-button--active' : ''
+            }`}
         >
           Desserts
         </motion.button>
