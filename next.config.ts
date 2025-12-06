@@ -52,20 +52,24 @@ const nextConfig: NextConfig = {
 
     // Always exclude canvas and native dependencies for production
     if (!dev) {
-      config.externals.push({
-        'canvas': 'commonjs canvas',
-        'cairo': 'commonjs cairo',
-        'pango': 'commonjs pango',
-        'gdk-pixbuf-2.0': 'commonjs gdk-pixbuf-2.0',
-        'pangocairo': 'commonjs pangocairo',
-        'pixman-1': 'commonjs pixman-1',
-        'fontconfig': 'commonjs fontconfig',
-        'freetype2': 'commonjs freetype2',
-        'harfbuzz': 'commonjs harfbuzz',
-        'libpng': 'commonjs libpng',
-        'libjpeg': 'commonjs libjpeg',
-        'giflib': 'commonjs giflib'
-      });
+      // We do NOT want to make canvas external, because that preserves the 'require("canvas")' call.
+      // Since we don't install canvas on Vercel (optional dependency), that require call fails/crashes.
+      // Instead, we let the alias rule below (lines 111-114) handle it by replacing it with false/empty module.
+
+      // config.externals.push({
+      //   'canvas': 'commonjs canvas',
+      //   'cairo': 'commonjs cairo',
+      //   'pango': 'commonjs pango',
+      //   'gdk-pixbuf-2.0': 'commonjs gdk-pixbuf-2.0',
+      //   'pangocairo': 'commonjs pangocairo',
+      //   'pixman-1': 'commonjs pixman-1',
+      //   'fontconfig': 'commonjs fontconfig',
+      //   'freetype2': 'commonjs freetype2',
+      //   'harfbuzz': 'commonjs harfbuzz',
+      //   'libpng': 'commonjs libpng',
+      //   'libjpeg': 'commonjs libjpeg',
+      //   'giflib': 'commonjs giflib'
+      // });
     }
 
     // Handle canvas only in development server-side
