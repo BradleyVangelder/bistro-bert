@@ -20,15 +20,18 @@ export const menuSections: MenuSection[] = [
     items: [
       {
         name: "Amuses van de chef",
-        description: "Drie dagelijkse hapjes"
+        description: "Drie dagelijkse hapjes",
+        price: "18,00"
       },
       {
         name: "Handgesneden tonijntartaar",
-        description: "Avocado, citrus, sesam"
+        description: "Avocado, citrus, sesam",
+        price: "22,00"
       },
       {
         name: "Gebakken foie gras",
-        description: "Vijgencompote, brioche"
+        description: "Vijgencompote, brioche",
+        price: "24,00"
       }
     ]
   },
@@ -39,20 +42,24 @@ export const menuSections: MenuSection[] = [
     items: [
       {
         name: "Rundertournedos 'Rossini'",
-        description: "Truffelsaus, foie gras, seizoensgroenten"
+        description: "Truffelsaus, foie gras, seizoensgroenten",
+        price: "48,00"
       },
       {
         name: "Zeebaars uit de Middellandse Zee",
-        description: "Saffraanrisotto, venkelconfijt"
+        description: "Saffraanrisotto, venkelconfijt",
+        price: "38,00"
       },
       {
         name: "Botergegaarde kreeft",
-        description: "Groenten met vanilleglans, koraalsaus"
+        description: "Groenten met vanilleglans, koraalsaus",
+        price: "58,00"
       },
       {
         name: "Risotto met wilde paddenstoelen",
         description: "Truffelolie, oude kaas",
-        dietary: ["Vegetarisch"]
+        dietary: ["Vegetarisch"],
+        price: "28,00"
       }
     ]
   },
@@ -63,15 +70,49 @@ export const menuSections: MenuSection[] = [
     items: [
       {
         name: "Grand Marnier-soufflé",
-        description: "Crème anglaise"
+        description: "Crème anglaise",
+        price: "16,00"
       },
       {
         name: "Chocoladedessert",
-        description: "Pure chocolademousse, hazelnootkrokant"
+        description: "Pure chocolademousse, hazelnootkrokant",
+        price: "14,00"
       },
       {
         name: "Belgische cheesecake",
-        description: "Bessencompote, basilicumijs"
+        description: "Bessencompote, basilicumijs",
+        price: "15,00"
+      }
+    ]
+  },
+  {
+    id: "suggestions",
+    name: "Suggesties",
+    description: "Seizoensgebonden suggesties van de chef.",
+    items: [
+      {
+        name: "Wildkroketjes Chili",
+        price: "14,00"
+      },
+      {
+        name: "Foie gras, Brioche",
+        description: "appel, karamel",
+        price: "22,00"
+      },
+      {
+        name: "Filet van eend",
+        description: "witloof, pastinaak, appel",
+        price: "29,00"
+      },
+      {
+        name: "Hertenfilet",
+        description: "schorseneren, flower sprouts, pastinaak",
+        price: "29,00"
+      },
+      {
+        name: "Biscuit, crème pâtissière",
+        description: "appel, vanille, peer, Calvados",
+        price: "13,00"
       }
     ]
   }

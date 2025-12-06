@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer'
 import ReviewSchema from '@/components/ui/ReviewSchema'
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema'
 import { MenuJsonLd } from '@/components/ui/MenuJsonLd'
+
 import MinimalistPDFViewer from '@/components/MinimalistPDFViewer'
 import { RestaurantSectionHeading, RestaurantSubsectionHeading } from '@/components/ui/SmartHeadings'
 import MenuDessertSelector from '@/components/menu/MenuDessertSelector'
@@ -20,14 +21,18 @@ export const dynamic = 'force-dynamic'
 // Page-specific metadata for Menu is now handled in the root layout.tsx
 
 export default function MenuPage() {
-  const [menuType, setMenuType] = useState<'menu' | 'dessert'>('menu')
+  const [menuType, setMenuType] = useState<'menu' | 'dessert' | 'suggestions'>('menu')
 
   const sectionsToDisplay = useMemo(() => {
-    if (menuType === 'dessert') {
-      return []
+    if (menuType === 'dessert' || menuType === 'menu') {
+      return [] // Shown in PDF
     }
 
-    return visibleMenuSections.filter(section => section.id !== 'desserts')
+    if (menuType === 'suggestions') {
+      return [] // Shown as Image
+    }
+
+    return []
   }, [menuType])
 
   const breadcrumbItems = [
@@ -53,7 +58,7 @@ export default function MenuPage() {
       <MenuJsonLd />
       <BreadcrumbSchema items={breadcrumbItems} />
       <ReviewSchema reviews={spotlightReviews} />
-      
+
       <div className="min-h-screen bg-white">
 
         {/* Content-First Menu Section - Streamlined */}
@@ -98,8 +103,8 @@ export default function MenuPage() {
                     className="space-y-10"
                   >
                     {sectionsToDisplay.map(section => (
-                      <article key={section.id} className="text-left">
-                        <RestaurantSubsectionHeading className="text-left text-black">
+                      <article key={section.id} className="text-center max-w-2xl mx-auto">
+                        <RestaurantSubsectionHeading className="text-center text-black">
                           {section.name}
                         </RestaurantSubsectionHeading>
                         {section.description && (
@@ -109,10 +114,13 @@ export default function MenuPage() {
                         )}
                         <ul className="space-y-4">
                           {section.items.map(item => (
-                            <li key={item.name} className="border border-gray-100 rounded-lg p-4">
+                            <li key={item.name} className="border-none rounded-lg p-4 flex flex-col items-center bg-gray-50/50 shadow-sm">
                               <h4 className="font-serif text-lg text-black">
                                 {item.name}
                               </h4>
+                              {item.price && (
+                                <p className="font-serif text-burgundy mt-1 text-lg">€{item.price}</p>
+                              )}
                               {item.description && (
                                 <p className="typography-body text-gray-600 mt-2">
                                   {item.description}
@@ -140,19 +148,42 @@ export default function MenuPage() {
                 className="mb-8 md:mb-16"
               >
 
-                {/* PDF Viewer - Main Feature */}
-                <div key={menuType} className="mb-8 md:mb-20">
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <MinimalistPDFViewer key={`${menuType}-pdf`} pdfUrl={getPdfUrl()} />
-                  </motion.div>
-                </div>
 
 
-  
+                {/* PDF Viewer - Removed for HTML migration */}
+                {/* PDF Viewer for Menu & Desserts */}
+                {(menuType === 'menu' || menuType === 'dessert') && (
+                  <div key={menuType} className="mb-8 md:mb-20">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.6 }}
+                    >
+                      <MinimalistPDFViewer key={`${menuType}-pdf`} pdfUrl={getPdfUrl()} />
+                    </motion.div>
+                  </div>
+                )}
+
+                {/* Image Display for Suggestions */}
+                {menuType === 'suggestions' && (
+                  <div className="mb-8 md:mb-20 flex justify-center">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.6 }}
+                      className="max-w-2xl w-full"
+                    >
+                      <img
+                        src="/images/suggesties.png"
+                        alt="Onze Suggesties"
+                        className="w-full h-auto rounded-lg shadow-md"
+                      />
+                    </motion.div>
+                  </div>
+                )}
+
+
+
                 {/* Reservation CTA - Luxury divider styling */}
                 <motion.div
                   key={`${menuType}-cta`}
@@ -164,7 +195,9 @@ export default function MenuPage() {
                   <p className="typography-body text-gray-600 mb-6">
                     {menuType === 'menu'
                       ? 'Klaar voor lunch of diner?'
-                      : 'Klaar voor een zoete afsluiting?'
+                      : menuType === 'suggestions'
+                        ? 'Ziet er heerlijk uit, toch?'
+                        : 'Klaar voor een zoete afsluiting?'
                     }
                   </p>
                   <div className="flex flex-col sm:flex-row button-tight-spacing justify-center">
@@ -180,12 +213,12 @@ export default function MenuPage() {
                 </motion.div>
               </motion.div>
             </div>
-          </div>
-        </section>
+          </div >
+        </section >
 
         {/* Footer */}
-        <Footer />
-      </div>
+        < Footer />
+      </div >
     </>
   )
 }
