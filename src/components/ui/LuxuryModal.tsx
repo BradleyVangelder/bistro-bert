@@ -46,6 +46,7 @@ export interface LuxuryModalProps extends Omit<MotionProps, 'variants' | 'initia
   showBackdrop?: boolean
   backdropVariant?: 'blur' | 'vignette' | 'fade' | 'gradient'
   backdropOpacity?: number
+  backdropColor?: string
   showCloseButton?: boolean
   showMaximizeButton?: boolean
   isMaximized?: boolean
@@ -245,6 +246,7 @@ export function LuxuryModal({
   showBackdrop = true,
   backdropVariant = 'blur',
   backdropOpacity = 0.8,
+  backdropColor = 'rgba(0, 0, 0, 0.65)',
   showCloseButton = true,
   showMaximizeButton = false,
   isMaximized = false,
@@ -262,6 +264,9 @@ export function LuxuryModal({
   onAnimationComplete,
   ...motionProps
 }: LuxuryModalProps) {
+  const MODAL_Z_INDEX = 2147483647
+  const OVERLAY_Z_INDEX = MODAL_Z_INDEX - 1
+
   const [isMaximizedState, setIsMaximizedState] = useState(isMaximized)
   const modalRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
@@ -372,109 +377,115 @@ export function LuxuryModal({
               onClose={closeOnBackdrop ? onClose : undefined}
               variant={backdropVariant}
               opacity={backdropOpacity}
+              color={backdropColor}
               closeOnClick={closeOnBackdrop}
               closeOnEscape={false}
               preventInteraction={preventBodyScroll}
               duration={duration}
               respectReducedMotion={respectReducedMotion}
+              style={{ zIndex: OVERLAY_Z_INDEX }}
             />
           )}
 
           {/* Modal */}
-          <motion.div
-            ref={modalRef}
-            {...motionProps}
-            variants={safeModalVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            style={{
-              ...sizeStyles,
-              zIndex: 50,
-              ...motionProps.style,
-            }}
-            className={`
-              fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-              bg-white rounded-2xl shadow-2xl overflow-hidden
-              border border-gray-100/50 backdrop-blur-sm
-              ${modalClassName || ''}
-              ${className || ''}
-            `}
-            aria-label={ariaLabel || title}
-            aria-describedby={ariaDescribedBy}
-            role="dialog"
-            aria-modal="true"
-            tabIndex={-1}
+          <div
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+            style={{ zIndex: MODAL_Z_INDEX }}
           >
-            {/* Modal Header */}
-            {(title || showCloseButton || showMaximizeButton) && (
-              <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-white/95 backdrop-blur-sm">
-                <div className="flex-1">
-                  {title && (
-                    <h2 className="text-suisse-h2 text-gray-900 leading-tight">
-                      {title}
-                    </h2>
-                  )}
-                  {description && (
-                    <p className="mt-1 text-sm text-gray-600 leading-relaxed">
-                      {description}
-                    </p>
-                  )}
-                </div>
-                
-                <div className="flex items-center gap-2 ml-4">
-                  {showMaximizeButton && (
-                    <button
-                      onClick={handleMaximize}
-                      className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors focus:ring-2 focus:ring-burgundy focus:ring-offset-2"
-                      aria-label={isMaximizedState ? "Minimize modal" : "Maximize modal"}
-                    >
-                      {isMaximizedState ? (
-                        <Minimize2 className="w-4 h-4 text-gray-600" />
-                      ) : (
-                        <Maximize2 className="w-4 h-4 text-gray-600" />
-                      )}
-                    </button>
-                  )}
-                  
-                  {showCloseButton && (
-                    <button
-                      onClick={onClose}
-                      className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors focus:ring-2 focus:ring-burgundy focus:ring-offset-2"
-                      aria-label="Close modal"
-                    >
-                      <X className="w-4 h-4 text-gray-600" />
-                    </button>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Modal Content */}
             <motion.div
-              ref={contentRef}
-              variants={safeContentVariants}
+              ref={modalRef}
+              {...motionProps}
+              variants={safeModalVariants}
               initial="initial"
               animate="animate"
               exit="exit"
-              className="relative overflow-auto"
               style={{
-                maxHeight: isMaximizedState ? 'calc(95vh - 120px)' : 'calc(90vh - 120px)',
+                ...sizeStyles,
+                ...motionProps.style,
               }}
+              className={`
+                pointer-events-auto
+                bg-[var(--off-white)] rounded-2xl shadow-2xl overflow-hidden
+                border border-gray-100/50 backdrop-blur-sm
+                ${modalClassName || ''}
+                ${className || ''}
+              `}
+              aria-label={ariaLabel || title}
+              aria-describedby={ariaDescribedBy}
+              role="dialog"
+              aria-modal="true"
+              tabIndex={-1}
             >
-              <div className="p-6">
-                {children}
+              {/* Modal Header */}
+              {(title || showCloseButton || showMaximizeButton) && (
+                <div className="flex items-center justify-between gap-4 px-5 py-5 sm:px-6 sm:py-6 border-b border-gray-100 bg-[var(--off-white)]/95 backdrop-blur-sm">
+                  <div className="min-w-0 flex-1">
+                    {title && (
+                      <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-gray-900 leading-tight tracking-tight">
+                        {title}
+                      </h2>
+                    )}
+                    {description && (
+                      <p className="mt-1 text-sm text-gray-600 leading-relaxed">
+                        {description}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {showMaximizeButton && (
+                      <button
+                        onClick={handleMaximize}
+                        className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors focus:ring-2 focus:ring-burgundy focus:ring-offset-2"
+                        aria-label={isMaximizedState ? "Minimize modal" : "Maximize modal"}
+                      >
+                        {isMaximizedState ? (
+                          <Minimize2 className="w-5 h-5 text-gray-700" />
+                        ) : (
+                          <Maximize2 className="w-5 h-5 text-gray-700" />
+                        )}
+                      </button>
+                    )}
+                    
+                    {showCloseButton && (
+                      <button
+                        onClick={onClose}
+                        className="w-12 h-12 flex items-center justify-center rounded-full bg-white/70 border border-gray-200/80 shadow-sm hover:bg-white/90 transition-colors focus:ring-2 focus:ring-burgundy focus:ring-offset-2"
+                        aria-label="Close modal"
+                      >
+                        <X className="w-6 h-6 text-gray-900" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Modal Content */}
+              <motion.div
+                ref={contentRef}
+                variants={safeContentVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="relative overflow-auto"
+                style={{
+                  maxHeight: isMaximizedState ? 'calc(95vh - 120px)' : 'calc(90vh - 120px)',
+                }}
+              >
+                <div className="p-6">
+                  {children}
+                </div>
+              </motion.div>
+
+              {/* Luxury Accent Border */}
+              <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/50 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent" />
+                <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-[#D4AF37]/30 to-transparent" />
+                <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-[#D4AF37]/30 to-transparent" />
               </div>
             </motion.div>
-
-            {/* Luxury Accent Border */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/50 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent" />
-              <div className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-[#D4AF37]/30 to-transparent" />
-              <div className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-[#D4AF37]/30 to-transparent" />
-            </div>
-          </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>

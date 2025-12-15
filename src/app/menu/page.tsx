@@ -11,7 +11,7 @@ import MinimalistPDFViewer from '@/components/MinimalistPDFViewer'
 import { RestaurantSectionHeading, RestaurantSubsectionHeading } from '@/components/ui/SmartHeadings'
 import MenuDessertSelector from '@/components/menu/MenuDessertSelector'
 import ActionButton from '@/components/ui/ActionButton'
-import { openZenchefWidget } from '@/utils/zenchef'
+import { openEasybookerWidget } from '@/utils/easybooker'
 import { visibleMenuSections } from '@/data/menu'
 import { spotlightReviews } from '@/data/reviews'
 
@@ -40,12 +40,16 @@ export default function MenuPage() {
     { name: 'Menukaart', url: 'https://www.bistro-bert.be/menu' },
   ]
 
-  const handleReserveClick = () => {
-    const widgetOpened = openZenchefWidget()
-    if (!widgetOpened) {
-      // Don't navigate away - just log the error and let user try again
-      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-      // Optional: You could show a toast message here instead of navigating away
+  const handleReserveClick = async () => {
+    try {
+      const widgetOpened = await openEasybookerWidget()
+      if (!widgetOpened) {
+        // Don't navigate away - just log the error and let user try again
+        console.warn('Easybooker widget niet beschikbaar. Gelieve later opnieuw te proberen.')
+        // Optional: You could show a toast message here instead of navigating away
+      }
+    } catch (error) {
+      console.warn('Easybooker widget niet beschikbaar. Gelieve later opnieuw te proberen.')
     }
   }
 

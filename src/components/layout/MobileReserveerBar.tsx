@@ -1,12 +1,13 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import ActionButton from '@/components/ui/ActionButton'
+import { useReservation } from '@/contexts/ReservationContext'
 
 export default function MobileReserveerBar() {
   const [isVisible, setIsVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const { open } = useReservation()
 
   useEffect(() => {
     const checkMobile = () => {
@@ -41,7 +42,7 @@ export default function MobileReserveerBar() {
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg md:hidden">
       <div className="container-dh px-4 py-3">
         <ActionButton
-          href="/contact"
+          onClick={open}
           variant="reserve"
           className="w-full"
           ariaLabel="Reserveer een tafel bij Bistro Bert"

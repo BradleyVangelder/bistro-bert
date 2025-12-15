@@ -2,19 +2,18 @@
 
 import { useCallback } from 'react'
 import type { FaqItem } from '@/data/faqs'
-import { openZenchefWidget } from '@/utils/zenchef'
+import { useReservation } from '@/contexts/ReservationContext'
 
 interface FaqListProps {
   items: FaqItem[]
 }
 
 export function FaqList({ items }: FaqListProps) {
+  const { open } = useReservation()
+
   const handleInlineReserve = useCallback(() => {
-    const widgetOpened = openZenchefWidget()
-    if (!widgetOpened) {
-      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-    }
-  }, [])
+    open()
+  }, [open])
 
   return (
     <div className="space-y-4">

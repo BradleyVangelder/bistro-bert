@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/StaggeredAnimations'
 import { useStaggeredAnimation } from '@/hooks/animations/useStaggeredAnimation'
 import ActionButton from '@/components/ui/ActionButton'
-import { openZenchefWidget } from '@/utils/zenchef'
+import { openEasybookerWidget } from '@/utils/easybooker'
 import { spotlightReviews } from '@/data/reviews'
 
 export default function OverOnsContent() {
@@ -22,12 +22,16 @@ export default function OverOnsContent() {
     { name: 'Over Ons', url: 'https://www.bistro-bert.be/over-ons' },
   ]
 
-  const handleReserveClick = () => {
-    const widgetOpened = openZenchefWidget()
-    if (!widgetOpened) {
-      // Don't navigate away - just log the error and let user try again
-      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-      // Optional: You could show a toast message here instead of navigating away
+  const handleReserveClick = async () => {
+    try {
+      const widgetOpened = await openEasybookerWidget()
+      if (!widgetOpened) {
+        // Don't navigate away - just log the error and let user try again
+        console.warn('Easybooker widget niet beschikbaar. Gelieve later opnieuw te proberen.')
+        // Optional: You could show a toast message here instead of navigating away
+      }
+    } catch (error) {
+      console.warn('Easybooker widget niet beschikbaar. Gelieve later opnieuw te proberen.')
     }
   }
 

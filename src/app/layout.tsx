@@ -8,7 +8,8 @@ import PerformanceOptimizer from "@/components/performance/PerformanceOptimizer"
 import { VercelAnalytics } from "@/components/analytics/VercelAnalytics";
 import { HighContrastProvider } from "@/contexts/HighContrastContext";
 import { RestaurantJsonLd } from "@/components/ui/RestaurantJsonLd";
-import ZenchefWidget from "@/components/ui/ZenchefWidget";
+import EasybookerWidget from "@/components/ui/EasybookerWidget";
+import { ReservationProvider } from "@/contexts/ReservationContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -128,10 +129,10 @@ export default function RootLayout({
         <link rel="alternate" hrefLang="nl-BE" href="https://www.bistro-bert.be" />
         <link rel="alternate" hrefLang="x-default" href="https://www.bistro-bert.be" />
         <RestaurantJsonLd />
-        {/* Zenchef Widget SDK */}
+        {/* Easybooker Widget SDK */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `;(function (d, s, id) {const el = d.getElementsByTagName(s)[0]; if (d.getElementById(id) || el.parentNode == null) {return;} var js = d.createElement(s);  js.id = id; js.async = true; js.src = 'https://sdk.zenchef.com/v1/sdk.min.js';  el.parentNode.insertBefore(js, el); })(document, 'script', 'zenchef-sdk')`
+            __html: `;(function (d, s, id) {const el = d.getElementsByTagName(s)[0]; if (d.getElementById(id) || el.parentNode == null) {return;} var js = d.createElement(s);  js.id = id; js.async = true; js.src = 'https://formv2.easybooker.be/widget.js';  js.setAttribute('data-widget-type', 'widget'); js.setAttribute('data-business-id', '694'); js.setAttribute('data-base-url', 'https://formv2.easybooker.be/'); el.parentNode.insertBefore(js, el); })(document, 'script', 'easybooker-sdk')`
           }}
         />
       </head>
@@ -140,18 +141,21 @@ export default function RootLayout({
       >
         <HighContrastProvider>
           <SkipLinks />
-          <Header />
-          <MainContent>{children}</MainContent>
+          <ReservationProvider>
+            <Header />
+            <MainContent>{children}</MainContent>
 
-          {/* Zenchef Widget - available on all pages */}
-          <ZenchefWidget />
+            {/* Easybooker Widget - available on all pages */}
+            <EasybookerWidget />
 
-          {/* Performance Monitoring */}
-          <WebVitalsMonitor />
-          <PerformanceOptimizer />
+            {/* Performance Monitoring */}
+            <WebVitalsMonitor />
+            <PerformanceOptimizer />
 
-          {/* Vercel Analytics */}
-          <VercelAnalytics />
+
+            {/* Vercel Analytics */}
+            <VercelAnalytics />
+          </ReservationProvider>
         </HighContrastProvider>
       </body>
     </html>

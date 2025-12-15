@@ -21,7 +21,7 @@ import {
   RestaurantSubsectionHeading
 } from '@/components/ui/SmartHeadings'
 import ActionButton from '@/components/ui/ActionButton'
-import { openZenchefWidget, fallbackToContactPage } from '@/utils/zenchef'
+import { openEasybookerWidget, fallbackToContactPage } from '@/utils/easybooker'
 // Use public path string to avoid static import blur processing
 const chefPortraitSrc = '/images/restaurant/chef.jpg'
 
@@ -36,12 +36,16 @@ export default function Home() {
     ambiance: false
   })
 
-  const handleReserveClick = () => {
-    const widgetOpened = openZenchefWidget()
-    if (!widgetOpened) {
-      // Don't navigate away - just log the error and let user try again
-      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-      // Optional: You could show a toast message here instead of navigating away
+  const handleReserveClick = async () => {
+    try {
+      const widgetOpened = await openEasybookerWidget()
+      if (!widgetOpened) {
+        // Don't navigate away - just log the error and let user try again
+        console.warn('Easybooker widget niet beschikbaar. Gelieve later opnieuw te proberen.')
+        // Optional: You could show a toast message here instead of navigating away
+      }
+    } catch (error) {
+      console.warn('Easybooker widget niet beschikbaar. Gelieve later opnieuw te proberen.')
     }
   }
 

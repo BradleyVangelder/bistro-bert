@@ -1,26 +1,17 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { revealPresets, microInteractionPresets } from '@/utils/animations/presets'
-import { ANIMATION_DURATIONS, EASING } from '@/utils/animations/constants'
-import { openZenchefWidget } from '@/utils/zenchef'
+import { revealPresets } from '@/utils/animations/presets'
+import { ANIMATION_DURATIONS } from '@/utils/animations/constants'
+import { useReservation } from '@/contexts/ReservationContext'
 import ActionButton from '@/components/ui/ActionButton'
 
 export default function StickyReserveButton() {
   const [isVisible, setIsVisible] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
 
-  const handleReserveClick = () => {
-    const widgetOpened = openZenchefWidget()
-    if (!widgetOpened) {
-      // Don't navigate away - just log the error and let user try again
-      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-      // Optional: You could show a toast message here instead of navigating away
-    }
-  }
+  const { open } = useReservation()
 
   useEffect(() => {
     const checkMobile = () => {
@@ -37,8 +28,6 @@ export default function StickyReserveButton() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100)
-      
       // Show after scrolling past hero section on mobile
       if (isMobile) {
         setIsVisible(window.scrollY > 300)
@@ -48,7 +37,7 @@ export default function StickyReserveButton() {
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    
+
     // Initial check
     handleScroll()
 
@@ -67,10 +56,9 @@ export default function StickyReserveButton() {
       variants={revealPresets.slideRight}
     >
       <ActionButton
-        onClick={handleReserveClick}
+        onClick={open}
         variant="reserve"
         ariaLabel="Reserveer een tafel bij Bistro Bert"
-        dataZcAction="open"
       >
         Reserveer een tafel
       </ActionButton>
@@ -98,10 +86,9 @@ export default function StickyReserveButton() {
             className="relative group"
           >
             <ActionButton
-              onClick={handleReserveClick}
+              onClick={open}
               variant="reserve"
               ariaLabel="Reserveer een tafel bij Bistro Bert"
-              dataZcAction="open"
               className="w-full"
             >
               Reserveer een tafel
