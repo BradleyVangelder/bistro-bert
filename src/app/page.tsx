@@ -21,7 +21,7 @@ import {
   RestaurantSubsectionHeading
 } from '@/components/ui/SmartHeadings'
 import ActionButton from '@/components/ui/ActionButton'
-import { openEasybookerWidget, fallbackToContactPage } from '@/utils/easybooker'
+import { useReservation } from '@/contexts/ReservationContext'
 // Use public path string to avoid static import blur processing
 const chefPortraitSrc = '/images/restaurant/chef.jpg'
 
@@ -29,6 +29,7 @@ const chefPortraitSrc = '/images/restaurant/chef.jpg'
 export const dynamic = 'force-dynamic'
 
 export default function Home() {
+  const { open } = useReservation()
   const [imagesLoaded, setImagesLoaded] = useState({
     hero: false,
     chef: false,
@@ -36,17 +37,8 @@ export default function Home() {
     ambiance: false
   })
 
-  const handleReserveClick = async () => {
-    try {
-      const widgetOpened = await openEasybookerWidget()
-      if (!widgetOpened) {
-        // Don't navigate away - just log the error and let user try again
-        console.warn('Easybooker widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-        // Optional: You could show a toast message here instead of navigating away
-      }
-    } catch (error) {
-      console.warn('Easybooker widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-    }
+  const handleReserveClick = () => {
+    open()
   }
 
 

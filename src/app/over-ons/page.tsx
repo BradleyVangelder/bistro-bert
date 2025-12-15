@@ -7,28 +7,20 @@ import ReviewSchema from '@/components/ui/ReviewSchema'
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema'
 import { RestaurantSectionHeading, RestaurantSubsectionHeading } from '@/components/ui/SmartHeadings'
 import ActionButton from '@/components/ui/ActionButton'
-import { openEasybookerWidget } from '@/utils/easybooker'
 import { spotlightReviews } from '@/data/reviews'
+import { useReservation } from '@/contexts/ReservationContext'
 
 // Page-specific metadata for Over ons is now handled in de root layout.tsx
 
 export default function OverOnsPage() {
+  const { open } = useReservation()
   const breadcrumbItems = [
     { name: 'Home', url: 'https://www.bistro-bert.be' },
     { name: 'Over Ons', url: 'https://www.bistro-bert.be/over-ons' },
   ]
 
-  const handleReserveClick = async () => {
-    try {
-      const widgetOpened = await openEasybookerWidget()
-      if (!widgetOpened) {
-        // Don't navigate away - just log the error and let user try again
-        console.warn('Easybooker widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-        // Optional: You could show a toast message here instead of navigating away
-      }
-    } catch (error) {
-      console.warn('Easybooker widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-    }
+  const handleReserveClick = () => {
+    open()
   }
 
   return (
