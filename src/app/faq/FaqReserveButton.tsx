@@ -1,14 +1,13 @@
 'use client'
 
 import ActionButton from '@/components/ui/ActionButton'
-import { openZenchefWidget } from '@/utils/zenchef'
+import { useReservation } from '@/contexts/ReservationContext'
 
 export function FaqReserveButton() {
+  const { open } = useReservation()
+
   const handleReserveClick = () => {
-    const widgetOpened = openZenchefWidget()
-    if (!widgetOpened) {
-      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-    }
+    open()
   }
 
   return (

@@ -21,7 +21,7 @@ import {
   RestaurantSubsectionHeading
 } from '@/components/ui/SmartHeadings'
 import ActionButton from '@/components/ui/ActionButton'
-import { openZenchefWidget, fallbackToContactPage } from '@/utils/zenchef'
+import { useReservation } from '@/contexts/ReservationContext'
 // Use public path string to avoid static import blur processing
 const chefPortraitSrc = '/images/restaurant/chef.jpg'
 
@@ -29,6 +29,7 @@ const chefPortraitSrc = '/images/restaurant/chef.jpg'
 export const dynamic = 'force-dynamic'
 
 export default function Home() {
+  const { open } = useReservation()
   const [imagesLoaded, setImagesLoaded] = useState({
     hero: false,
     chef: false,
@@ -37,12 +38,7 @@ export default function Home() {
   })
 
   const handleReserveClick = () => {
-    const widgetOpened = openZenchefWidget()
-    if (!widgetOpened) {
-      // Don't navigate away - just log the error and let user try again
-      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-      // Optional: You could show a toast message here instead of navigating away
-    }
+    open()
   }
 
 

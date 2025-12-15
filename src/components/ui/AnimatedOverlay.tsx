@@ -265,10 +265,10 @@ export function AnimatedOverlay({
 
   // Handle click events
   const handleClick = useCallback((e: React.MouseEvent) => {
-    if (closeOnClick && !preventInteraction && e.target === e.currentTarget) {
+    if (closeOnClick && e.target === e.currentTarget) {
       onClose?.()
     }
-  }, [closeOnClick, preventInteraction, onClose])
+  }, [closeOnClick, onClose])
 
   // Handle escape key
   useEffect(() => {
@@ -332,6 +332,8 @@ export function AnimatedOverlay({
     }
   }, [isOpen, preventInteraction])
 
+  const shouldCapturePointerEvents = preventInteraction || closeOnClick || !!onClose
+
   return (
     <AnimatePresence mode="wait">
       {isOpen && (
@@ -345,11 +347,11 @@ export function AnimatedOverlay({
           style={{
             ...positionStyles,
             zIndex: 40,
-            pointerEvents: preventInteraction ? 'none' : 'auto',
+            pointerEvents: shouldCapturePointerEvents ? 'auto' : 'none',
             ...motionProps.style,
           }}
           className={`
-            ${preventInteraction ? 'pointer-events-none' : 'pointer-events-auto'}
+            ${shouldCapturePointerEvents ? 'pointer-events-auto' : 'pointer-events-none'}
           `}
           onClick={handleClick}
           aria-label={ariaLabel}

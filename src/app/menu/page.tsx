@@ -11,7 +11,7 @@ import MinimalistPDFViewer from '@/components/MinimalistPDFViewer'
 import { RestaurantSectionHeading, RestaurantSubsectionHeading } from '@/components/ui/SmartHeadings'
 import MenuDessertSelector from '@/components/menu/MenuDessertSelector'
 import ActionButton from '@/components/ui/ActionButton'
-import { openZenchefWidget } from '@/utils/zenchef'
+import { useReservation } from '@/contexts/ReservationContext'
 import { visibleMenuSections } from '@/data/menu'
 import { spotlightReviews } from '@/data/reviews'
 
@@ -21,6 +21,7 @@ export const dynamic = 'force-dynamic'
 // Page-specific metadata for Menu is now handled in the root layout.tsx
 
 export default function MenuPage() {
+  const { open } = useReservation()
   const [menuType, setMenuType] = useState<'menu' | 'dessert' | 'suggestions'>('menu')
 
   const sectionsToDisplay = useMemo(() => {
@@ -41,12 +42,7 @@ export default function MenuPage() {
   ]
 
   const handleReserveClick = () => {
-    const widgetOpened = openZenchefWidget()
-    if (!widgetOpened) {
-      // Don't navigate away - just log the error and let user try again
-      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-      // Optional: You could show a toast message here instead of navigating away
-    }
+    open()
   }
 
   const getPdfUrl = () => {

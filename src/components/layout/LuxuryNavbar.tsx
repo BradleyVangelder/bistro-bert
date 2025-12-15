@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Menu, Phone, Mail, MapPin } from 'lucide-react'
+import { useReservation } from '@/contexts/ReservationContext'
 
 interface MenuOverlayProps {
   isOpen: boolean
@@ -46,6 +47,8 @@ export default function LuxuryNavbar() {
   const [activeLink, setActiveLink] = useState('')
   const pathname = usePathname()
   const menuRef = useRef<HTMLDivElement>(null)
+
+  const { open } = useReservation()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -104,7 +107,7 @@ export default function LuxuryNavbar() {
       document.addEventListener('keydown', handleEscape)
       document.addEventListener('keydown', handleKeyDown)
       document.body.style.overflow = 'hidden'
-      
+
       // Set focus to first focusable element when menu opens
       setTimeout(() => {
         const firstFocusable = menuRef.current?.querySelector(
@@ -181,27 +184,32 @@ export default function LuxuryNavbar() {
                       >
                         <Link
                           href={item.href}
-                          onClick={onClose}
-                          className={`group block space-y-2 ${
-                            pathname === item.href ? 'text-burgundy' : 'text-rich-black'
-                          }`}
+                          onClick={(e) => {
+                            if (item.label === 'Reserveren') {
+                              e.preventDefault()
+                              onClose()
+                              open()
+                            } else {
+                              onClose()
+                            }
+                          }}
+                          className={`group block space-y-2 ${pathname === item.href ? 'text-burgundy' : 'text-rich-black'
+                            }`}
                         >
                           <div className="flex items-center justify-between">
                             <span className="text-suisse-h2 tracking-tight">
                               {item.label}
                             </span>
-                            <div className={`w-16 h-px transition-all duration-300 ${
-                              pathname === item.href ? 'bg-burgundy' : 'bg-gray-300 group-hover:bg-burgundy'
-                            }`} />
+                            <div className={`w-16 h-px transition-all duration-300 ${pathname === item.href ? 'bg-burgundy' : 'bg-gray-300 group-hover:bg-burgundy'
+                              }`} />
                           </div>
                           {item.description && (
                             <p className="text-gray-600 text-sm font-luxury tracking-wide">
                               {item.description}
                             </p>
                           )}
-                          <div className={`h-px bg-gradient-to-r from-transparent via-burgundy to-transparent transition-all duration-500 ${
-                            pathname === item.href ? 'w-full' : 'w-0 group-hover:w-full'
-                          }`} />
+                          <div className={`h-px bg-gradient-to-r from-transparent via-burgundy to-transparent transition-all duration-500 ${pathname === item.href ? 'w-full' : 'w-0 group-hover:w-full'
+                            }`} />
                         </Link>
                       </motion.div>
                     ))}
@@ -227,7 +235,7 @@ export default function LuxuryNavbar() {
                       <span className="text-sm font-luxury">Verboekt 121, 2430 Laakdal</span>
                     </div>
                   </motion.div>
-                  
+
                 </nav>
 
                 {/* Footer */}
@@ -248,11 +256,10 @@ export default function LuxuryNavbar() {
     <>
       {/* Main Navbar */}
       <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
-          isScrolled
-            ? 'bg-white/98 backdrop-blur-lg border-b border-gray-50 shadow-sm'
-            : 'bg-white/95 backdrop-blur-md border-b border-gray-50/50'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${isScrolled
+          ? 'bg-white/98 backdrop-blur-lg border-b border-gray-50 shadow-sm'
+          : 'bg-white/95 backdrop-blur-md border-b border-gray-50/50'
+          }`}
       >
         <div className="container-dh">
           <div className="flex items-center justify-center py-3 relative">
@@ -282,16 +289,20 @@ export default function LuxuryNavbar() {
                 <Link
                   key={item.id}
                   href={item.href}
-                  className={`relative group px-4 py-2 ${
-                    activeLink === item.href ? 'text-burgundy' : 'text-rich-black'
-                  }`}
+                  onClick={(e) => {
+                    if (item.label === 'Reserveren') {
+                      e.preventDefault()
+                      open()
+                    }
+                  }}
+                  className={`relative group px-4 py-2 ${activeLink === item.href ? 'text-burgundy' : 'text-rich-black'
+                    }`}
                 >
                   <span className="text-sm font-luxury font-medium tracking-widest uppercase transition-colors duration-300 group-hover:text-burgundy">
                     {item.label}
                   </span>
-                  <div className={`absolute -bottom-2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-burgundy to-transparent transition-all duration-300 ${
-                    activeLink === item.href ? 'opacity-100 w-full' : 'opacity-0 w-0 group-hover:opacity-100 group-hover:w-full'
-                  }`} />
+                  <div className={`absolute -bottom-2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-burgundy to-transparent transition-all duration-300 ${activeLink === item.href ? 'opacity-100 w-full' : 'opacity-0 w-0 group-hover:opacity-100 group-hover:w-full'
+                    }`} />
                 </Link>
               ))}
             </nav>

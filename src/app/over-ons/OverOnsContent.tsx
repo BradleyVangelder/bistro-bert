@@ -13,22 +13,18 @@ import {
 } from '@/components/ui/StaggeredAnimations'
 import { useStaggeredAnimation } from '@/hooks/animations/useStaggeredAnimation'
 import ActionButton from '@/components/ui/ActionButton'
-import { openZenchefWidget } from '@/utils/zenchef'
 import { spotlightReviews } from '@/data/reviews'
+import { useReservation } from '@/contexts/ReservationContext'
 
 export default function OverOnsContent() {
+  const { open } = useReservation()
   const breadcrumbItems = [
     { name: 'Home', url: 'https://www.bistro-bert.be' },
     { name: 'Over Ons', url: 'https://www.bistro-bert.be/over-ons' },
   ]
 
   const handleReserveClick = () => {
-    const widgetOpened = openZenchefWidget()
-    if (!widgetOpened) {
-      // Don't navigate away - just log the error and let user try again
-      console.warn('Zenchef widget niet beschikbaar. Gelieve later opnieuw te proberen.')
-      // Optional: You could show a toast message here instead of navigating away
-    }
+    open()
   }
 
   // Custom staggered animations for different sections
