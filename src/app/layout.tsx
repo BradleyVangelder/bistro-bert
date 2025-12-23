@@ -10,6 +10,7 @@ import { HighContrastProvider } from "@/contexts/HighContrastContext";
 import { RestaurantJsonLd } from "@/components/ui/RestaurantJsonLd";
 import EasybookerWidget from "@/components/ui/EasybookerWidget";
 import { ReservationProvider } from "@/contexts/ReservationContext";
+import ClosingBanner from "@/components/layout/ClosingBanner";
 import "./globals.css";
 
 const inter = Inter({
@@ -141,6 +142,7 @@ export default function RootLayout({
       >
         <HighContrastProvider>
           <SkipLinks />
+          <ClosingBanner />
           <ReservationProvider>
             <Header />
             <MainContent>{children}</MainContent>
