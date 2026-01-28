@@ -10,6 +10,7 @@ import { HighContrastProvider } from "@/contexts/HighContrastContext";
 import { RestaurantJsonLd } from "@/components/ui/RestaurantJsonLd";
 import EasybookerWidget from "@/components/ui/EasybookerWidget";
 import { ReservationProvider } from "@/contexts/ReservationContext";
+import ValentineModal from "@/components/promotions/ValentineModal";
 import "./globals.css";
 
 const inter = Inter({
@@ -147,6 +148,9 @@ export default function RootLayout({
 
             {/* Easybooker Widget - available on all pages */}
             <EasybookerWidget />
+
+            {/* Valentine Promotion Modal */}
+            <ValentineModal />
 
             {/* Performance Monitoring */}
             <WebVitalsMonitor />

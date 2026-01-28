@@ -3,11 +3,17 @@
 import { motion } from 'framer-motion'
 
 interface MenuDessertSelectorProps {
-  selectedType: 'menu' | 'dessert' | 'suggestions'
-  onTypeChange: (type: 'menu' | 'dessert' | 'suggestions') => void
+  selectedType: 'menu' | 'dessert' | 'suggestions' | 'valentine'
+  onTypeChange: (type: 'menu' | 'dessert' | 'suggestions' | 'valentine') => void
 }
 
+// Set to end of February 15th (23:59:59) in local time
+const VALENTINE_END_DATE = new Date(2026, 1, 15, 23, 59, 59)
+
 export default function MenuDessertSelector({ selectedType, onTypeChange }: MenuDessertSelectorProps) {
+  const now = new Date()
+  const isValentineActive = now <= VALENTINE_END_DATE
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -49,6 +55,19 @@ export default function MenuDessertSelector({ selectedType, onTypeChange }: Menu
         >
           Desserts
         </motion.button>
+        {isValentineActive && (
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            type="button"
+            onClick={() => onTypeChange('valentine')}
+            aria-pressed={selectedType === 'valentine'}
+            className={`monochrome-pdf-button menu-toggle-button${selectedType === 'valentine' ? ' menu-toggle-button--active' : ''
+              }`}
+          >
+            Valentijn
+          </motion.button>
+        )}
       </div>
     </motion.div>
   )

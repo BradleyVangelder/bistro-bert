@@ -1,6 +1,7 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Footer from '@/components/layout/Footer'
 import ReviewSchema from '@/components/ui/ReviewSchema'
@@ -20,13 +21,28 @@ export const dynamic = 'force-dynamic'
 
 // Page-specific metadata for Menu is now handled in the root layout.tsx
 
-export default function MenuPage() {
+// Component that uses useSearchParams wrapped in Suspense
+function MenuContent() {
   const { open } = useReservation()
-  const [menuType, setMenuType] = useState<'menu' | 'dessert' | 'suggestions'>('menu')
+  const searchParams = useSearchParams()
+  const [menuType, setMenuType] = useState<'menu' | 'dessert' | 'suggestions' | 'valentine'>('menu')
+
+  // Handle URL parameter for auto-selecting Valentine tab
+  useEffect(() => {
+    const tab = searchParams.get('tab')
+    if (tab === 'valentine') {
+      const now = new Date()
+      // Set to end of February 15th (23:59:59) in local time
+      const valentineEndDate = new Date(2026, 1, 15, 23, 59, 59)
+      if (now <= valentineEndDate) {
+        setMenuType('valentine')
+      }
+    }
+  }, [searchParams])
 
   const sectionsToDisplay = useMemo(() => {
-    if (menuType === 'dessert' || menuType === 'menu') {
-      return [] // Shown in PDF
+    if (menuType === 'dessert' || menuType === 'menu' || menuType === 'valentine') {
+      return [] // Shown in PDF or Image
     }
 
     if (menuType === 'suggestions') {
@@ -98,7 +114,7 @@ export default function MenuPage() {
                     transition={{ duration: 0.6 }}
                     className="space-y-10"
                   >
-                    {sectionsToDisplay.map(section => (
+                    {sectionsToDisplay.map((section: { id: string; name: string; description?: string; items: Array<{ name: string; price?: string; description?: string; dietary?: string[] }> }) => (
                       <article key={section.id} className="text-center max-w-2xl mx-auto">
                         <RestaurantSubsectionHeading className="text-center text-black">
                           {section.name}
@@ -109,7 +125,7 @@ export default function MenuPage() {
                           </p>
                         )}
                         <ul className="space-y-4">
-                          {section.items.map(item => (
+                          {section.items.map((item: { name: string; price?: string; description?: string; dietary?: string[] }) => (
                             <li key={item.name} className="border-none rounded-lg p-4 flex flex-col items-center bg-gray-50/50 shadow-sm">
                               <h4 className="font-serif text-lg text-black">
                                 {item.name}
@@ -178,6 +194,24 @@ export default function MenuPage() {
                   </div>
                 )}
 
+                {/* Image Display for Valentine Menu */}
+                {menuType === 'valentine' && (
+                  <div className="mb-8 md:mb-20 flex justify-center">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.6 }}
+                      className="max-w-lg w-full"
+                    >
+                      <img
+                        src="/valentijns-menu.jpg"
+                        alt="Valentijnsmenu 2025 - Carpaccio coquille, Griet of Entrecote, Javanais voor 59 euro"
+                        className="w-full h-auto rounded-lg shadow-lg"
+                      />
+                    </motion.div>
+                  </div>
+                )}
+
 
 
                 {/* Reservation CTA - Luxury divider styling */}
@@ -193,17 +227,19 @@ export default function MenuPage() {
                       ? 'Klaar voor lunch of diner?'
                       : menuType === 'suggestions'
                         ? 'Ziet er heerlijk uit, toch?'
-                        : 'Klaar voor een zoete afsluiting?'
+                        : menuType === 'valentine'
+                          ? 'Vier de liefde bij Bistro Bert'
+                          : 'Klaar voor een zoete afsluiting?'
                     }
                   </p>
                   <div className="flex flex-col sm:flex-row button-tight-spacing justify-center">
                     <ActionButton
                       onClick={handleReserveClick}
                       variant="reserve"
-                      ariaLabel="Open reserveringswidget"
+                      ariaLabel={menuType === 'valentine' ? 'Reserveer voor Valentijn' : 'Open reserveringswidget'}
                       dataZcAction="open"
                     >
-                      Reserveer een tafel
+                      {menuType === 'valentine' ? 'Reserveer voor Valentijn' : 'Reserveer een tafel'}
                     </ActionButton>
                   </div>
                 </motion.div>
@@ -216,5 +252,21 @@ export default function MenuPage() {
         < Footer />
       </div >
     </>
+  )
+}
+
+// Main page component with Suspense boundary
+export default function MenuPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-burgundy mx-auto mb-4"></div>
+          <p className="text-gray-600">Menu laden...</p>
+        </div>
+      </div>
+    }>
+      <MenuContent />
+    </Suspense>
   )
 }
