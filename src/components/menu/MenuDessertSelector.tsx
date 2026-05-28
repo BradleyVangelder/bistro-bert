@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion'
 
 interface MenuDessertSelectorProps {
-  selectedType: 'menu' | 'dessert' | 'suggestions' | 'valentine'
-  onTypeChange: (type: 'menu' | 'dessert' | 'suggestions' | 'valentine') => void
+  selectedType: 'menu' | 'dessert' | 'wine' | 'valentine'
+  onTypeChange: (type: 'menu' | 'dessert' | 'wine' | 'valentine') => void
 }
 
 // Set to end of February 15th (23:59:59) in local time
@@ -37,23 +37,23 @@ export default function MenuDessertSelector({ selectedType, onTypeChange }: Menu
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           type="button"
-          onClick={() => onTypeChange('suggestions')}
-          aria-pressed={selectedType === 'suggestions'}
-          className={`monochrome-pdf-button menu-toggle-button${selectedType === 'suggestions' ? ' menu-toggle-button--active' : ''
-            }`}
-        >
-          Suggesties
-        </motion.button>
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          type="button"
           onClick={() => onTypeChange('dessert')}
           aria-pressed={selectedType === 'dessert'}
           className={`monochrome-pdf-button menu-toggle-button${selectedType === 'dessert' ? ' menu-toggle-button--active' : ''
             }`}
         >
           Desserts
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          type="button"
+          onClick={() => onTypeChange('wine')}
+          aria-pressed={selectedType === 'wine'}
+          className={`monochrome-pdf-button menu-toggle-button${selectedType === 'wine' ? ' menu-toggle-button--active' : ''
+            }`}
+        >
+          Wijn
         </motion.button>
         {isValentineActive && (
           <motion.button

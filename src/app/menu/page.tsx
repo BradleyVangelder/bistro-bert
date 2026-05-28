@@ -13,7 +13,6 @@ import { RestaurantSectionHeading, RestaurantSubsectionHeading } from '@/compone
 import MenuDessertSelector from '@/components/menu/MenuDessertSelector'
 import ActionButton from '@/components/ui/ActionButton'
 import { useReservation } from '@/contexts/ReservationContext'
-import { visibleMenuSections } from '@/data/menu'
 import { spotlightReviews } from '@/data/reviews'
 
 // Force dynamic rendering for this page to avoid SSR issues with PDF viewer
@@ -25,12 +24,16 @@ export const dynamic = 'force-dynamic'
 function MenuContent() {
   const { open } = useReservation()
   const searchParams = useSearchParams()
-  const [menuType, setMenuType] = useState<'menu' | 'dessert' | 'suggestions' | 'valentine'>('menu')
+  const [menuType, setMenuType] = useState<'menu' | 'dessert' | 'wine' | 'valentine'>('menu')
 
-  // Handle URL parameter for auto-selecting Valentine tab
+  // Handle URL parameter for auto-selecting tabs
   useEffect(() => {
     const tab = searchParams.get('tab')
-    if (tab === 'valentine') {
+    if (tab === 'dessert') {
+      setMenuType('dessert')
+    } else if (tab === 'wine') {
+      setMenuType('wine')
+    } else if (tab === 'valentine') {
       const now = new Date()
       // Set to end of February 15th (23:59:59) in local time
       const valentineEndDate = new Date(2026, 1, 15, 23, 59, 59)
@@ -41,14 +44,6 @@ function MenuContent() {
   }, [searchParams])
 
   const sectionsToDisplay = useMemo(() => {
-    if (menuType === 'dessert' || menuType === 'menu' || menuType === 'valentine') {
-      return [] // Shown in PDF or Image
-    }
-
-    if (menuType === 'suggestions') {
-      return [] // Shown as Image
-    }
-
     return []
   }, [menuType])
 
@@ -62,7 +57,14 @@ function MenuContent() {
   }
 
   const getPdfUrl = () => {
-    return menuType === 'menu' ? '/menu.pdf' : '/files/dessert.pdf'
+    switch (menuType) {
+      case 'dessert':
+        return '/Dessertenkaart-BB.pdf'
+      case 'wine':
+        return '/Wijnkaart-BB.pdf'
+      default:
+        return '/menu-suggesties.pdf'
+    }
   }
 
   return (
@@ -163,8 +165,8 @@ function MenuContent() {
 
 
                 {/* PDF Viewer - Removed for HTML migration */}
-                {/* PDF Viewer for Menu & Desserts */}
-                {(menuType === 'menu' || menuType === 'dessert') && (
+                {/* PDF Viewer for Menu, Desserts & Wine */}
+                {(menuType === 'menu' || menuType === 'dessert' || menuType === 'wine') && (
                   <div key={menuType} className="mb-8 md:mb-20">
                     <motion.div
                       initial={{ opacity: 0 }}
@@ -172,24 +174,6 @@ function MenuContent() {
                       transition={{ duration: 0.6 }}
                     >
                       <MinimalistPDFViewer key={`${menuType}-pdf`} pdfUrl={getPdfUrl()} />
-                    </motion.div>
-                  </div>
-                )}
-
-                {/* Image Display for Suggestions */}
-                {menuType === 'suggestions' && (
-                  <div className="mb-8 md:mb-20 flex justify-center">
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.6 }}
-                      className="max-w-2xl w-full"
-                    >
-                      <img
-                        src="/images/suggesties.png"
-                        alt="Onze Suggesties"
-                        className="w-full h-auto rounded-lg shadow-md"
-                      />
                     </motion.div>
                   </div>
                 )}
@@ -225,8 +209,8 @@ function MenuContent() {
                   <p className="typography-body text-gray-600 mb-6">
                     {menuType === 'menu'
                       ? 'Klaar voor lunch of diner?'
-                      : menuType === 'suggestions'
-                        ? 'Ziet er heerlijk uit, toch?'
+                      : menuType === 'wine'
+                        ? 'Ontdek onze wijnselectie bij uw maaltijd'
                         : menuType === 'valentine'
                           ? 'Vier de liefde bij Bistro Bert'
                           : 'Klaar voor een zoete afsluiting?'
