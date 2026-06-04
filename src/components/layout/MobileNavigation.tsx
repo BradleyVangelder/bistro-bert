@@ -105,7 +105,7 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
                 Dinsdag–Zondag
               </p>
               <p className="text-burgundy font-semibold">
-                11:00 - 23:00
+                12:00 - 23:00
               </p>
               <p className="text-gray-600 text-sm mt-1">
                 Maandag gesloten

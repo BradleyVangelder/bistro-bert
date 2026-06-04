@@ -91,28 +91,54 @@ export const menuSections: MenuSection[] = [
     description: "Seizoensgebonden suggesties van de chef.",
     items: [
       {
-        name: "Wildkroketjes Chili",
-        price: "14,00"
+        name: "Asperges à la Flamande",
+        description: "ei, peterselie, boter",
+        price: "18,00"
       },
       {
-        name: "Foie gras, Brioche",
-        description: "appel, karamel",
+        name: "Gelakt buikspek",
+        description: "Cevennen-ui, hazelnoot",
+        price: "19,00"
+      },
+      {
+        name: "Gerookte paling - brioche",
+        description: "witloof, appel",
         price: "22,00"
       },
       {
-        name: "Filet van eend",
-        description: "witloof, pastinaak, appel",
+        name: "Tomaat - burrata",
+        description: "pesto, Serranoham",
+        price: "19,00"
+      },
+      {
+        name: "Wilde tarbot",
+        description: "Dijonaise - spinazie - aardappel",
+        price: "59,00"
+      },
+      {
+        name: "Asperges à la Flamande",
+        description: "ei, peterselie, boter, krieltjes",
+        price: "25,00"
+      },
+      {
+        name: "Gebakken asperges - speck",
+        description: "luchtig ei, frisée, krieltjes",
         price: "29,00"
       },
       {
-        name: "Hertenfilet",
-        description: "schorseneren, flower sprouts, pastinaak",
+        name: "Gebakken asperges - grijze garnalen",
+        description: "luchtig ei, frisée, krieltjes",
         price: "29,00"
       },
       {
-        name: "Biscuit, crème pâtissière",
-        description: "appel, vanille, peer, Calvados",
-        price: "13,00"
+        name: "Presa 100% Iberico Bellota",
+        description: "asperge, knolselder, zwarte look",
+        price: "32,00"
+      },
+      {
+        name: "Tagliata di Manzo 600g (2p)",
+        description: "rucola, kerstomaat, parmezaan, balsamico",
+        price: "62,00"
       }
     ]
   }
