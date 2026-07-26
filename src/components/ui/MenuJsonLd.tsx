@@ -36,6 +36,13 @@ export function MenuJsonLd() {
         "@type": "MenuItem",
         name: item.name,
         description: item.description,
+        offers: item.price && !item.price.includes("-")
+          ? {
+              "@type": "Offer",
+              price: item.price.replace(",", "."),
+              priceCurrency: "EUR"
+            }
+          : undefined,
         suitableForDiet: item.dietary?.map((diet) => restrictedDietMap[diet] ?? diet)
       }))
     }))

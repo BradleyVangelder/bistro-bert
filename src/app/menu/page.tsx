@@ -8,9 +8,9 @@ import ReviewSchema from '@/components/ui/ReviewSchema'
 import BreadcrumbSchema from '@/components/ui/BreadcrumbSchema'
 import { MenuJsonLd } from '@/components/ui/MenuJsonLd'
 
-import MinimalistPDFViewer from '@/components/MinimalistPDFViewer'
 import { RestaurantSectionHeading, RestaurantSubsectionHeading } from '@/components/ui/SmartHeadings'
 import MenuDessertSelector from '@/components/menu/MenuDessertSelector'
+import ResponsiveMenuViewer, { type MenuImagePage } from '@/components/menu/ResponsiveMenuViewer'
 import ActionButton from '@/components/ui/ActionButton'
 import { useReservation } from '@/contexts/ReservationContext'
 import { spotlightReviews } from '@/data/reviews'
@@ -20,16 +20,51 @@ export const dynamic = 'force-dynamic'
 
 // Page-specific metadata for Menu is now handled in the root layout.tsx
 
+const MENU_IMAGE_PAGES: Record<'suggestions' | 'menu' | 'dessert' | 'wine', MenuImagePage[]> = {
+  suggestions: [
+    {
+      src: '/menu-pages/suggesties.png',
+      alt: 'Suggesties van Bistro Bert',
+      width: 1241,
+      height: 1754
+    }
+  ],
+  menu: [
+    {
+      src: '/menu-pages/lunch-diner.png',
+      alt: 'Lunch en diner: pasta, salades, voor-, hoofd- en kleine gerechten',
+      width: 1241,
+      height: 2263
+    }
+  ],
+  dessert: [
+    {
+      src: '/menu-pages/desserts.png',
+      alt: 'Dessertenkaart van Bistro Bert',
+      width: 1241,
+      height: 1755
+    }
+  ],
+  wine: Array.from({ length: 10 }, (_, index) => ({
+    src: `/menu-pages/wijn-${String(index + 1).padStart(2, '0')}.png`,
+    alt: `Wijnkaart van Bistro Bert, pagina ${index + 1} van 10`,
+    width: 1240,
+    height: 1754
+  }))
+}
+
 // Component that uses useSearchParams wrapped in Suspense
 function MenuContent() {
   const { open } = useReservation()
   const searchParams = useSearchParams()
-  const [menuType, setMenuType] = useState<'menu' | 'dessert' | 'wine' | 'valentine'>('menu')
+  const [menuType, setMenuType] = useState<'suggestions' | 'menu' | 'dessert' | 'wine' | 'valentine'>('suggestions')
 
   // Handle URL parameter for auto-selecting tabs
   useEffect(() => {
     const tab = searchParams.get('tab')
-    if (tab === 'dessert') {
+    if (tab === 'suggestions' || tab === 'menu') {
+      setMenuType(tab)
+    } else if (tab === 'dessert') {
       setMenuType('dessert')
     } else if (tab === 'wine') {
       setMenuType('wine')
@@ -54,17 +89,6 @@ function MenuContent() {
 
   const handleReserveClick = () => {
     open()
-  }
-
-  const getPdfUrl = () => {
-    switch (menuType) {
-      case 'dessert':
-        return '/Dessertenkaart-BB.pdf'
-      case 'wine':
-        return '/Wijnkaart-BB.pdf'
-      default:
-        return '/menu-suggesties.pdf'
-    }
   }
 
   return (
@@ -164,16 +188,18 @@ function MenuContent() {
 
 
 
-                {/* PDF Viewer - Removed for HTML migration */}
-                {/* PDF Viewer for Menu, Desserts & Wine */}
-                {(menuType === 'menu' || menuType === 'dessert' || menuType === 'wine') && (
+                {/* Responsive menu viewer */}
+                {(menuType === 'suggestions' || menuType === 'menu' || menuType === 'dessert' || menuType === 'wine') && (
                   <div key={menuType} className="mb-8 md:mb-20">
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.6 }}
                     >
-                      <MinimalistPDFViewer key={`${menuType}-pdf`} pdfUrl={getPdfUrl()} />
+                      <ResponsiveMenuViewer
+                        key={`${menuType}-viewer`}
+                        pages={MENU_IMAGE_PAGES[menuType]}
+                      />
                     </motion.div>
                   </div>
                 )}
@@ -207,13 +233,15 @@ function MenuContent() {
                   className="text-center pt-6 md:pt-12 border-t border-gray-200"
                 >
                   <p className="typography-body text-gray-600 mb-6">
-                    {menuType === 'menu'
-                      ? 'Klaar voor lunch of diner?'
-                      : menuType === 'wine'
-                        ? 'Ontdek onze wijnselectie bij uw maaltijd'
-                        : menuType === 'valentine'
-                          ? 'Vier de liefde bij Bistro Bert'
-                          : 'Klaar voor een zoete afsluiting?'
+                    {menuType === 'suggestions'
+                      ? 'Zin om een van onze suggesties te proeven?'
+                      : menuType === 'menu'
+                        ? 'Klaar voor lunch of diner?'
+                        : menuType === 'wine'
+                          ? 'Ontdek onze wijnselectie bij uw maaltijd'
+                          : menuType === 'valentine'
+                            ? 'Vier de liefde bij Bistro Bert'
+                            : 'Klaar voor een zoete afsluiting?'
                     }
                   </p>
                   <div className="flex flex-col sm:flex-row button-tight-spacing justify-center">

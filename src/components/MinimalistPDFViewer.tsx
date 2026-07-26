@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import {
@@ -8,8 +8,7 @@ import {
   Viewer,
   SpecialZoomLevel,
   ScrollMode,
-  ViewMode,
-  type RenderPageProps
+  ViewMode
 } from '@react-pdf-viewer/core'
 import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation'
 import '@react-pdf-viewer/core/lib/styles/index.css'
@@ -19,38 +18,33 @@ interface MinimalistPDFViewerProps {
   className?: string
 }
 
-interface PageCache {
-  pageNumber: number
-  canvas?: HTMLCanvasElement
-  timestamp: number
+interface PageSize {
+  width: number
+  height: number
 }
 
 export default function MinimalistPDFViewer({ pdfUrl, className = '' }: MinimalistPDFViewerProps) {
   const [numPages, setNumPages] = useState<number | null>(null)
   const [pageNumber, setPageNumber] = useState(1)
+  const [pageSizes, setPageSizes] = useState<PageSize[]>([])
   const [isDocumentLoading, setIsDocumentLoading] = useState(true)
   const [isPageLoading, setIsPageLoading] = useState(false)
   const [isClient, setIsClient] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [pageCache, setPageCache] = useState<Map<number, PageCache>>(new Map())
-  const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 })
-  const [isPreloading, setIsPreloading] = useState(false)
   // Replace isUpdatingFromUrl with a more robust mechanism
   const [updateSource, setUpdateSource] = useState<'url' | 'viewer' | 'button' | null>(null)
-  const [lastUpdateTime, setLastUpdateTime] = useState(0)
 
   const containerRef = useRef<HTMLDivElement | null>(null)
   const pageNavigationPluginInstance = pageNavigationPlugin()
   const { jumpToPage } = pageNavigationPluginInstance
-  const intersectionObserverRef = useRef<IntersectionObserver | null>(null)
-  const resizeObserverRef = useRef<ResizeObserver | null>(null)
-  const lastJumpTimeRef = useRef<number>(0)
   const urlUpdateTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const lastUpdateTimeRef = useRef(0)
   const isTestEnvironment = useRef(typeof window !== 'undefined' && window.location.search.includes('test=true'))
 
   const isFirstPage = pageNumber <= 1
   const isLastPage = numPages ? pageNumber >= numPages : true
   const isLoading = isDocumentLoading || isPageLoading
+  const currentPageSize = pageSizes[pageNumber - 1]
 
 
   useEffect(() => {
@@ -63,6 +57,7 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
 
     // Reset to page 1 when PDF URL changes
     setPageNumber(1)
+    setPageSizes([])
     setError(null)
     setIsPageLoading(false)
 
@@ -80,30 +75,6 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
     }
   }, [pdfUrl, isClient])
 
-  // Set up container dimensions for CLS prevention
-  useEffect(() => {
-    if (!containerRef.current) return
-
-    const updateDimensions = () => {
-      if (containerRef.current) {
-        const { width, height } = containerRef.current.getBoundingClientRect()
-        setContainerDimensions({ width, height })
-      }
-    }
-
-    updateDimensions()
-
-    // Use ResizeObserver to track dimension changes
-    resizeObserverRef.current = new ResizeObserver(updateDimensions)
-    resizeObserverRef.current.observe(containerRef.current)
-
-    return () => {
-      if (resizeObserverRef.current) {
-        resizeObserverRef.current.disconnect()
-      }
-    }
-  }, [])
-
   // Simplified page change function - button clicks should be immediate
   const changePage = useCallback((newPageNumber: number, source: 'url' | 'viewer' | 'button') => {
     const now = Date.now()
@@ -111,50 +82,40 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
     // For button clicks, be more responsive - only prevent truly rapid clicks
     const MIN_UPDATE_DELAY = source === 'button' ? 50 : 200
 
-    // Get current lastUpdateTime from state to avoid closure issues
-    setLastUpdateTime(currentTime => {
-      // Prevent rapid successive updates
-      if (now - currentTime < MIN_UPDATE_DELAY) {
-        if (process.env.NODE_ENV === 'development') {
-          console.log(`[PDF DEBUG] Skipping rapid update from ${source}: ${newPageNumber} (last update: ${now - currentTime}ms ago)`)
-        }
-        return currentTime // Return the same value to update
-      }
-
-      // Update state
-      setUpdateSource(source)
-      setPageNumber(newPageNumber)
-      setError(null)
-
-      // Handle source-specific actions
-      if (source !== 'url') {
-        // Update URL when the source is not 'url'
-        try {
-          const url = new URL(window.location.href)
-          url.searchParams.set("slide", newPageNumber.toString())
-          window.history.replaceState({}, "", url.toString())
-        } catch (error) {
-          console.warn('Failed to update URL:', error)
-        }
-      }
-
-      if (source !== 'viewer') {
-        // Update PDF viewer when the source is not 'viewer'
-        jumpToPage(newPageNumber - 1)
-        setIsPageLoading(true)
-
-        // Set a fallback timeout to ensure loading state doesn't get stuck
-        setTimeout(() => {
-          setIsPageLoading(false)
-        }, 1000)
-      }
-
+    if (now - lastUpdateTimeRef.current < MIN_UPDATE_DELAY) {
       if (process.env.NODE_ENV === 'development') {
-        console.log(`[PDF DEBUG] Page changed to ${newPageNumber} from source: ${source}`)
+        console.log(`[PDF DEBUG] Skipping rapid update from ${source}: ${newPageNumber} (last update: ${now - lastUpdateTimeRef.current}ms ago)`)
       }
+      return
+    }
 
-      return now // Return the new timestamp
-    })
+    lastUpdateTimeRef.current = now
+    setUpdateSource(source)
+    setPageNumber(newPageNumber)
+    setError(null)
+
+    if (source !== 'url') {
+      try {
+        const url = new URL(window.location.href)
+        url.searchParams.set("slide", newPageNumber.toString())
+        window.history.replaceState({}, "", url.toString())
+      } catch (error) {
+        console.warn('Failed to update URL:', error)
+      }
+    }
+
+    if (source !== 'viewer') {
+      jumpToPage(newPageNumber - 1)
+      setIsPageLoading(true)
+
+      setTimeout(() => {
+        setIsPageLoading(false)
+      }, 1800)
+    }
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`[PDF DEBUG] Page changed to ${newPageNumber} from source: ${source}`)
+    }
   }, [jumpToPage])
 
   // Initialize from URL parameters
@@ -318,138 +279,6 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
     }
   }, [isClient])
 
-  // Optimized renderPage function with caching and performance improvements
-  const renderPage = useCallback((props: RenderPageProps) => {
-    const { canvasLayer, pageIndex, markRendered } = props
-    const currentPageNumber = pageIndex + 1
-
-    // Mark the page as rendered when it's ready
-    Promise.resolve().then(() => {
-      markRendered(pageIndex)
-      // Stop page loading once the page is fully rendered
-      setIsPageLoading(false)
-      setError(null)
-      
-      // Cache the rendered page for faster navigation
-      // Note: We'll skip canvas caching for now due to ReactPDF viewer complexity
-      // The viewer handles its own internal caching
-    })
-
-    const canvasAttrs = canvasLayer.attrs ?? {}
-
-    // Add performance optimizations to canvas
-    const optimizedCanvasAttrs = {
-      ...canvasAttrs,
-      style: {
-        ...canvasAttrs.style,
-        // Ensure proper dimensions to prevent CLS
-        width: containerDimensions.width || '100%',
-        height: containerDimensions.height || 'auto',
-        // Enable hardware acceleration
-        transform: 'translateZ(0)',
-        willChange: 'transform'
-      }
-    }
-
-    return (
-      <div
-        {...optimizedCanvasAttrs}
-        className={[canvasAttrs.className, 'monochrome-pdf-sheet'].filter(Boolean).join(' ')}
-        aria-label={`Menukaart — pagina ${currentPageNumber}`}
-        role="img"
-        data-page-number={currentPageNumber}
-      >
-        {canvasLayer.children}
-      </div>
-    )
-  }, [containerDimensions])
-
-  // DISABLED: Preloading logic was causing infinite loop
-  // The PDF viewer handles its own internal caching
-  // useEffect(() => {
-  //   if (!isClient || !numPages || isPreloading) return
-
-  //   console.log('[PDF DEBUG] Preload effect triggered, pageNumber:', pageNumber, 'numPages:', numPages)
-  //   const preloadPages = async () => {
-  //     setIsPreloading(true)
-      
-  //     try {
-  //       // Preload next page if it exists
-  //       if (pageNumber < numPages) {
-  //         // Use a timeout to avoid blocking the main thread
-  //         setTimeout(() => {
-  //           console.log('[PDF DEBUG] Preloading page:', pageNumber)
-  //           jumpToPage(pageNumber)
-  //         }, 100)
-  //       }
-  //     } catch (error) {
-  //       console.warn('Failed to preload page:', error)
-  //     } finally {
-  //       setIsPreloading(false)
-  //     }
-  //   }
-
-  //   preloadPages()
-  // }, [pageNumber, numPages, isClient, isPreloading, jumpToPage])
-
-  // Set up IntersectionObserver for lazy loading with debouncing
-  useEffect(() => {
-    if (!isClient) return
-
-    intersectionObserverRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          const pageNumber = parseInt(entry.target.getAttribute('data-page-number') || '0')
-          
-          if (entry.isIntersecting) {
-            // Page is visible, ensure it's loaded
-            if (pageCache.has(pageNumber)) {
-              // Page is already cached
-              return
-            }
-            
-            // Check if enough time has passed since the last jump
-            const now = Date.now()
-            const timeSinceLastJump = now - lastJumpTimeRef.current
-            const MIN_JUMP_DELAY = 500 // 500ms minimum delay between jumps
-            
-            if (timeSinceLastJump < MIN_JUMP_DELAY) {
-              return // Skip this jump to prevent rapid successive jumps
-            }
-            
-            // Load the page if it's not cached
-            const targetPage = pageNumber - 1
-            if (targetPage >= 0 && targetPage < (numPages || 0)) {
-              lastJumpTimeRef.current = now
-              jumpToPage(targetPage)
-            }
-          } else {
-            // Page is not visible, we can optionally remove it from cache
-            // to save memory (keeping current and next page)
-            if (Math.abs(pageNumber - pageNumber) > 2) {
-              setPageCache(prev => {
-                const newCache = new Map(prev)
-                newCache.delete(pageNumber)
-                return newCache
-              })
-            }
-          }
-        })
-      },
-      {
-        root: containerRef.current,
-        rootMargin: '50px', // Start loading 50px before page comes into view
-        threshold: 0.1
-      }
-    )
-
-    return () => {
-      if (intersectionObserverRef.current) {
-        intersectionObserverRef.current.disconnect()
-      }
-    }
-  }, [isClient, numPages, jumpToPage, pageNumber, pageCache])
-
   // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
@@ -459,7 +288,7 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
     }
   }, [])
 
-  const navigationControls = (
+  const navigationControls = numPages && numPages > 1 ? (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
@@ -475,8 +304,12 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
         aria-current={isFirstPage ? "true" : undefined}
       >
         <ArrowLeft size={18} strokeWidth={1.5} />
-        <span>Vorige pagina</span>
+        <span>Vorige</span>
       </button>
+
+      <p className="monochrome-pdf-indicator" aria-live="polite">
+        {pageNumber} / {numPages}
+      </p>
 
       <button
         type="button"
@@ -486,11 +319,11 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
         aria-label="Volgende pagina"
         aria-current={isLastPage ? "true" : undefined}
       >
-        <span>Volgende pagina</span>
+        <span>Volgende</span>
         <ArrowRight size={18} strokeWidth={1.5} />
       </button>
     </motion.div>
-  )
+  ) : null
 
 
   const rootClassName = ['monochrome-pdf-viewer', className].filter(Boolean).join(' ')
@@ -512,9 +345,16 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
     <div className={rootClassName}>
       {navigationControls}
 
-      <div
+      <motion.div
+        layout
+        transition={{ type: 'spring', stiffness: 180, damping: 26 }}
         ref={containerRef}
         className="monochrome-pdf-container"
+        style={{
+          aspectRatio: currentPageSize
+            ? `${currentPageSize.width} / ${currentPageSize.height}`
+            : '1 / 1.414'
+        }}
         role="region"
         aria-label="Menukaart carrousel"
         aria-roledescription="carousel"
@@ -575,44 +415,34 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
             <Viewer
               fileUrl={pdfUrl}
               plugins={[pageNavigationPluginInstance]}
-              defaultScale={SpecialZoomLevel.PageFit}
+              defaultScale={SpecialZoomLevel.PageWidth}
               scrollMode={ScrollMode.Page}
               viewMode={ViewMode.SinglePage}
-              onPageChange={(event) => {
-                // Only update if not recently updated from URL
-                const now = Date.now()
-                
-                // Get current lastUpdateTime to avoid closure issues
-                setLastUpdateTime(currentTime => {
-                  const timeSinceLastUpdate = now - currentTime
-                  
-                  if (updateSource !== 'url' && timeSinceLastUpdate >= 200) {
-                    const newPageNumber = event.currentPage + 1
-                    if (newPageNumber !== pageNumber) {
-                      changePage(newPageNumber, 'viewer')
-                    }
-                  } else if (process.env.NODE_ENV === 'development') {
-                    console.log(`[PDF DEBUG] Ignoring page change from viewer, updateSource: ${updateSource}, timeSinceLastUpdate: ${timeSinceLastUpdate}ms`)
-                  }
-                  
-                  return currentTime // Don't update the timestamp, just read it
-                })
-              }}
               onDocumentLoad={(event) => {
                 setNumPages(event.doc.numPages)
                 setIsDocumentLoading(false)
                 setIsPageLoading(false)
                 setError(null)
+
+                void Promise.all(
+                  Array.from({ length: event.doc.numPages }, async (_, index) => {
+                    const page = await event.doc.getPage(index + 1)
+                    const viewport = page.getViewport({ scale: 1 })
+
+                    return {
+                      width: viewport.width,
+                      height: viewport.height
+                    }
+                  })
+                ).then(setPageSizes).catch((pageSizeError) => {
+                  console.warn('[PDF DEBUG] Failed to read PDF page sizes:', pageSizeError)
+                })
                 
                 // Container dimension validation
                 if (containerRef.current) {
                   const { width, height } = containerRef.current.getBoundingClientRect()
                   if (width < 100 || height < 100) {
                     console.warn('[PDF DEBUG] Container dimensions too small:', { width, height })
-                    // In test environment, set minimum dimensions
-                    if (isTestEnvironment.current) {
-                      setContainerDimensions({ width: 800, height: 600 })
-                    }
                   }
                 }
                 
@@ -628,19 +458,11 @@ export default function MinimalistPDFViewer({ pdfUrl, className = '' }: Minimali
                   }, 5000) // 5 second timeout for tests
                 }
               }}
-              renderPage={renderPage}
             />
           </Worker>
           
         </motion.div>
-      </div>
-
-      {/* Caption showing current page */}
-      <div className="text-center monochrome-pdf-page-caption">
-        <p className="text-sm text-gray-600 font-medium">
-          Pagina {pageNumber}{numPages ? ` van ${numPages}` : ''}
-        </p>
-      </div>
+      </motion.div>
     </div>
   )
 }

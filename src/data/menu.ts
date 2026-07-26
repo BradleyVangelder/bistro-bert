@@ -14,141 +14,269 @@ export interface MenuSection {
 
 export const menuSections: MenuSection[] = [
   {
-    id: "starters",
-    name: "Voorgerechten",
-    description: "Een selectie van verfijnde amuses en koude voorgerechten om de toon te zetten.",
+    id: "suggestions",
+    name: "Suggesties",
+    description: "Seizoensgebonden suggesties van de chef.",
     items: [
       {
-        name: "Amuses van de chef",
-        description: "Drie dagelijkse hapjes",
+        name: "Bruschetta pomodoro (5 stuks)",
+        description: "Tomaat, basilicum, look",
         price: "18,00"
       },
       {
-        name: "Handgesneden tonijntartaar",
-        description: "Avocado, citrus, sesam",
+        name: "Gerookte paling - brioche",
+        description: "Witloof, appel",
         price: "22,00"
       },
       {
-        name: "Gebakken foie gras",
-        description: "Vijgencompote, brioche",
+        name: "Tomaat - burrata",
+        description: "Pesto, Serranoham",
+        price: "19,00"
+      },
+      {
+        name: "Carpaccio",
+        description: "Pecorino, kappertjes, basilicum piccolino",
+        price: "21,00"
+      },
+      {
+        name: "Wilde tarbot",
+        description: "Dijonaise, spinazie, aardappel",
+        price: "59,00"
+      },
+      {
+        name: "Tomaat garnaal",
+        description: "Sla, ei, grijze Noordzeegarnalen",
+        price: "31,00"
+      },
+      {
+        name: "Mosselen natuur (800 g - 1,2 kg)",
+        description: "Zeeuwse Goudmerk, frietjes, mosselsaus",
+        price: "25,00 - 30,00"
+      },
+      {
+        name: "Mosselen witte wijn of look-room (800 g - 1,2 kg)",
+        description: "Zeeuwse Goudmerk, frietjes, mosselsaus",
+        price: "27,00 - 32,00"
+      },
+      {
+        name: "Tagliatelle mosselen",
+        description: "Nduja, witte wijn",
+        price: "30,00"
+      },
+      {
+        name: "Presa 100% Iberico Bellota",
+        description: "Witte koolsla, zwarte look, rode wijn",
+        price: "32,00"
+      },
+      {
+        name: "Tagliata di Manzo 600 g (2 p.)",
+        description: "Rucola, kerstomaat, parmezaan, balsamico",
+        price: "62,00"
+      }
+    ]
+  },
+  {
+    id: "pasta",
+    name: "Pasta",
+    items: [
+      {
+        name: "Spaghetti bolognaise",
+        description: "Onze klassieke bolognaise",
+        price: "20,00"
+      },
+      {
+        name: "Spaghetti carbonara",
+        description: "Pancetta, ei, parmezaan, peterselie",
+        price: "21,00"
+      },
+      {
+        name: "Linguine diabolique",
+        description: "Scampi, paprika, tomaat",
+        price: "23,00"
+      },
+      {
+        name: "Fusili feta courgette",
+        description: "Pijnboompitten, rucola, tomaat",
+        price: "21,00"
+      }
+    ]
+  },
+  {
+    id: "salads",
+    name: "Salades",
+    items: [
+      {
+        name: "Caesar salad",
+        description: "Romeinse sla, kip, ei, parmezaan, dressing",
+        price: "23,00"
+      },
+      {
+        name: "Geitenkaas",
+        description: "Witloof, vijgen, granaatappel, honing, spek",
+        price: "23,00"
+      },
+      {
+        name: "Scampi",
+        description: "Granny Smith, zongedroogde tomaat, spek",
         price: "24,00"
+      },
+      {
+        name: "Thai beef salad",
+        description: "Rosbief, sojascheuten, koriander, chili",
+        price: "24,00"
+      }
+    ]
+  },
+  {
+    id: "starters",
+    name: "Voorgerechten",
+    items: [
+      {
+        name: "Tataki tonijn",
+        description: "Sesam, munt, crème van erwt, sojasaus",
+        price: "20,00"
+      },
+      {
+        name: "Zalm tartaar",
+        description: "Bieslook, dillecrème, kroepoek, dragonolie",
+        price: "18,00"
+      },
+      {
+        name: "Vitello tonnato",
+        description: "Kappertjes, tomaat, parmezaan, zwarte look",
+        price: "18,00"
+      },
+      {
+        name: "Steak tartare",
+        description: "Uitjes, kappertjes, worcester, tabasco",
+        price: "18,00"
+      },
+      {
+        name: "Carpaccio venkel",
+        description: "Pijnboompitten, gemarineerde komkommer",
+        price: "16,00"
+      },
+      {
+        name: "Gamba's à la plancha",
+        description: "Kruidenboter, optie: spicy",
+        price: "20,00"
+      },
+      {
+        name: "Kaaskroket",
+        description: "Peterselie, citroen",
+        price: "9,00 - 17,00"
+      },
+      {
+        name: "Garnaalkroket",
+        description: "Grijze Noordzeegarnalen, peterselie, cocktailsaus",
+        price: "11,00 - 21,00"
+      },
+      {
+        name: "Duo van kroketten",
+        description: "Peterselie, citroen, cocktailsaus",
+        price: "19,00"
       }
     ]
   },
   {
     id: "mains",
     name: "Hoofdgerechten",
-    description: "Klassiekers met seizoensproducten en moderne afwerking.",
+    description: "Met frietjes, kroketjes, puree of pasta waar aangeduid.",
     items: [
       {
-        name: "Rundertournedos 'Rossini'",
-        description: "Truffelsaus, foie gras, seizoensgroenten",
-        price: "48,00"
+        name: "Steak",
+        description: "Salade, bijgerecht en saus naar keuze",
+        price: "30,00"
       },
       {
-        name: "Zeebaars uit de Middellandse Zee",
-        description: "Saffraanrisotto, venkelconfijt",
+        name: "Filet pur",
+        description: "Salade, bijgerecht en saus naar keuze",
+        price: "40,00"
+      },
+      {
+        name: "Entrecôte",
+        description: "Salade, bijgerecht en saus naar keuze",
         price: "38,00"
       },
       {
-        name: "Botergegaarde kreeft",
-        description: "Groenten met vanilleglans, koraalsaus",
-        price: "58,00"
+        name: "Steak tartare",
+        description: "Salade, frietjes",
+        price: "29,00"
       },
       {
-        name: "Risotto met wilde paddenstoelen",
-        description: "Truffelolie, oude kaas",
-        dietary: ["Vegetarisch"],
-        price: "28,00"
-      }
-    ]
-  },
-  {
-    id: "desserts",
-    name: "Desserts",
-    description: "Zoete afsluiters met verfijnde texturen.",
-    items: [
-      {
-        name: "Grand Marnier-soufflé",
-        description: "Crème anglaise",
-        price: "16,00"
+        name: "Parelhoenfilet",
+        description: "Boschampignons, rode wijn en bijgerecht",
+        price: "30,00"
       },
       {
-        name: "Chocoladedessert",
-        description: "Pure chocolademousse, hazelnootkrokant",
-        price: "14,00"
+        name: "Catch of the day",
+        description: "Vis volgens marktaanbod en bijgerecht",
+        price: "30,00"
       },
       {
-        name: "Belgische cheesecake",
-        description: "Bessencompote, basilicumijs",
-        price: "15,00"
-      }
-    ]
-  },
-  {
-    id: "suggestions",
-    name: "Suggesties",
-    description: "Seizoensgebonden suggesties van de chef.",
-    items: [
-      {
-        name: "Asperges à la Flamande",
-        description: "ei, peterselie, boter",
-        price: "18,00"
-      },
-      {
-        name: "Gelakt buikspek",
-        description: "Cevennen-ui, hazelnoot",
-        price: "19,00"
-      },
-      {
-        name: "Gerookte paling - brioche",
-        description: "witloof, appel",
-        price: "22,00"
-      },
-      {
-        name: "Tomaat - burrata",
-        description: "pesto, Serranoham",
-        price: "19,00"
-      },
-      {
-        name: "Wilde tarbot",
-        description: "Dijonaise - spinazie - aardappel",
+        name: "Zeetong à la meunière",
+        description: "Tartaar, salade en bijgerecht",
         price: "59,00"
       },
       {
-        name: "Asperges à la Flamande",
-        description: "ei, peterselie, boter, krieltjes",
+        name: "Risotto zeebaars",
+        description: "Champignons, spinazie, bisque",
+        price: "30,00"
+      },
+      {
+        name: "Gamba's à la plancha",
+        description: "Fijne brunoise, kruidenboter, look, optie: spicy",
+        price: "30,00"
+      },
+      {
+        name: "Vispannetje",
+        description: "Noordzeevis, bisque en bijgerecht",
+        price: "27,00"
+      },
+      {
+        name: "Vol-au-vent",
+        description: "Bijgerecht, salade",
+        price: "26,00"
+      },
+      {
+        name: "Varkenswangen",
+        description: "Triple d'Anvers, salade en bijgerecht",
+        price: "29,00"
+      },
+      {
+        name: "Krokante vis",
+        description: "Tartaar, salade en bijgerecht",
         price: "25,00"
       },
       {
-        name: "Gebakken asperges - speck",
-        description: "luchtig ei, frisée, krieltjes",
-        price: "29,00"
-      },
-      {
-        name: "Gebakken asperges - grijze garnalen",
-        description: "luchtig ei, frisée, krieltjes",
-        price: "29,00"
-      },
-      {
-        name: "Presa 100% Iberico Bellota",
-        description: "asperge, knolselder, zwarte look",
-        price: "32,00"
-      },
-      {
-        name: "Tagliata di Manzo 600g (2p)",
-        description: "rucola, kerstomaat, parmezaan, balsamico",
-        price: "62,00"
+        name: "Vegetarische curry",
+        description: "Kikkererwten, groenten, kruiden",
+        price: "25,00"
       }
+    ]
+  },
+  {
+    id: "extras",
+    name: "Extra's",
+    items: [
+      { name: "Gemengde sla", price: "4,00" },
+      { name: "Witloofsla", price: "4,00" },
+      { name: "Warme groenten", price: "6,00" },
+      { name: "Gratin", price: "5,00" },
+      { name: "Friet, kroketjes, puree of pasta", price: "4,00" },
+      { name: "Extra brood en boter", price: "2,50" }
+    ]
+  },
+  {
+    id: "small-dishes",
+    name: "Kleine gerechten",
+    items: [
+      { name: "Mini bolognaise", price: "14,00" },
+      { name: "Mini vol-au-vent", price: "15,00" },
+      { name: "Mini steak", price: "20,00" },
+      { name: "Krokant visje", price: "15,00" }
     ]
   }
 ];
 
-const hiddenMenuSectionIds = new Set<MenuSection['id']>([
-  "starters",
-  "mains",
-]);
-
-export const visibleMenuSections = menuSections.filter(
-  (section) => !hiddenMenuSectionIds.has(section.id)
-);
+export const visibleMenuSections = menuSections;
