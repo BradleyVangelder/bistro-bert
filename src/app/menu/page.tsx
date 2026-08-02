@@ -26,7 +26,7 @@ const MENU_IMAGE_PAGES: Record<'suggestions' | 'menu' | 'dessert' | 'wine', Menu
       src: '/menu-pages/suggesties.png',
       alt: 'Suggesties van Bistro Bert',
       width: 1241,
-      height: 1754
+      height: 1755
     }
   ],
   menu: [
@@ -34,7 +34,7 @@ const MENU_IMAGE_PAGES: Record<'suggestions' | 'menu' | 'dessert' | 'wine', Menu
       src: '/menu-pages/lunch-diner.png',
       alt: 'Lunch en diner: pasta, salades, voor-, hoofd- en kleine gerechten',
       width: 1241,
-      height: 2263
+      height: 1755
     }
   ],
   dessert: [

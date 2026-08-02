@@ -24,8 +24,8 @@ export const menuSections: MenuSection[] = [
         price: "18,00"
       },
       {
-        name: "Gerookte paling - brioche",
-        description: "Witloof, appel",
+        name: "Steak tartare - brioche",
+        description: "Rode ui, zure room, bieslook",
         price: "22,00"
       },
       {
@@ -37,6 +37,11 @@ export const menuSections: MenuSection[] = [
         name: "Carpaccio",
         description: "Pecorino, kappertjes, basilicum piccolino",
         price: "21,00"
+      },
+      {
+        name: "Coquilles",
+        description: "Salie beurre blanc, lente-ui",
+        price: "23,00"
       },
       {
         name: "Wilde tarbot",
@@ -64,14 +69,19 @@ export const menuSections: MenuSection[] = [
         price: "30,00"
       },
       {
-        name: "Presa 100% Iberico Bellota",
-        description: "Witte koolsla, zwarte look, rode wijn",
-        price: "32,00"
+        name: "Rib-eye",
+        description: "Salade van venkel en witloof",
+        price: "41,00"
       },
       {
         name: "Tagliata di Manzo 600 g (2 p.)",
         description: "Rucola, kerstomaat, parmezaan, balsamico",
         price: "62,00"
+      },
+      {
+        name: "Scroppino",
+        description: "Citroensorbet, limoncello, prosecco",
+        price: "12,00"
       }
     ]
   },
@@ -261,7 +271,6 @@ export const menuSections: MenuSection[] = [
     items: [
       { name: "Gemengde sla", price: "4,00" },
       { name: "Witloofsla", price: "4,00" },
-      { name: "Warme groenten", price: "6,00" },
       { name: "Gratin", price: "5,00" },
       { name: "Friet, kroketjes, puree of pasta", price: "4,00" },
       { name: "Extra brood en boter", price: "2,50" }
