@@ -102,13 +102,13 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
                 Openingstijden
               </h3>
               <p className="text-black font-medium">
-                Dinsdag–Zondag
+                Woensdag–Zondag
               </p>
               <p className="text-burgundy font-semibold">
                 12:00 - 23:00
               </p>
               <p className="text-gray-600 text-sm mt-1">
-                Maandag gesloten
+                Maandag &amp; dinsdag gesloten
               </p>
             </div>
             

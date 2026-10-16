@@ -219,7 +219,7 @@ export default function LuxuryMenu() {
                             {dietaryIcons[diet] || <Leaf className="w-4 h-4" />}
                           </span>
                         ))}
-                      </h3>
+                      </RestaurantSubsectionHeading>
                       <p className="text-[1.3rem] text-gray-600 leading-relaxed font-luxury mb-3">
                         {item.description}
                       </p>

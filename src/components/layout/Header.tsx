@@ -212,7 +212,7 @@ export default function Header() {
                     <div className="flex items-center gap-2 md:gap-4 text-gray-700 py-2">
                       <Clock className="w-5 h-5 text-gray-700" />
                       <div>
-                        <span className="text-base font-luxury">Dinsdag–Zondag</span>
+                        <span className="text-base font-luxury">Woensdag–Zondag</span>
                         <div className="text-gray-800 font-semibold">12:00–23:00</div>
                       </div>
                     </div>

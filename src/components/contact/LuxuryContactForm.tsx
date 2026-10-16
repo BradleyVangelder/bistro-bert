@@ -111,8 +111,8 @@ export default function LuxuryContactForm() {
             </div>
             <div>
               <h3 className="font-luxury font-medium text-rich-black mb-1">Openingstijden</h3>
-              <p className="text-gray-600 font-luxury">Dinsdag–Zondag: 12:00–23:00</p>
-              <p className="text-sm text-gray-500">Maandag gesloten</p>
+              <p className="text-gray-600 font-luxury">Woensdag–Zondag: 12:00–23:00</p>
+              <p className="text-sm text-gray-500">Maandag &amp; dinsdag gesloten</p>
             </div>
           </div>
         </div>
