@@ -4,7 +4,6 @@ const baseUrl = 'https://www.bistro-bert.be'
 
 const disallowPaths = [
   '/api/',
-  '/_next/',
   '/admin/',
   '/animations',
   '/gallery-debug',
