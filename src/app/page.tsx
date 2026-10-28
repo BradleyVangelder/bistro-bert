@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import Footer from '@/components/layout/Footer'
 import ImageGallery from '@/components/ImageGallery'
 import { galleryImages } from '@/data/images'
@@ -382,7 +383,11 @@ export default function Home() {
                 <div>
                   <FadeIn delay={0.5} duration={0.8} direction="up">
                     <p className="typography-body-large text-white/90 mb-8 md:mb-12 max-w-lg md:max-w-2xl mx-auto">
-                      Lunch, zakenlunch of diner in Laakdal. Meld allergieën of timing—wij passen ons aan.
+                      Lunch,{' '}
+                      <Link href="/business-lunch" className="underline decoration-white/40 underline-offset-4 hover:decoration-white">
+                        zakenlunch
+                      </Link>{' '}
+                      of diner in Laakdal. Meld allergieën of timing—wij passen ons aan.
                     </p>
                   </FadeIn>
                 </div>

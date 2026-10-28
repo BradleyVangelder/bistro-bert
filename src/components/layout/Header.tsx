@@ -17,7 +17,8 @@ export default function Header() {
   const [hasScrolledFromTop, setHasScrolledFromTop] = useState(false)
 
   // Determine header styling based on current page
-  const isHomePage = pathname === '/'
+  // Pages that open with a full-screen photo get the white logo and icon at the top
+  const hasPhotoHero = pathname === '/' || pathname === '/business-lunch'
 
   // Mobile detection
   const [isMobile, setIsMobile] = useState(false)
@@ -50,7 +51,7 @@ export default function Header() {
     }
   }, [])
 
-  const isWhiteIcon = isHomePage && !hasScrolledFromTop
+  const isWhiteIcon = hasPhotoHero && !hasScrolledFromTop
 
   // Enhanced responsive behavior
   const logoWidth = isMobile ? 96 : 120
@@ -62,6 +63,7 @@ export default function Header() {
   const navItems = [
     { id: 'contact', label: 'Contact', href: '/contact' },
     { id: 'menu', label: 'Menukaart', href: '/menu' },
+    { id: 'business-lunch', label: 'Business lunch', href: '/business-lunch' },
     { id: 'over-ons', label: 'Over ons', href: '/over-ons' },
     { id: 'faq', label: 'FAQ', href: '/faq' },
   ]

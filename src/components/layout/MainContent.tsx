@@ -12,9 +12,9 @@ export default function MainContent({ children }: { children: React.ReactNode })
     setIsClient(true);
   }, []);
 
-  // Only apply navbar-spacer when NOT on the home page
-  const isHomePage = isClient && pathname === '/';
-  const mainClassName = isHomePage ? "" : "navbar-spacer";
+  // Only apply navbar-spacer on pages without a full-screen photo hero
+  const hasPhotoHero = isClient && (pathname === '/' || pathname === '/business-lunch');
+  const mainClassName = hasPhotoHero ? "" : "navbar-spacer";
 
   return (
     <main id="main-content" role="main" tabIndex={-1} className={mainClassName}>

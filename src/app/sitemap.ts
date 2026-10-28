@@ -28,6 +28,13 @@ const routes: RouteConfig[] = [
     images: ['https://www.bistro-bert.be/images/restaurant/cuisine.jpg'],
   },
   {
+    path: '/business-lunch',
+    file: 'src/app/business-lunch/page.tsx',
+    changeFrequency: 'monthly',
+    priority: 0.8,
+    images: ['https://www.bistro-bert.be/images/restaurant/chef.jpg'],
+  },
+  {
     path: '/contact',
     file: 'src/app/contact/page.tsx',
     changeFrequency: 'monthly',

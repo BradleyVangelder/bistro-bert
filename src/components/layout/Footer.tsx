@@ -8,6 +8,7 @@ export default function Footer() {
   // Navigation items matching the header
   const navItems = [
     { id: 'menu', label: 'Menukaart', href: '/menu' },
+    { id: 'business-lunch', label: 'Business lunch', href: '/business-lunch' },
     { id: 'over-ons', label: 'Over ons', href: '/over-ons' },
     { id: 'faq', label: 'FAQ', href: '/faq' },
     { id: 'contact', label: 'Contact', href: '/contact' },
