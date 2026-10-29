@@ -19,6 +19,11 @@ export const menuSections: MenuSection[] = [
     description: "Seizoensgebonden suggesties van de chef.",
     items: [
       {
+        name: "Wildkroketjes",
+        description: "Chimichurri",
+        price: "19,00"
+      },
+      {
         name: "Arancini chorizo",
         description: "Risotto, chilimayonaise",
         price: "18,00"
@@ -29,9 +34,9 @@ export const menuSections: MenuSection[] = [
         price: "24,00"
       },
       {
-        name: "Tomaat - burrata",
-        description: "Pesto, Serranoham",
-        price: "19,00"
+        name: "Coquilles",
+        description: "Salie beurre blanc, lente-ui",
+        price: "23,00"
       },
       {
         name: "Carpaccio",
@@ -39,14 +44,19 @@ export const menuSections: MenuSection[] = [
         price: "21,00"
       },
       {
-        name: "Coquilles",
-        description: "Salie beurre blanc, lente-ui",
-        price: "23,00"
+        name: "Brandade corvina",
+        description: "Aardappel, ombervis, venkel",
+        price: "35,00"
       },
       {
-        name: "Mechelse koekkoek",
-        description: "Saus van morilles, slahart",
-        price: "30,00"
+        name: "Eendenborst",
+        description: "Lichte pepersaus, witloof, knolselder",
+        price: "35,00"
+      },
+      {
+        name: "Hertenfilet",
+        description: "Rode wijn, vijg, pomme fondant",
+        price: "37,00"
       },
       {
         name: "Tomahawk van Brasvar",
@@ -59,28 +69,13 @@ export const menuSections: MenuSection[] = [
         price: "30,00"
       },
       {
-        name: "Wilde tarbot",
-        description: "Dijonaise, spinazie, aardappel",
-        price: "59,00"
-      },
-      {
-        name: "Tomaat garnaal",
-        description: "Sla, ei, grijze Noordzeegarnalen",
-        price: "31,00"
-      },
-      {
         name: "Rib-eye",
         description: "Salade van venkel en witloof",
         price: "41,00"
       },
       {
-        name: "Tagliata di Manzo 600 g (2 p.)",
-        description: "Rucola, kerstomaat, parmezaan, balsamico",
-        price: "62,00"
-      },
-      {
-        name: "Scroppino",
-        description: "Citroensorbet, limoncello, prosecco",
+        name: "Scroppino van appel",
+        description: "Licor 43, vodka, prosecco",
         price: "12,00"
       }
     ]
