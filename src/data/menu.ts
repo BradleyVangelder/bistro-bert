@@ -54,9 +54,9 @@ export const menuSections: MenuSection[] = [
         price: "35,00"
       },
       {
-        name: "Hertenfilet",
+        name: "Hertenrugfilet",
         description: "Rode wijn, vijg, pomme fondant",
-        price: "37,00"
+        price: "41,00"
       },
       {
         name: "Tomahawk van Brasvar",
@@ -74,7 +74,7 @@ export const menuSections: MenuSection[] = [
         price: "41,00"
       },
       {
-        name: "Scroppino van appel",
+        name: "Scroppino van peer",
         description: "Licor 43, vodka, prosecco",
         price: "12,00"
       }
